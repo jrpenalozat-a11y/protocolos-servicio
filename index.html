@@ -124,24 +124,6 @@
             border-color: var(--btn-bg-active);
             box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
-        .search-wrap {
-            padding: 0 16px 4px;
-            background: var(--bg-card);
-        }
-        .global-search {
-            width: 100%;
-            padding: 12px 18px;
-            border-radius: 40px;
-            border: 1px solid var(--accent);
-            background: var(--checklist-bg);
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            outline: none;
-        }
-        .global-search:focus {
-            border-color: var(--btn-bg-active);
-            box-shadow: 0 0 0 3px rgba(139,90,43,0.15);
-        }
         .install-btn {
             background: var(--btn-bg-active);
             color: #fff;
@@ -361,9 +343,6 @@
     <div class="header-bar">
         <button class="install-btn" id="installBtn" hidden>⬇️ Instalar app</button>
         <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
-    </div>
-    <div class="search-wrap">
-        <input type="search" id="globalSearch" class="global-search" placeholder="🔎 Buscar en toda la app (corte, vino, pescado, término…)" autocomplete="off">
     </div>
     <div class="main-buttons" id="mainNav">
         <button class="main-btn" data-tab="protocolos">📋 Protocolos</button>
@@ -921,41 +900,6 @@
         container.innerHTML = `<div class="service-title">⭐ Favoritos (${ids.length})</div><div class="service-desc">Tus tarjetas guardadas. Toca la ⭐ para quitarlas.</div><div class="grid-cards">${ids.map(id => favs[id]).join("")}</div>`;
     }
 
-    // ================== BUSCADOR GLOBAL ==================
-    function buildSearchIndex() {
-        const idx = [];
-        Object.values(protocolos).forEach(p => idx.push({ cat: '📋 Protocolo', title: p.titulo, body: p.descripcion + ' ' + p.pasos.join(' ') }));
-        atencionMesa.secuencia.momentos.forEach(m => idx.push({ cat: '🤝 Atención', title: m.momento, body: m.que + ' ' + m.frase + ' ' + m.error }));
-        atencionMesa.gestos.senales.forEach(s => idx.push({ cat: '👀 Leer cliente', title: s.senal, body: s.significa + ' ' + s.accion }));
-        atencionMesa.venta.tips.forEach(t => idx.push({ cat: '🍰 Venta sugestiva', title: 'Venta sugestiva', body: t }));
-        atencionMesa.presencia.reglas.forEach(r => idx.push({ cat: '🎯 Presencia atenta', title: 'Presencia atenta', body: r }));
-        idx.push({ cat: '🍷 Vinos', title: 'Servicio de vino', body: bebestibles.vino.descripcion + ' ' + bebestibles.vino.pasos.join(' ') });
-        bebestibles.cocteles.internacionales.forEach(c => idx.push({ cat: '🍸 Cóctel', title: c.nombre, body: c.ingredientes + ' ' + c.preparacion }));
-        bebestibles.cocteles.chilenos.forEach(c => idx.push({ cat: '🍸 Cóctel chileno', title: c.nombre, body: c.ingredientes + ' ' + c.preparacion }));
-        maridajes.forEach(m => idx.push({ cat: '🍷🍽️ Maridaje', title: m.plato, body: m.vino + ' ' + m.motivo }));
-        [...carnes.vacunoParrilla, ...carnes.vacunoOlla].forEach(c => idx.push({ cat: '🥩 Carne', title: c.nombre + ' → ' + c.equivalente, body: c.desc }));
-        [...carnes.cerdo, ...carnes.venado, ...carnes.jabali, ...carnes.otrasCarnes].forEach(c => idx.push({ cat: '🥩 Carne', title: c.nombre, body: c.desc }));
-        pescadosChile.forEach(p => idx.push({ cat: '🐟 Pescado', title: p.split(':')[0], body: p.split(':')[1] || '' }));
-        [...mariscos.orilla, ...mariscos.fondo].forEach(m => idx.push({ cat: '🐚 Marisco', title: m.nombre, body: m.desc }));
-        crustaceos.forEach(c => idx.push({ cat: '🦞 Crustáceo', title: c.nombre, body: c.desc }));
-        Object.values(vegetalesChilenos).forEach(g => (g.variedades || g.lista || []).forEach(v => idx.push({ cat: '🌽 Vegetal', title: v.nombre, body: v.desc })));
-        Object.entries(diccionario).forEach(([area, terms]) => terms.forEach(t => idx.push({ cat: '📖 ' + area.charAt(0).toUpperCase() + area.slice(1), title: t.term, body: t.definition })));
-        return idx;
-    }
-    const SEARCH_INDEX = buildSearchIndex();
-    function renderSearch(q) {
-        const query = q.trim().toLowerCase();
-        const container = document.getElementById('mainContent');
-        document.querySelectorAll('.main-btn').forEach(b => b.classList.remove('active'));
-        const results = SEARCH_INDEX.filter(it => (it.title + ' ' + it.body).toLowerCase().includes(query));
-        container.innerHTML = `<div class="service-title">🔎 Resultados (${results.length})</div>` +
-            (results.length
-                ? `<div class="grid-cards">${results.map(r => `<div class="card-item"><div class="item-name">${r.title}</div><div class="item-desc"><span class="std-badge">${r.cat}</span><br>${r.body}</div></div>`).join("")}</div>`
-                : `<div class="service-desc">No se encontró nada para "${q}". Prueba con otra palabra (ej. "ribeye", "mojito", "merluza").</div>`);
-        decorateFavorites();
-        window.scrollTo(0, 0);
-    }
-
     // ================== NAVEGACIÓN PRINCIPAL ==================
     let currentTab = 'productosMar';
     function setMainTab(tab) {
@@ -996,13 +940,7 @@
         updateFavCount();
         document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
         document.querySelectorAll('.main-btn').forEach(btn => {
-            btn.addEventListener('click', () => { document.getElementById('globalSearch').value = ''; setMainTab(btn.getAttribute('data-tab')); });
-        });
-        const search = document.getElementById('globalSearch');
-        search.addEventListener('input', () => {
-            const v = search.value;
-            if (v.trim().length >= 2) renderSearch(v);
-            else setMainTab(currentTab);
+            btn.addEventListener('click', () => setMainTab(btn.getAttribute('data-tab')));
         });
         const installBtn = document.getElementById('installBtn');
         installBtn.addEventListener('click', async () => {
