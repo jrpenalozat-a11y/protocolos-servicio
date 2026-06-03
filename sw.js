@@ -1,5 +1,5 @@
 // Service Worker — Protocolos de Servicio
-const CACHE = 'protocolos-v1';
+const CACHE = 'protocolos-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -24,9 +24,28 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-// Estrategia: cache-first con respaldo de red (y cacheo progresivo de lo que se descargue)
+// Detecta si una petición es de navegación / documento HTML
+function isHtmlRequest(req) {
+  return req.mode === 'navigate' ||
+    (req.method === 'GET' && req.headers.get('accept') && req.headers.get('accept').includes('text/html'));
+}
+
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
+
+  // HTML: network-first (siempre intenta la última versión; offline -> caché)
+  if (isHtmlRequest(e.request)) {
+    e.respondWith(
+      fetch(e.request).then((resp) => {
+        const copy = resp.clone();
+        caches.open(CACHE).then((c) => c.put('./index.html', copy)).catch(() => {});
+        return resp;
+      }).catch(() => caches.match(e.request).then((c) => c || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  // Resto de assets: cache-first con respaldo de red y cacheo progresivo
   e.respondWith(
     caches.match(e.request).then((cached) => {
       if (cached) return cached;
@@ -34,7 +53,7 @@ self.addEventListener('fetch', (e) => {
         const copy = resp.clone();
         caches.open(CACHE).then((c) => c.put(e.request, copy)).catch(() => {});
         return resp;
-      }).catch(() => caches.match('./index.html'));
+      });
     })
   );
 });
