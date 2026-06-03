@@ -1,0 +1,10 @@
+# Config local de herramientas
+.claude/
+
+# Caché de Vite (servidor de desarrollo)
+.vite/
+node_modules/
+
+# Sistema
+Thumbs.db
+.DS_Store
