@@ -352,6 +352,7 @@
         <button class="main-btn" data-tab="carnes">🥩 Carnes</button>
         <button class="main-btn active" data-tab="productosMar">🌊 Productos del Mar</button>
         <button class="main-btn" data-tab="vegetales">🌽 Vegetales Chilenos</button>
+        <button class="main-btn" data-tab="restaurantes">🛎️ Servicio por Local</button>
         <button class="main-btn" data-tab="diccionario">📖 Diccionario</button>
         <button class="main-btn" data-tab="favoritos">⭐ Favoritos</button>
     </div>
@@ -723,6 +724,25 @@
         }
     };
 
+    // ========================== RESTAURANTES DE CHILE ==========================
+    const restaurantesChile = [
+        { tipo: "Picada / Restaurant de barrio", ejemplos: "Eladio, La Vega, fuentes de soda clásicas", protocolo: "Americano", icono: "🇺🇸", matiz: "Muy informal, velocidad extrema. Se sirve el plato directamente, a veces en el mostrador. Se retira cuando el cliente se va." },
+        { tipo: "Parrillada / Asador", ejemplos: "Donde el Guatón, Parrilladas del sur", protocolo: "Familiar (variante del Americano)", icono: "🥩", matiz: "Centro es la parrilla a la vista. Servicio americano con bandeja comunitaria (carnes y ensaladas se pasan). Formalidad baja pero cálida." },
+        { tipo: "Marisquería", ejemplos: "La Caleta, El Galeón", protocolo: "Americano (con algo de Inglés)", icono: "🐟", matiz: "Plato emplatado, a veces fuente compartida (toque Inglés). Servicio ágil con explicación de especies." },
+        { tipo: "Restaurant familiar / de especialidad chilena", ejemplos: "Chile Lindo, Como en Casa", protocolo: "Americano (estándar)", icono: "🇨🇱", matiz: "Servicio clásico americano. Diferencia en la cercanía y trato amable, no en el protocolo." },
+        { tipo: "Fuente de soda / Cafetería tradicional", ejemplos: "Fuente Alemana, Café Central, Café Literario", protocolo: "Americano (muy rápido)", icono: "☕", matiz: "Servicio de mesa exprés o autoservicio en mostrador. Mínima interacción." },
+        { tipo: "Restaurant de hotel (no fine dining)", ejemplos: "Hoteles 4 estrellas, cadenas", protocolo: "Americano o Inglés", icono: "🏨", matiz: "Desayunos: Directo (buffet). Almuerzos/cenas: Americano o Inglés si hay fuentes compartidas." },
+        { tipo: "Comida rápida (fast food)", ejemplos: "McDonald's, Burger King, local de completos", protocolo: "Directo", icono: "🍔", matiz: "Cliente paga y retira su bandeja. Autoservicio al 100%." },
+        { tipo: "Delivery / Take away", ejemplos: "PedidosYa, Rappi, restaurantes con retiro", protocolo: "Bandeja (adaptado)", icono: "🛵", matiz: "Comida en envases cerrados, sin montaje en mesa. Versión externa del room service." },
+        { tipo: "Alta cocina / Restaurante con estrella", ejemplos: "Boragó, Ambrosía, De Central", protocolo: "Francés o Ruso", icono: "🌟", matiz: "Francés para terminación en mesa; Ruso para presentación teatral. Formalidad máxima, servicio lento y detallado." },
+        { tipo: "Restaurant de hotel de lujo (5 estrellas)", ejemplos: "Hotel W, Ritz-Carlton, The Singular", protocolo: "Francés (cenas) / Inglés (desayunos)", icono: "👑", matiz: "Cenas: Francés o Inglés según concepto. Desayunos: Directo con personal sirviendo." },
+        { tipo: "Restaurant temático / de autor", ejemplos: "Peumayén, Chila", protocolo: "Ruso o Francés combinado", icono: "🎨", matiz: "Menús degustación. Usan Ruso para presentar y explicar origen, o Francés para terminar platos." },
+        { tipo: "Cocinería (local de comida al paso)", ejemplos: "La Pica del Indio, Donde el Mono", protocolo: "Directo", icono: "🍲", matiz: "Cliente se sirve desde un buffet caliente (el 'servidor'). Directo puro." },
+        { tipo: "Restaurant de carretera / área de descanso", ejemplos: "Los Perales, Ruta 5", protocolo: "Americano (muy rápido)", icono: "🛣️", matiz: "Comida pre-cocida o al paso. Americano con platos desechables y servicio exprés." },
+        { tipo: "Quincho / Evento campestre", ejemplos: "Asados familiares, fondas dieciocheras", protocolo: "Inglés (adaptado) o Directo", icono: "🏕️", matiz: "Fuentes en el centro. Comensales se sirven solos (Directo) o el anfitrión sirve (Inglés). Mezcla según ambiente." },
+        { tipo: "Mercado / Caleta de pescadores", ejemplos: "Mercado Central (Santiago), Caleta El Membrillo (Valparaíso)", protocolo: "Directo o Americano informal", icono: "⚓", matiz: "En puestos: cliente retira su plato (Directo). Si hay mesas con servicio, se convierte en Americano informal." }
+    ];
+
     // ================== FUNCIONES AUXILIARES ==================
     function saveChecklist(key, checks) { localStorage.setItem(key, JSON.stringify(checks)); }
     function loadChecklist(key) { const saved = localStorage.getItem(key); return saved ? JSON.parse(saved) : null; }
@@ -833,6 +853,27 @@
         container.innerHTML = html;
     }
 
+    function renderRestaurantesChile() {
+        const container = document.getElementById('mainContent');
+        container.innerHTML = `
+            <div class="service-title">🛎️ Servicio por Tipo de Local</div>
+            <div class="service-desc">Qué estilo de servicio se recomienda según el tipo de restaurant, con sus matices de informalidad o formalidad. Encuentra tu tipo de local y aplica el protocolo adecuado.</div>
+            <div class="grid-cards">
+                ${restaurantesChile.map(r => `
+                    <div class="card-item">
+                        <div class="item-name">${r.icono} ${r.tipo}</div>
+                        <div class="item-desc"><strong>Ejemplos:</strong> ${r.ejemplos}</div>
+                        <div class="item-desc"><strong>Protocolo:</strong> ${r.protocolo}</div>
+                        <div class="item-desc"><strong>Matiz:</strong> ${r.matiz}</div>
+                    </div>
+                `).join("")}
+            </div>
+            <div class="image-place">
+                <img src="https://placehold.co/400x200/e8dccc/5a3e2b?text=Restaurantes+de+Chile" alt="Restaurantes chilenos">
+            </div>
+        `;
+    }
+
     function renderAtencionMesa() {
         const container = document.getElementById('mainContent');
         const A = atencionMesa;
@@ -915,6 +956,7 @@
         else if (tab === 'carnes') renderCarnes();
         else if (tab === 'productosMar') renderProductosMar();
         else if (tab === 'vegetales') renderVegetales();
+        else if (tab === 'restaurantes') renderRestaurantesChile();
         else if (tab === 'diccionario') renderDiccionario();
         else if (tab === 'favoritos') renderFavoritos();
         decorateFavorites();
