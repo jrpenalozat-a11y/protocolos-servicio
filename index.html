@@ -367,6 +367,7 @@
     </div>
     <div class="main-buttons" id="mainNav">
         <button class="main-btn" data-tab="protocolos">📋 Protocolos</button>
+        <button class="main-btn" data-tab="atencionMesa">🤝 Atención en Mesa</button>
         <button class="main-btn" data-tab="bebestibles">🍷 Bebestibles</button>
         <button class="main-btn" data-tab="maridajes">🍷🍽️ Maridajes</button>
         <button class="main-btn" data-tab="carnes">🥩 Carnes</button>
@@ -678,6 +679,71 @@
         { plato: "🍰 Postres dulces", vino: "Late Harvest · Moscato", motivo: "Regla de oro: el vino debe ser más dulce que el postre." }
     ];
 
+    // ========================== ATENCIÓN EN MESA ==========================
+    const atencionMesa = {
+        secuencia: {
+            titulo: "🗺️ Secuencia de Servicio",
+            desc: "El recorrido del cliente, momento a momento. Cada paso con su frase modelo y el error que más se comete.",
+            momentos: [
+                { momento: "1. Recibimiento", que: "Saluda en los primeros 30 segundos, con sonrisa y contacto visual. Acompaña a la mesa.", frase: "«¡Buenas noches, bienvenidos! ¿Tienen reserva o los acomodo en una mesa?»", error: "Dejar al cliente parado en la entrada sin que nadie lo mire." },
+                { momento: "2. Presentación en la mesa", que: "Preséntate por tu nombre, deja claro que tú los atiendes esta noche.", frase: "«Soy Jaime y los voy a acompañar esta noche. ¿Les ofrezco algo para tomar mientras revisan la carta?»", error: "Presentarse de espaldas o sin mirar a los comensales." },
+                { momento: "3. Toma de comanda", que: "Empieza por las damas y sigue en sentido horario. Pregunta SIEMPRE por alergias. Repite el pedido para confirmar.", frase: "«¿Tienen alguna alergia o algo que no consuman? Perfecto. Entonces serían dos entradas para compartir y...»", error: "No preguntar por alergias o no repetir la comanda." },
+                { momento: "4. Sugerencia / venta", que: "Recomienda con criterio: un plato estrella, una entrada para compartir, un maridaje.", frase: "«Si les gustan los mariscos, el congrio del día está saliendo espectacular.»", error: "Decir «todo es rico»: no transmite criterio ni ayuda a decidir." },
+                { momento: "5. Servicio de platos", que: "Sirve por la derecha, retira por la izquierda. Anuncia el plato al dejarlo y desea buen provecho.", frase: "«Les dejo el lomo a punto medio. Que lo disfruten.»", error: "Dejar el plato sin decir qué es ni para quién." },
+                { momento: "6. Control de calidad", que: "A los ~2 minutos del primer bocado, chequea discretamente que todo esté bien.", frase: "«¿Cómo está todo? ¿Les hace falta algo?»", error: "Preguntar justo cuando el cliente tiene la boca llena, o no chequear nunca." },
+                { momento: "7. Ofrecer postre y café", que: "Retira el plato principal, limpia las migas y ofrece la carta de postres en positivo.", frase: "«¿Les muestro la carta de postres? Hoy tenemos un volcán de chocolate recién hecho.»", error: "Preguntar seco «¿algo más?»: cierra la venta en vez de abrirla." },
+                { momento: "8. La cuenta", que: "Lleva la cuenta solo cuando la pidan, sin apurar. Revisa que esté correcta antes.", frase: "«Aquí tienen. ¿Les cobro junto o separado? Tómense su tiempo.»", error: "Llevar la cuenta sin que la pidan: apura y molesta al cliente." },
+                { momento: "9. Despedida", que: "Agradece, despídete (con nombre si lo sabes) e invita a volver. Es el último recuerdo que se llevan.", frase: "«Muchas gracias por venir, los esperamos pronto. ¡Buenas noches!»", error: "Despedir con indiferencia o no despedir." }
+            ]
+        },
+        gestos: {
+            titulo: "👀 Leer al Cliente (lenguaje no verbal)",
+            desc: "Un buen garzón lee la mesa de lejos y se anticipa. Señales clave y qué hacer ante cada una.",
+            senales: [
+                { senal: "Carta cerrada sobre la mesa", significa: "Están listos para pedir", accion: "Acércate en menos de 1 minuto." },
+                { senal: "El cliente busca con la mirada / levanta la vista", significa: "Necesita algo", accion: "Anticípate y ve tú, no esperes que te llame." },
+                { senal: "Cubiertos juntos y paralelos (posición 4:20)", significa: "Terminó el plato", accion: "Confirma y retira por la izquierda." },
+                { senal: "Cubiertos en «V» o cruzados sobre el plato", significa: "Sigue comiendo o hace una pausa", accion: "NO retires el plato todavía." },
+                { senal: "Servilleta doblada sobre la mesa", significa: "Terminaron / se van", accion: "Ofrece postre, café o la cuenta." },
+                { senal: "Miran el reloj o el celular seguido", significa: "Tienen prisa", accion: "Agiliza los tiempos y avísale a cocina." },
+                { senal: "Conversación animada, risas, brindis", significa: "Buen momento, no quieren interrupciones", accion: "Espacia las visitas, no interrumpas." },
+                { senal: "Revisan la cuenta con detención", significa: "Posible duda o error", accion: "Acércate amable: «¿Está todo bien con la cuenta?»" },
+                { senal: "Niños inquietos o bebé llorando", significa: "Familia estresada", accion: "Apura algo simple para los niños, ofrece pan." },
+                { senal: "Prueba, deja el cubierto y frunce el ceño", significa: "Algo no le gustó", accion: "Acércate discreto: «¿Está todo a su gusto?»" }
+            ]
+        },
+        venta: {
+            titulo: "🍰 Venta Sugestiva (postre, café, bajativo)",
+            desc: "Vender sin presionar: se trata de sumar a la experiencia, no de «colocar» productos.",
+            tips: [
+                "Ofrece en POSITIVO: «¿Les muestro la carta de postres?» en vez de «¿algo más?».",
+                "Describe con los sentidos: «tibio», «crujiente», «recién hecho», «con helado de vainilla».",
+                "Sugiere algo concreto, no abras todo el menú: nombra 1 o 2 estrellas.",
+                "Propón el cierre: un café, un bajativo o un vino dulce para terminar.",
+                "Lee la mesa: si están llenos, ofrece algo para compartir o solo un café.",
+                "Nunca presiones: si dicen que no, agradece y cierra con calidez."
+            ],
+            frases: [
+                "«Tenemos un volcán de chocolate tibio con helado que sale en 5 minutos, ¿les tienta?»",
+                "«¿Un cafecito o un bajativo para cerrar? Tenemos un buen amaretto.»",
+                "«Si quieren algo livianito, el sorbete de la casa es perfecto para compartir.»"
+            ]
+        },
+        presencia: {
+            titulo: "🎯 Presencia Atenta (estar atento sin invadir)",
+            desc: "El arte de estar cuando se te necesita y desaparecer cuando no. El equilibrio que define a un gran garzón.",
+            reglas: [
+                "Regla de los 3 minutos: no dejes pasar más de ese tiempo sin un acuse de recibo o contacto visual.",
+                "Anticípate: rellena el agua y el pan antes de que lo pidan.",
+                "Vigila tu rango de lejos: una mirada cada cierto rato basta para leer la mesa.",
+                "Cuándo NO acercarse: durante un brindis, una conversación íntima, una foto o una llamada.",
+                "Mantén la mesa limpia: retira lo que ya no se usa (copas vacías, platos de pan).",
+                "Camina siempre con propósito: aprovecha cada viaje para retirar o reponer algo.",
+                "Acércate por el costado y a la altura del cliente, sin invadir su espacio personal."
+            ]
+        }
+    };
+
     // ================== FUNCIONES AUXILIARES ==================
     function saveChecklist(key, checks) { localStorage.setItem(key, JSON.stringify(checks)); }
     function loadChecklist(key) { const saved = localStorage.getItem(key); return saved ? JSON.parse(saved) : null; }
@@ -788,6 +854,22 @@
         container.innerHTML = html;
     }
 
+    function renderAtencionMesa() {
+        const container = document.getElementById('mainContent');
+        const A = atencionMesa;
+        container.innerHTML = `<div class="service-title">🤝 Atención en Mesa</div>
+            <div class="service-desc">El trato y la lectura del cliente: lo que más se nota en la experiencia (y en la propina).</div>
+            <div class="subseccion"><h2>${A.secuencia.titulo}</h2><div class="service-desc">${A.secuencia.desc}</div>
+                <div class="grid-cards">${A.secuencia.momentos.map(m => `<div class="card-item"><div class="item-name">${m.momento}</div><div class="item-desc">${m.que}</div><div class="item-prep">💬 <em>${m.frase}</em></div><div class="item-desc" style="color:#c0392b">⚠️ ${m.error}</div></div>`).join("")}</div></div>
+            <div class="subseccion"><h2>${A.gestos.titulo}</h2><div class="service-desc">${A.gestos.desc}</div>
+                <div class="grid-cards">${A.gestos.senales.map(s => `<div class="card-item"><div class="item-name">👁️ ${s.senal}</div><div class="item-desc"><strong>Significa:</strong> ${s.significa}</div><div class="item-prep">✅ <strong>Acción:</strong> ${s.accion}</div></div>`).join("")}</div></div>
+            <div class="subseccion"><h2>${A.venta.titulo}</h2><div class="service-desc">${A.venta.desc}</div>
+                <ul style="margin-left:20px; font-size:0.9rem; color:var(--text-secondary)">${A.venta.tips.map(t => `<li style="margin-bottom:6px">${t}</li>`).join("")}</ul>
+                <div class="grid-cards">${A.venta.frases.map(f => `<div class="card-item"><div class="item-prep">💬 <em>${f}</em></div></div>`).join("")}</div></div>
+            <div class="subseccion"><h2>${A.presencia.titulo}</h2><div class="service-desc">${A.presencia.desc}</div>
+                <ul style="margin-left:20px; font-size:0.9rem; color:var(--text-secondary)">${A.presencia.reglas.map(r => `<li style="margin-bottom:6px">${r}</li>`).join("")}</ul></div>`;
+    }
+
     function renderMaridajes() {
         const container = document.getElementById('mainContent');
         container.innerHTML = `<div class="service-title">🍷🍽️ Maridajes</div>
@@ -843,6 +925,10 @@
     function buildSearchIndex() {
         const idx = [];
         Object.values(protocolos).forEach(p => idx.push({ cat: '📋 Protocolo', title: p.titulo, body: p.descripcion + ' ' + p.pasos.join(' ') }));
+        atencionMesa.secuencia.momentos.forEach(m => idx.push({ cat: '🤝 Atención', title: m.momento, body: m.que + ' ' + m.frase + ' ' + m.error }));
+        atencionMesa.gestos.senales.forEach(s => idx.push({ cat: '👀 Leer cliente', title: s.senal, body: s.significa + ' ' + s.accion }));
+        atencionMesa.venta.tips.forEach(t => idx.push({ cat: '🍰 Venta sugestiva', title: 'Venta sugestiva', body: t }));
+        atencionMesa.presencia.reglas.forEach(r => idx.push({ cat: '🎯 Presencia atenta', title: 'Presencia atenta', body: r }));
         idx.push({ cat: '🍷 Vinos', title: 'Servicio de vino', body: bebestibles.vino.descripcion + ' ' + bebestibles.vino.pasos.join(' ') });
         bebestibles.cocteles.internacionales.forEach(c => idx.push({ cat: '🍸 Cóctel', title: c.nombre, body: c.ingredientes + ' ' + c.preparacion }));
         bebestibles.cocteles.chilenos.forEach(c => idx.push({ cat: '🍸 Cóctel chileno', title: c.nombre, body: c.ingredientes + ' ' + c.preparacion }));
@@ -879,6 +965,7 @@
             else btn.classList.remove('active');
         });
         if (tab === 'protocolos') renderProtocolos();
+        else if (tab === 'atencionMesa') renderAtencionMesa();
         else if (tab === 'bebestibles') renderBebestibles();
         else if (tab === 'maridajes') renderMaridajes();
         else if (tab === 'carnes') renderCarnes();
