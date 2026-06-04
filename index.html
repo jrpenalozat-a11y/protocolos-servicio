@@ -904,7 +904,7 @@
         const proto = protocolos[key];
         const div = document.getElementById('protoContent');
         if (!div) return;
-        div.innerHTML = `<div class="service-title">${proto.titulo}</div><div class="service-desc">${proto.descripcion}</div><div class="image-place"><img src="${proto.imagen}" alt="Montaje"></div><div class="checklist" id="checklist-${key}"><h3>✅ Checklist <span class="progress-indicator" id="progressCounter">0/${proto.pasos.length}</span><button class="reset-btn" data-reset>↺ Reiniciar</button></h3>${proto.pasos.map(p => `<label class="checklist-item"><input type="checkbox"> ${p}</label>`).join("")}</div>`;
+        div.innerHTML = `<div class="service-title">${proto.titulo}</div><div class="service-desc">${proto.descripcion}</div><div class="image-place"><img src="img/protocolos.jpg" alt="Servicio de mesa" loading="lazy"></div><div class="checklist" id="checklist-${key}"><h3>✅ Checklist <span class="progress-indicator" id="progressCounter">0/${proto.pasos.length}</span><button class="reset-btn" data-reset>↺ Reiniciar</button></h3>${proto.pasos.map(p => `<label class="checklist-item"><input type="checkbox"> ${p}</label>`).join("")}</div>`;
         bindChecklist(`checklist-${key}`, `proto_${key}`);
     }
 
@@ -912,7 +912,7 @@
         const container = document.getElementById('mainContent');
         container.innerHTML = `<div class="service-title">🍷 Bebestibles</div>
             <div class="service-desc">Del vino bien servido al pisco sour de la casa. ¡Salud! 🥂</div>
-            <div class="subseccion"><h2>🍷 Vinos y Espumantes</h2><div class="service-desc">${bebestibles.vino.descripcion}</div><div class="image-place"><img src="${bebestibles.vino.imagen}" alt="Vinos"></div><div class="checklist" id="checklist-vino"><h3>✅ Protocolo <span class="progress-indicator" id="progressCounter">0/${bebestibles.vino.pasos.length}</span><button class="reset-btn" data-reset>↺ Reiniciar</button></h3>${bebestibles.vino.pasos.map(p => `<label class="checklist-item"><input type="checkbox"> ${p}</label>`).join("")}</div></div>
+            <div class="subseccion"><h2>🍷 Vinos y Espumantes</h2><div class="service-desc">${bebestibles.vino.descripcion}</div><div class="image-place"><img src="img/bebestibles.jpg" alt="Servicio de vino" loading="lazy"></div><div class="checklist" id="checklist-vino"><h3>✅ Protocolo <span class="progress-indicator" id="progressCounter">0/${bebestibles.vino.pasos.length}</span><button class="reset-btn" data-reset>↺ Reiniciar</button></h3>${bebestibles.vino.pasos.map(p => `<label class="checklist-item"><input type="checkbox"> ${p}</label>`).join("")}</div></div>
             <div class="subseccion"><h2>🍸 Cocteles Internacionales (${bebestibles.cocteles.internacionales.length})</h2><div class="grid-cards">${bebestibles.cocteles.internacionales.map(c => `<div class="card-item"><div class="item-name">🍸 ${c.nombre}</div><div class="item-ingredients">${c.ingredientes}</div><div class="item-prep">${c.preparacion}</div></div>`).join("")}</div>
             <h2>🇨🇱 Cocteles Chilenos (${bebestibles.cocteles.chilenos.length})</h2><div class="grid-cards">${bebestibles.cocteles.chilenos.map(c => `<div class="card-item"><div class="item-name">🍸 ${c.nombre}</div><div class="item-ingredients">${c.ingredientes}</div><div class="item-prep">${c.preparacion}</div></div>`).join("")}</div></div>`;
         bindChecklist('checklist-vino', 'checklist_vino');
@@ -930,7 +930,8 @@
             <div class="subseccion"><h2>🐗 Jabalí</h2><div class="grid-cards">${carnes.jabali.map(c => card(c, false)).join("")}</div></div>
             <div class="subseccion"><h2>🌿 Otras carnes</h2><div class="grid-cards">${carnes.otrasCarnes.map(c => card(c, false)).join("")}</div></div>
             <div class="subseccion"><h2>🔥 Al palo / Espiedo (asado lento)</h2><div class="service-desc">Cortes y piezas grandes ideales para cocción lenta girando frente al fuego (al palo, en cruz o al espiedo): quedan dorados por fuera y jugosos por dentro.</div><div class="grid-cards">${carnes.alPalo.map(c => card(c, false)).join("")}</div></div>
-            <div class="subseccion"><h2>🌡️ Puntos de Cocción</h2><div class="grid-cards">${carnes.puntosCarne.map(p => p.nota ? `<div class="card-item"><div class="item-name">⚠️ Nota</div><div class="item-desc">${p.nota}</div></div>` : `<div class="card-item"><div class="item-name">🇨🇱 ${p.chile} <span class="std-badge">Chile</span><br>🇺🇸 ${p.usa}</div><div class="item-desc">🌡️ ${p.temp} · ⏱️ ${p.tiempo}<br>${p.desc}</div></div>`).join("")}</div></div>`;
+            <div class="subseccion"><h2>🌡️ Puntos de Cocción</h2><div class="grid-cards">${carnes.puntosCarne.map(p => p.nota ? `<div class="card-item"><div class="item-name">⚠️ Nota</div><div class="item-desc">${p.nota}</div></div>` : `<div class="card-item"><div class="item-name">🇨🇱 ${p.chile} <span class="std-badge">Chile</span><br>🇺🇸 ${p.usa}</div><div class="item-desc">🌡️ ${p.temp} · ⏱️ ${p.tiempo}<br>${p.desc}</div></div>`).join("")}</div></div>
+            <div class="image-place"><img src="img/carnes.jpg" alt="Parrilla y carnes" loading="lazy"></div>`;
     }
 
     function renderProductosMar() {
@@ -941,7 +942,7 @@
             <div class="subseccion"><h2>🐚 Mariscos de Orilla</h2><div class="grid-cards">${mariscos.orilla.map(m => `<div class="card-item"><div class="item-name">${m.nombre}</div><div class="item-desc">${m.desc}</div></div>`).join("")}</div>
             <h2>🐚 Mariscos de Fondo</h2><div class="grid-cards">${mariscos.fondo.map(m => `<div class="card-item"><div class="item-name">${m.nombre}</div><div class="item-desc">${m.desc}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>🦞 Crustáceos Chilenos</h2><div class="grid-cards">${crustaceos.map(c => `<div class="card-item"><div class="item-name">${c.nombre}</div><div class="item-desc">${c.desc}</div></div>`).join("")}</div></div>
-            <div class="image-place"><img src="https://placehold.co/400x200/e8dccc/5a3e2b?text=Productos+del+Mar+de+Chile" alt="Mariscos"></div>`;
+            <div class="image-place"><img src="img/mar.jpg" alt="Productos del mar" loading="lazy"></div>`;
     }
 
     function renderVegetales() {
@@ -953,7 +954,7 @@
             <div class="subseccion"><h2>${vegetalesChilenos.frutosNativos.titulo}</h2><div class="service-desc">${vegetalesChilenos.frutosNativos.descripcion}</div><div class="grid-cards">${vegetalesChilenos.frutosNativos.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>${vegetalesChilenos.hierbasCondimentos.titulo}</h2><div class="service-desc">${vegetalesChilenos.hierbasCondimentos.descripcion}</div><div class="grid-cards">${vegetalesChilenos.hierbasCondimentos.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>${vegetalesChilenos.otros.titulo}</h2><div class="service-desc">${vegetalesChilenos.otros.descripcion}</div><div class="grid-cards">${vegetalesChilenos.otros.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>
-            <div class="image-place"><img src="https://placehold.co/400x200/e8dccc/5a3e2b?text=Vegetales+Chilenos" alt="Vegetales"></div>`;
+            <div class="image-place"><img src="img/vegetales.jpg" alt="Vegetales chilenos" loading="lazy"></div>`;
     }
 
     function renderDiccionario() {
@@ -983,7 +984,7 @@
                 `).join("")}
             </div>
             <div class="image-place">
-                <img src="https://placehold.co/400x200/e8dccc/5a3e2b?text=Restaurantes+de+Chile" alt="Restaurantes chilenos">
+                <img src="img/local.jpg" alt="Restaurante chileno" loading="lazy">
             </div>
         `;
     }

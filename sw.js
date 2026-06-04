@@ -1,11 +1,17 @@
 // Service Worker — Protocolos de Servicio
-const CACHE = 'protocolos-v2';
+const CACHE = 'protocolos-v3';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './img/protocolos.jpg',
+  './img/bebestibles.jpg',
+  './img/mar.jpg',
+  './img/carnes.jpg',
+  './img/vegetales.jpg',
+  './img/local.jpg'
 ];
 
 // Instala y precachea el shell de la app
