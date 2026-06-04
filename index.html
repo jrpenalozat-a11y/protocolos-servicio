@@ -630,11 +630,32 @@
             { term: "Old Fashioned (vaso)", definition: "Vaso corto y ancho." },
             { term: "Highball", definition: "Vaso alto y estrecho." },
             { term: "Mixología", definition: "Arte y técnica de crear y preparar cócteles." },
-            { term: "Destilado", definition: "Licor obtenido por destilación: pisco, ron, whisky, gin, vodka." },
             { term: "Licor", definition: "Bebida dulce y aromatizada, de menor graduación (amaretto, triple sec)." },
             { term: "Escarchar", definition: "Decorar el borde del vaso con sal o azúcar (rim)." },
             { term: "Chaser", definition: "Bebida suave que se toma después de un trago fuerte." },
-            { term: "Aperitivo / Bajativo", definition: "Aperitivo: trago antes de comer; bajativo: trago digestivo al final." }
+            { term: "Aperitivo / Bajativo", definition: "Aperitivo: trago antes de comer; bajativo: trago digestivo al final." },
+            { term: "Coctelera", definition: "Recipiente para agitar y enfriar tragos con hielo (la clásica de 3 piezas o la Boston)." },
+            { term: "Colador / Strainer", definition: "Filtra el hielo y los sólidos al servir; el de resorte se llama Hawthorne." },
+            { term: "Cuchara de bar", definition: "Cuchara larga en espiral para revolver (stir) y medir." },
+            { term: "Vaso mezclador", definition: "Vaso de vidrio para revolver tragos hechos solo con destilados (sin agitar)." },
+            { term: "Medida / Onza", definition: "Dosis en coctelería (1 oz ≈ 30 ml). El jigger es la herramienta para medirla." },
+            { term: "Cóctel / Trago", definition: "Bebida que combina uno o más destilados con jugos, licores o mixers." },
+            { term: "Trago largo / corto", definition: "Largo (long drink): con harto mixer, en vaso alto. Corto (short): concentrado, en copa." },
+            { term: "Mixer / Bebida de relleno", definition: "Líquido sin alcohol que completa el trago: soda, tónica, ginger, cola, jugo." },
+            { term: "Frappé / Frozen", definition: "Trago licuado con hielo hasta quedar tipo granizado." },
+            { term: "Doble", definition: "Porción de destilado del doble de lo normal (≈ 60 ml)." }
+        ],
+        destilados: [
+            { term: "Pisco", definition: "Destilado de uva, emblema de Chile. Base de la piscola, el pisco sour y el chilcano." },
+            { term: "Ron", definition: "Destilado de caña de azúcar o melaza. Base de mojito, daiquiri, cuba libre y piña colada." },
+            { term: "Whisky", definition: "Destilado de granos (cebada, maíz, centeno) añejado en barrica. Scotch, bourbon, etc." },
+            { term: "Gin / Ginebra", definition: "Destilado neutro aromatizado con enebro y botánicos. Base del gin tonic y el negroni." },
+            { term: "Vodka", definition: "Destilado neutro (grano o papa), de sabor limpio. Base de moscow mule y cosmopolitan." },
+            { term: "Tequila", definition: "Destilado de agave azul, de México. Base de la margarita." },
+            { term: "Mezcal", definition: "Destilado de agave (México), de sabor ahumado característico." },
+            { term: "Cachaça", definition: "Destilado de jugo de caña fresca, de Brasil. Base de la caipirinha." },
+            { term: "Brandy / Coñac", definition: "Destilado de vino añejado; el coñac es el brandy de la región de Cognac, Francia." },
+            { term: "Aguardiente", definition: "Nombre genérico de destilados fuertes; en Chile, base de la cola de mono." }
         ],
         comedor: [
             { term: "Mise en place", definition: "Preparación anticipada para el servicio." },
@@ -960,7 +981,7 @@
     function renderDiccionario() {
         const container = document.getElementById('mainContent');
         let html = `<div class="service-title">📖 Diccionario por áreas</div><div class="service-desc">El idioma secreto del rubro 🤫 — del «mise en place» al grito de «¡86!». Aquí lo cachái todo.</div>`;
-        const meta = { barra: ['🍸', 'Barra'], comedor: ['🍽️', 'Comedor'], cocina: ['👨‍🍳', 'Cocina'], codigos: ['🔢', 'Códigos y jerga'] };
+        const meta = { barra: ['🍸', 'Barra'], destilados: ['🥃', 'Destilados'], comedor: ['🍽️', 'Comedor'], cocina: ['👨‍🍳', 'Cocina'], codigos: ['🔢', 'Códigos y jerga'] };
         for (const [area, terms] of Object.entries(diccionario)) {
             const [emoji, label] = meta[area] || ['📖', area];
             html += `<div class="dict-section"><h3>${emoji} ${label}</h3><div class="dict-grid">${terms.map(t => `<div class="term-card"><div class="term-title">${t.term}</div><div class="term-def">${t.definition}</div></div>`).join("")}</div></div>`;
