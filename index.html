@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Protocolos de Restaurante | App profesional</title>
     <meta name="description" content="Protocolos de servicio, cócteles, carnes, productos del mar, vegetales chilenos y diccionario gastronómico.">
-    <meta name="theme-color" content="#8b5a2b">
+    <meta name="theme-color" content="#2b323d">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,36 +19,36 @@
             transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
         }
         :root {
-            --bg-body: #f7f3ef;
-            --bg-card: white;
-            --text-primary: #2c1e12;
-            --text-secondary: #4a3b2e;
-            --btn-bg: #f0ebe5;
-            --btn-bg-active: #8b5a2b;
-            --btn-text: #3e2a21;
-            --btn-text-active: white;
-            --border-light: #eee;
-            --checklist-bg: #fefaf5;
-            --accent: #d4b48c;
-            --placeholder-bg: #f2ede8;
-            --term-card-bg: #fefaf5;
-            --term-border: #d4b48c;
+            --bg-body: #2b323d;
+            --bg-card: #363f4b;
+            --text-primary: #f6f8fb;
+            --text-secondary: #cdd5de;
+            --btn-bg: #3e4856;
+            --btn-bg-active: #2dd4bf;
+            --btn-text: #e6ebf1;
+            --btn-text-active: #05221e;
+            --border-light: #45505e;
+            --checklist-bg: #323b47;
+            --accent: #2dd4bf;
+            --placeholder-bg: #323b47;
+            --term-card-bg: #323b47;
+            --term-border: #2dd4bf;
         }
         body.dark {
-            --bg-body: #121212;
-            --bg-card: #1e1e1e;
-            --text-primary: #f0ede8;
-            --text-secondary: #cbc3b8;
-            --btn-bg: #333;
-            --btn-bg-active: #b87c4a;
-            --btn-text: #e0d6ce;
-            --btn-text-active: #121212;
-            --border-light: #2c2c2c;
-            --checklist-bg: #2a241f;
-            --accent: #b87c4a;
-            --placeholder-bg: #2c241e;
-            --term-card-bg: #2a241f;
-            --term-border: #b87c4a;
+            --bg-body: #0c0f13;
+            --bg-card: #161b22;
+            --text-primary: #f1f4f7;
+            --text-secondary: #aab4c0;
+            --btn-bg: #1f262f;
+            --btn-bg-active: #2dd4bf;
+            --btn-text: #d6dde6;
+            --btn-text-active: #04201c;
+            --border-light: #232b34;
+            --checklist-bg: #141a21;
+            --accent: #2dd4bf;
+            --placeholder-bg: #141a21;
+            --term-card-bg: #141a21;
+            --term-border: #2dd4bf;
         }
         body {
             background: var(--bg-body);
@@ -414,50 +414,50 @@
     // ========================== CARNES (AMPLIADA) ==========================
     const carnes = {
         vacunoParrilla: [
-            { nombre: "Lomo liso", equivalente: "Striploin / New York Strip", desc: "Magro, tierno, sabor puro. Parrilla o plancha." },
-            { nombre: "Lomo vetado", equivalente: "Ribeye", desc: "Alto marmoleo, muy jugoso. Favorito para parrilla." },
-            { nombre: "Filete", equivalente: "Tenderloin", desc: "El más tierno y magro. Cocción rápida." },
-            { nombre: "Chuleta de vacuno", equivalente: "T‑Bone / Porterhouse", desc: "Corte con hueso, muy sabroso." },
-            { nombre: "Asado de tira", equivalente: "Short ribs", desc: "Costillas cortadas transversalmente." },
-            { nombre: "Entraña", equivalente: "Skirt steak", desc: "Sabor intenso. Parrilla rápida." },
-            { nombre: "Punta de ganso", equivalente: "Top Sirloin Cap (Picanha)", desc: "Con capa de grasa. Popular en asados." }
+            { nombre: "Lomo liso", equivalente: "Striploin / New York Strip", desc: "Corte magro y tierno de la zona lumbar, con una fina capa de grasa al borde y sabor limpio. Uno de los favoritos para parrilla y plancha.", punto: "A punto (para que no se seque).", maridaje: "Cabernet Sauvignon o Carmenère." },
+            { nombre: "Lomo vetado", equivalente: "Ribeye", desc: "Corte de alto marmoleo (grasa intramuscular) que lo hace muy jugoso y sabroso. El preferido de muchos parrilleros.", punto: "A punto / Medio (la grasa necesita calor para fundirse).", maridaje: "Cabernet Sauvignon o Syrah (taninos que cortan la grasa)." },
+            { nombre: "Filete", equivalente: "Tenderloin", desc: "El corte más tierno y magro del vacuno, de sabor suave y textura mantecosa. Cocción rápida y cuidadosa.", punto: "Entre inglesa y a punto (si se pasa, se seca).", maridaje: "Merlot o Pinot Noir (tintos no muy tánicos)." },
+            { nombre: "T-Bone", equivalente: "Porterhouse", desc: "Corte con hueso en forma de «T» que separa dos músculos: a un lado el lomo (striploin) y al otro el filete (tenderloin). El hueso aporta mucho sabor. La versión más ancha y con más filete se llama Porterhouse. Imponente en la parrilla.", punto: "A punto.", maridaje: "Malbec o Cabernet Sauvignon." },
+            { nombre: "Asado de tira", equivalente: "Short ribs", desc: "Costillas cortadas transversalmente, con hueso y vetas de grasa que dan mucho sabor. Ícono del asado chileno.", punto: "Bien cocido y crujiente por fuera (estilo parrilla chilena).", maridaje: "Carmenère o Malbec." },
+            { nombre: "Entraña", equivalente: "Skirt steak", desc: "Corte delgado del diafragma, de fibra marcada y sabor intenso. Se cocina rápido y entero.", punto: "Entre inglesa y a punto (fuego fuerte y rápido).", maridaje: "Malbec o Syrah." },
+            { nombre: "Punta de ganso", equivalente: "Top Sirloin Cap (Picanha)", desc: "Corte con una característica capa de grasa que se dora y perfuma la carne. Muy popular en asados al estilo brasileño.", punto: "A punto, con la grasa bien dorada.", maridaje: "Cabernet Sauvignon o Carmenère." }
         ],
         vacunoOlla: [
-            { nombre: "Posta negra", equivalente: "Top Round", desc: "Magra, ideal para mechada y estofados." },
-            { nombre: "Posta rosada", equivalente: "Knuckle", desc: "Versátil, para horno o guisos." },
-            { nombre: "Tapapecho", equivalente: "Brisket", desc: "Pecho, cocción lenta (BBQ, mechada)." },
-            { nombre: "Garrón", equivalente: "Shank", desc: "Rico en colágeno. Ossobuco, estofado." },
-            { nombre: "Abastero", equivalente: "Heel of Round", desc: "Económico, para desmechar." },
-            { nombre: "Huachalomo", equivalente: "Chuck roll", desc: "Guisos y cocciones lentas." },
-            { nombre: "Sobrebarriga", equivalente: "Flank steak", desc: "Parrilla rápida o estofados." }
+            { nombre: "Posta negra", equivalente: "Top Round", desc: "Corte magro y de fibra larga, ideal para mechada, estofados y carne desmenuzada. Necesita cocción lenta para ablandar.", punto: "Cocción lenta y completa (mechada o estofado).", maridaje: "Carmenère o Merlot." },
+            { nombre: "Posta rosada", equivalente: "Knuckle", desc: "Corte versátil y relativamente magro, bueno para horno, guisos o escalopas. Jugoso si no se sobrecocina.", punto: "Al horno a medio, o cocción lenta en guiso.", maridaje: "Merlot o Carmenère." },
+            { nombre: "Tapapecho", equivalente: "Brisket", desc: "Corte del pecho con grasa y colágeno, pensado para cocciones muy largas (BBQ, mechada). Se deshace al cocinarse bien.", punto: "Cocción lenta y prolongada hasta que se deshaga.", maridaje: "Syrah o Malbec (también una buena cerveza negra)." },
+            { nombre: "Garrón", equivalente: "Shank", desc: "Corte de la pierna, rico en colágeno y con el hueso central (caracú). Base del clásico osobuco y de estofados.", punto: "Cocción lenta hasta gelatinizar el colágeno.", maridaje: "Cabernet Sauvignon o tinto con cuerpo." },
+            { nombre: "Abastero", equivalente: "Heel of Round", desc: "Corte económico de fibra gruesa, ideal para desmechar (carne mechada) tras una cocción larga.", punto: "Cocción lenta y completa para desmechar.", maridaje: "Carmenère o Merlot." },
+            { nombre: "Huachalomo", equivalente: "Chuck roll", desc: "Corte del cuello/lomo alto con grasa entreverada, perfecto para guisos y cocciones lentas que lo vuelven muy jugoso.", punto: "Cocción lenta (guisos, estofados).", maridaje: "Carmenère o Merlot." },
+            { nombre: "Sobrebarriga", equivalente: "Flank steak", desc: "Corte plano y fibroso de buen sabor. Sirve para parrilla rápida (cortado contra la fibra) o estofados largos.", punto: "Parrilla a medio (cortar contra la fibra) o estofado.", maridaje: "Malbec o Syrah." }
         ],
         cerdo: [
-            { nombre: "Lomo de cerdo (filete)", desc: "Corte magro y tierno. A la plancha, horno o relleno." },
-            { nombre: "Pernil", desc: "Pierna trasera. Ideal para asar al horno (pernil crocante)." },
-            { nombre: "Costillar de cerdo (ribs)", desc: "Costillas, muy sabrosas. Para BBQ, horno o fritas." },
-            { nombre: "Chuletas de cerdo", desc: "Corte con hueso de la espalda. Plancha o parrilla." },
-            { nombre: "Panceta (tocino)", desc: "Vientre, alto contenido graso. Crujiente, para freír o ahumar." },
-            { nombre: "Cabeza de lomo (cabezada)", desc: "Parte alta del lomo, jugosa. Asado o estofado." },
-            { nombre: "Solomillo de cerdo", desc: "El más tierno, similar al filete de vacuno. Saltado o a la plancha." }
+            { nombre: "Lomo de cerdo (filete)", desc: "Corte magro y tierno, de sabor suave. A la plancha, al horno o relleno; se seca con facilidad si se pasa de cocción.", punto: "Bien cocido pero jugoso (63 °C + reposo).", maridaje: "Pinot Noir o Chardonnay con cuerpo." },
+            { nombre: "Pernil", desc: "Pierna trasera con piel y grasa, ideal para asar al horno largo y lograr el clásico pernil crocante.", punto: "Bien cocido (cocción lenta y jugosa; piel crocante).", maridaje: "Carmenère o un blanco como Riesling (corta la grasa)." },
+            { nombre: "Costillar de cerdo (ribs)", desc: "Costillas muy sabrosas, con grasa que se funde en cocciones lentas. Estrella del BBQ.", punto: "Bien cocido y lento, hasta que la carne se separe del hueso.", maridaje: "Syrah, Zinfandel o Malbec." },
+            { nombre: "Chuletas de cerdo", desc: "Corte con hueso de la espalda, jugoso y de sabor marcado. Plancha o parrilla.", punto: "Bien cocido pero jugoso (63 °C + reposo; un toque rosado está bien).", maridaje: "Merlot o Pinot Noir." },
+            { nombre: "Panceta (tocino)", desc: "Vientre del cerdo, de alto contenido graso. Queda crujiente y untuosa; para freír, hornear o ahumar.", punto: "Bien cocida y crujiente.", maridaje: "Espumante o Riesling (cortan la grasa)." },
+            { nombre: "Cabeza de lomo (cabezada)", desc: "Parte alta del lomo con más grasa entreverada, muy jugosa. Asado o estofado.", punto: "Bien cocido y jugoso.", maridaje: "Carmenère o Merlot." },
+            { nombre: "Solomillo de cerdo", desc: "El corte más tierno del cerdo, similar al filete de vacuno. Magro y delicado; salteado o a la plancha.", punto: "Bien cocido pero jugoso (63 °C + reposo).", maridaje: "Pinot Noir." }
         ],
         venado: [
-            { nombre: "Lomo de venado", desc: "Muy magro y tierno, sabor suave. Sellado en sartén o parrilla (punto poco hecho)." },
-            { nombre: "Pernil de venado", desc: "Pierna trasera, ideal para asar lentamente o estofar." },
-            { nombre: "Costillar de venado", desc: "Costillas pequeñas, sabrosas. Parrilla o ahumado." },
-            { nombre: "Medallones de venado", desc: "Cortes pequeños del lomo, para cocción rápida en sartén." }
+            { nombre: "Lomo de venado", desc: "Carne de caza muy magra y tierna, de color rojo intenso y sabor suave a monte. Se sella rápido en sartén o parrilla.", punto: "Entre inglesa y a punto (si se pasa, se reseca).", maridaje: "Syrah o Cabernet, con salsa de frutos rojos." },
+            { nombre: "Pernil de venado", desc: "Pierna trasera magra, ideal para asar lentamente o estofar para conservar la jugosidad.", punto: "Cocción lenta (asado o estofado).", maridaje: "Carmenère reserva o Cabernet Sauvignon." },
+            { nombre: "Costillar de venado", desc: "Costillas pequeñas y sabrosas, muy buenas a la parrilla o ahumadas.", punto: "A punto / Medio (según grosor).", maridaje: "Syrah o Malbec." },
+            { nombre: "Medallones de venado", desc: "Cortes pequeños y tiernos del lomo, para cocción rápida en sartén con salsas potentes.", punto: "Entre inglesa y a punto.", maridaje: "Merlot o Pinot Noir con cuerpo." }
         ],
         jabali: [
-            { nombre: "Lomo de jabalí", desc: "Carne roja intensa, ligeramente dulce. Sellado a la plancha." },
-            { nombre: "Pernil de jabalí", desc: "Pierna, para asados largos o estofados con frutos rojos." },
-            { nombre: "Costillar de jabalí", desc: "Ideal para BBQ o cocción lenta en salsa." },
-            { nombre: "Chorizo de jabalí", desc: "Embutido ahumado, sabroso para aperitivos o guisos." }
+            { nombre: "Lomo de jabalí", desc: "Carne roja intensa, magra y ligeramente dulce, con marcado sabor a caza. Se sella a la plancha.", punto: "Bien cocido por seguridad (caza), pero cuidando la jugosidad.", maridaje: "Syrah o Malbec con cuerpo." },
+            { nombre: "Pernil de jabalí", desc: "Pierna para asados largos o estofados; combina muy bien con frutos rojos y especias.", punto: "Cocción lenta y completa.", maridaje: "Cabernet Sauvignon o Carmenère reserva." },
+            { nombre: "Costillar de jabalí", desc: "Costillas para BBQ o cocción lenta en salsa, de sabor profundo.", punto: "Bien cocido, cocción lenta.", maridaje: "Syrah o Malbec." },
+            { nombre: "Chorizo de jabalí", desc: "Embutido ahumado y sabroso, para aperitivos, tablas o guisos.", punto: "Bien cocido.", maridaje: "Tinto joven o Carmenère." }
         ],
         otrasCarnes: [
-            { nombre: "Cordero (patagónico)", desc: "Carne suave y jugosa. Chuletas, pierna o costillar a la parrilla." },
-            { nombre: "Avestruz", desc: "Magra, baja en grasa. Similar al lomo de vacuno. Filetes a la plancha." },
-            { nombre: "Conejo", desc: "Carne blanca, delicada. Guisado, estofado o a la cazuela." },
-            { nombre: "Ciervo (corzo)", desc: "Similar al venado, más pequeño. Estofados o lomo a la plancha." },
-            { nombre: "Ñandú (sur de Chile)", desc: "Similar al avestruz, carne magra y sabrosa. Filetes a la parrilla." }
+            { nombre: "Cordero (patagónico)", desc: "Carne suave y jugosa con grasa aromática, emblema del sur de Chile. Chuletas, pierna o costillar a la parrilla o al palo.", punto: "A punto (rosado y jugoso).", maridaje: "Syrah, Merlot o Carmenère." },
+            { nombre: "Avestruz", desc: "Carne roja magra y baja en grasa, de textura similar al lomo de vacuno y sabor suave. Filetes a la plancha.", punto: "Entre inglesa y a punto (se seca rápido si se pasa).", maridaje: "Pinot Noir o Merlot." },
+            { nombre: "Conejo", desc: "Carne blanca, delicada y magra. Guisado, estofado o a la cazuela para mantenerla jugosa.", punto: "Bien cocido pero jugoso.", maridaje: "Chardonnay con cuerpo o Pinot Noir." },
+            { nombre: "Ciervo (corzo)", desc: "Similar al venado pero más pequeño y fino. Estofados o lomo a la plancha con salsas de fruta.", punto: "Entre inglesa y a punto.", maridaje: "Syrah o Cabernet Sauvignon." },
+            { nombre: "Ñandú (sur de Chile)", desc: "Ave corredora de carne roja, magra y sabrosa, parecida al avestruz. Filetes a la parrilla.", punto: "Entre inglesa y a punto.", maridaje: "Merlot o Pinot Noir." }
         ],
         puntosCarne: [
             { chile: "Término azul / Sellado", usa: "Blue rare", temp: "46-49°C", desc: "Sellado por fuera, centro frío.", tiempo: "1-2 min/lado" },
@@ -472,53 +472,53 @@
 
     // ========================== PRODUCTOS DEL MAR ==========================
     const pescadosChile = [
-        "Reineta: Blanca, firme, pocas espinas. Plancha, horno o frita.",
-        "Merluza común: Blanca, suave. Caldillo o frita.",
-        "Salmón: Graso (Omega-3). Horno, parrilla o ahumado.",
-        "Congrio: Blanco, delicado. Caldillo de congrio.",
-        "Jurel: Azul, firme. Conservas o parrilla.",
-        "Corvina: Blanca, magra. Filetes a la plancha.",
-        "Lenguado: Blanco, plano, textura fina.",
-        "Sierra: Semigraso. Frito o ceviche.",
-        "Caballa: Azul, pequeño. Frito o en conserva.",
-        "Tollo: Tiburón, carne blanca y firme.",
-        "Anchoveta: Pequeño, graso. Anchoas.",
-        "Albacora (Pez espada): Magro y firme, carne rosada. Parrilla, horno o plancha.",
-        "Besugo: Blanco, fina. Plancha u horno.",
-        "Rollizo: Carne blanca y firme. Frito o al horno.",
-        "Pejerrey: Río, carne blanda. Frito.",
-        "Pampanito: Blanco graso. Frito o ceviche.",
-        "Palometa: Semigraso, 'pez mantequilla'.",
-        "Salmonete: Pequeño, delicado. Frito."
+        "Reineta: Pescado blanco de carne firme y suave, con pocas espinas. Sabor delicado, ideal para quienes no gustan del gusto fuerte a mar. Muy versátil: a la plancha, al horno o frita.",
+        "Merluza austral: Especie del sur de Chile (Patagonia), más grande, de carne firme, blanca y sabor fino; muy apreciada y de exportación. Se distingue de la merluza común (zona centro-norte), que es más pequeña, de carne más blanda y de consumo masivo/económico (la típica frita o en caldillo).",
+        "Salmón: Pescado graso de carne anaranjada, rico en Omega-3 y de sabor marcado. La mayoría proviene de cultivos del sur de Chile. Muy versátil: al horno, a la parrilla, ahumado o crudo en sushi y ceviche.",
+        "Congrio: Pescado blanco, alargado y sin escamas, de carne firme y delicada. Estrella del 'caldillo de congrio' que inmortalizó Pablo Neruda. Existen tres tipos (dorado, colorado y negro). Frito o en caldillo.",
+        "Jurel: Pescado azul (graso) de carne firme y sabor intenso, muy nutritivo y económico. Base de gran parte de las conservas chilenas; también frito o a la parrilla.",
+        "Corvina: Pescado blanco, magro y de carne firme muy apreciada en cocina, con sabor fino y elegante. Ideal en filetes a la plancha, al horno o en ceviche.",
+        "Lenguado: Pescado plano de carne blanca, fina y de textura suave; considerado gourmet por su delicadeza. A la plancha, 'meunière' (con mantequilla) o al horno.",
+        "Sierra: Pescado semigraso de carne más oscura y sabor pronunciado. Por su firmeza se luce ahumado o en ceviche; también frito.",
+        "Caballa: Pescado azul pequeño, graso y de sabor fuerte, rico en Omega-3 y muy económico. Frito, a la parrilla o en conserva.",
+        "Tollo: Tiburón pequeño de carne blanca, firme y sin espinas (solo cartílago central), de sabor suave. Ojo: a veces se vende como 'albacora' de forma fraudulenta. Frito o en guisos.",
+        "Anchoveta: Pez muy pequeño y graso, de sabor intenso. Materia prima de las anchoas en salazón y de la harina de pescado. Frita o curada.",
+        "Albacora (Pez espada): Pez de gran tamaño y carne rosada, magra, firme y casi sin espinas, de sabor suave parecido a una carne. En Chile 'albacora' es el nombre comercial del pez espada. A la parrilla, plancha u horno.",
+        "Besugo: Pescado blanco de carne fina y delicada, de buen sabor aunque menos conocido. A la plancha o al horno.",
+        "Rollizo: Pescado de roca de carne blanca y firme, de sabor suave. Frito o al horno.",
+        "Pejerrey: Pez pequeño y alargado de carne blanca y blanda, con muchas espinas finas. Hay de río y de mar. Clásico apanado y frito.",
+        "Pampanito: Pescado blanco y algo graso, de carne suave y sabor delicado. Frito o en ceviche.",
+        "Palometa: Pescado semigraso de textura mantecosa (por eso lo llaman 'pez mantequilla') y sabor suave. A la plancha o frita.",
+        "Salmonete: Pescado pequeño de carne blanca y delicada, muy valorado en la cocina mediterránea por su sabor fino. Frito entero o a la plancha."
     ];
 
     const mariscos = {
         orilla: [
-            { nombre: "Cholga", desc: "🏝️ Orilla - Molusco bivalvo grande. Paila marina, curanto." },
-            { nombre: "Picoroco", desc: "🏝️ Orilla - Crustáceo fijo a rocas. Carne firme, cocido o salsas." },
-            { nombre: "Lapa", desc: "🏝️ Orilla - Gasterópodo adherido a rocas. Ideal para caldos." },
-            { nombre: "Loco", desc: "🏝️ Orilla - Gasterópodo de roca, alto valor. Empanadas y platos de mariscos." },
-            { nombre: "Piure", desc: "🏝️ Orilla - Tunicado rojizo, sabor intenso a yodo. Exquisitez." },
-            { nombre: "Erizo de mar", desc: "🏝️ Orilla - Equinodermo, gónadas comestibles. Crudo o en pastas." }
+            { nombre: "Cholga", desc: "🏝️ Orilla - Molusco bivalvo grande de la familia de los choros (mejillones), de concha negra y carne anaranjada. Sabor intenso a mar. Base de la paila marina y del curanto; al vapor, en sopas o seca." },
+            { nombre: "Picoroco", desc: "🏝️ Orilla - Crustáceo gigante que vive fijo a las rocas dentro de una concha calcárea. Su carne blanca es firme y dulce, parecida a la jaiba. Cocido, en caldos o en salsas." },
+            { nombre: "Lapa", desc: "🏝️ Orilla - Molusco de concha cónica adherido fuertemente a las rocas. Carne firme y de buen sabor. Ideal en caldos, salteada o gratinada." },
+            { nombre: "Loco", desc: "🏝️ Orilla - Caracol de mar de roca, muy preciado por su carne firme y sabrosa. Requiere golpearlo ('apaleo') para ablandarlo. Empanadas, con mayo o en platos de mariscos. Tiene vedas estrictas." },
+            { nombre: "Piure", desc: "🏝️ Orilla - Tunicado de aspecto rojizo que crece en colonias sobre las rocas, de sabor muy intenso a yodo. Considerado una exquisitez para paladares marinos. Crudo con limón, en arroces o salsas." },
+            { nombre: "Erizo de mar", desc: "🏝️ Orilla - Equinodermo cubierto de púas; se comen sus 'lenguas' (gónadas) de color naranja, de sabor intenso y yodado muy apreciado. Fresco con limón y cebolla, o en pastas y salsas." }
         ],
         fondo: [
-            { nombre: "Macha", desc: "🌊 Fondo - Almeja grande, enterrada en arena. Sopas, a la plancha." },
-            { nombre: "Almeja", desc: "🌊 Fondo - Bivalvo de arena. Marinera, al vapor." },
-            { nombre: "Choro (Zapato)", desc: "🌊 Fondo - Bivalvo negro grande. Caldos y sopas." },
-            { nombre: "Ostión", desc: "🌊 Fondo - Filtrador de fondos conchíferos. Fresco con limón o gratinado." },
-            { nombre: "Navajuela", desc: "🌊 Fondo - Almeja alargada. Ceviches y platos gourmet." },
-            { nombre: "Huepo", desc: "🌊 Fondo - Navaja de mar. Chupe y salsas." }
+            { nombre: "Macha", desc: "🌊 Fondo - Almeja alargada de color rosado que vive enterrada en la arena de las playas. Carne tierna de sabor delicado. Clásica 'a la parmesana', en ceviche o en sopas." },
+            { nombre: "Almeja", desc: "🌊 Fondo - Molusco bivalvo de arena, de carne suave y sabor a mar; muy versátil. A la marinera, al vapor, en pastas o ceviche." },
+            { nombre: "Choro (Zapato)", desc: "🌊 Fondo - El mejillón más grande de Chile, de concha negra y carne carnosa de sabor potente. En caldos, sopas, al vapor o gratinado." },
+            { nombre: "Ostión", desc: "🌊 Fondo - Molusco filtrador con su característico coral (lengua naranja). Carne blanca, dulce y delicada. Fresco con limón, gratinado a la parmesana o sellado." },
+            { nombre: "Navajuela", desc: "🌊 Fondo - Almeja de concha rectangular y alargada que vive enterrada en la arena. Carne firme y sabrosa. En ceviches, salteada o en platos gourmet." },
+            { nombre: "Huepo", desc: "🌊 Fondo - También llamado 'navaja de mar', molusco largo y angosto enterrado verticalmente en la arena. Carne firme. En chupe, salteado o en salsas." }
         ]
     };
 
     const crustaceos = [
-        { nombre: "Centolla (Magallánica/Patagónica)", desc: "Fondos marinos 30-600 m. Carne delicada, manjar internacional." },
-        { nombre: "Langosta de Juan Fernández", desc: "Endémica, carne fina y sabrosa, muy cotizada." },
-        { nombre: "Jaiba", desc: "Cangrejo común en fondos arenosos. Pasteles, sopas o cocida." },
-        { nombre: "Langostino Amarillo", desc: "Aguas profundas, carne firme, alta calidad culinaria." },
-        { nombre: "Langostino Colorado", desc: "Similar al amarillo, color rojizo." },
-        { nombre: "Camarón Nailon", desc: "Profundidad, asociado a corales. Carne delicada, sabor dulce." },
-        { nombre: "Cangrejo Dorado", desc: "Sur de Chile, carne similar a centolla." }
+        { nombre: "Centolla (Magallánica/Patagónica)", desc: "Cangrejo de gran tamaño de los mares fríos del sur (Magallanes/Patagonia), de patas largas y carne blanca, delicada y dulce. Manjar de exportación muy cotizado. Cocida, en chupe o en ensaladas. Tiene veda estacional." },
+        { nombre: "Langosta de Juan Fernández", desc: "Especie endémica del archipiélago de Juan Fernández, de carne fina, firme y muy sabrosa. Producto de lujo y alto valor. A la parrilla, al horno o cocida." },
+        { nombre: "Jaiba", desc: "Cangrejo común en fondos arenosos y rocosos del litoral chileno, de carne sabrosa y aromática. Base del pastel de jaiba, de chupes y sopas; también cocida." },
+        { nombre: "Langostino Amarillo", desc: "Crustáceo de aguas profundas, de carne firme y sabor dulce, de alta calidad culinaria. Apanado, al ajillo o en salsas." },
+        { nombre: "Langostino Colorado", desc: "Similar al amarillo pero de color rojizo más intenso, de carne fina y sabrosa. Al ajillo, en arroces o salsas." },
+        { nombre: "Camarón Nailon", desc: "Camarón pequeño de aguas profundas, asociado a fondos de coral, de carne delicada y sabor dulce. En cócteles, salsas, chupes o pil-pil." },
+        { nombre: "Cangrejo Dorado", desc: "Cangrejo de aguas profundas del sur de Chile, de carne abundante y sabor similar a la centolla. Cocido, en chupe o en ensaladas." }
     ];
 
     // ========================== VEGETALES CHILENOS (AMPLIADO CON TOPINAMBUR Y ZONAS) ==========================
@@ -812,20 +812,21 @@
 
     function renderCarnes() {
         const container = document.getElementById('mainContent');
+        const card = (c, eq) => `<div class="card-item"><div class="item-name">${eq ? `🇨🇱 ${c.nombre} → 🇺🇸 ${c.equivalente}` : c.nombre}</div><div class="item-desc">${c.desc}</div><div class="item-prep">🔥 <strong>Punto:</strong> ${c.punto}</div><div class="item-prep">🍷 <strong>Maridaje:</strong> ${c.maridaje}</div></div>`;
         container.innerHTML = `<div class="service-title">🥩 Carnes</div>
-            <div class="subseccion"><h2>🐂 Vacuno - Cortes para Parrilla</h2><div class="grid-cards">${carnes.vacunoParrilla.map(c => `<div class="card-item"><div class="item-name">🇨🇱 ${c.nombre} → 🇺🇸 ${c.equivalente}</div><div class="item-desc">${c.desc}</div></div>`).join("")}</div>
-            <h2>🍲 Vacuno - Cortes para Olla</h2><div class="grid-cards">${carnes.vacunoOlla.map(c => `<div class="card-item"><div class="item-name">🇨🇱 ${c.nombre} → 🇺🇸 ${c.equivalente}</div><div class="item-desc">${c.desc}</div></div>`).join("")}</div></div>
-            <div class="subseccion"><h2>🐖 Cerdo</h2><div class="grid-cards">${carnes.cerdo.map(c => `<div class="card-item"><div class="item-name">${c.nombre}</div><div class="item-desc">${c.desc}</div></div>`).join("")}</div></div>
-            <div class="subseccion"><h2>🦌 Venado</h2><div class="grid-cards">${carnes.venado.map(c => `<div class="card-item"><div class="item-name">${c.nombre}</div><div class="item-desc">${c.desc}</div></div>`).join("")}</div></div>
-            <div class="subseccion"><h2>🐗 Jabalí</h2><div class="grid-cards">${carnes.jabali.map(c => `<div class="card-item"><div class="item-name">${c.nombre}</div><div class="item-desc">${c.desc}</div></div>`).join("")}</div></div>
-            <div class="subseccion"><h2>🌿 Otras carnes</h2><div class="grid-cards">${carnes.otrasCarnes.map(c => `<div class="card-item"><div class="item-name">${c.nombre}</div><div class="item-desc">${c.desc}</div></div>`).join("")}</div></div>
+            <div class="subseccion"><h2>🐂 Vacuno - Cortes para Parrilla</h2><div class="grid-cards">${carnes.vacunoParrilla.map(c => card(c, true)).join("")}</div>
+            <h2>🍲 Vacuno - Cortes para Olla</h2><div class="grid-cards">${carnes.vacunoOlla.map(c => card(c, true)).join("")}</div></div>
+            <div class="subseccion"><h2>🐖 Cerdo</h2><div class="grid-cards">${carnes.cerdo.map(c => card(c, false)).join("")}</div></div>
+            <div class="subseccion"><h2>🦌 Venado</h2><div class="grid-cards">${carnes.venado.map(c => card(c, false)).join("")}</div></div>
+            <div class="subseccion"><h2>🐗 Jabalí</h2><div class="grid-cards">${carnes.jabali.map(c => card(c, false)).join("")}</div></div>
+            <div class="subseccion"><h2>🌿 Otras carnes</h2><div class="grid-cards">${carnes.otrasCarnes.map(c => card(c, false)).join("")}</div></div>
             <div class="subseccion"><h2>🌡️ Puntos de Cocción</h2><div class="grid-cards">${carnes.puntosCarne.map(p => p.nota ? `<div class="card-item"><div class="item-name">⚠️ Nota</div><div class="item-desc">${p.nota}</div></div>` : `<div class="card-item"><div class="item-name">🇨🇱 ${p.chile} <span class="std-badge">Chile</span><br>🇺🇸 ${p.usa}</div><div class="item-desc">🌡️ ${p.temp} · ⏱️ ${p.tiempo}<br>${p.desc}</div></div>`).join("")}</div></div>`;
     }
 
     function renderProductosMar() {
         const container = document.getElementById('mainContent');
         container.innerHTML = `<div class="service-title">🌊 Productos del Mar</div>
-            <div class="subseccion"><h2>🐟 Pescados Chilenos (${pescadosChile.length})</h2><div class="grid-cards">${pescadosChile.map(p => `<div class="card-item"><div class="item-name">${p.split(':')[0]}</div><div class="item-desc">${p.split(':')[1] || ''}</div></div>`).join("")}</div></div>
+            <div class="subseccion"><h2>🐟 Pescados Chilenos (${pescadosChile.length})</h2><div class="grid-cards">${pescadosChile.map(p => { const i = p.indexOf(':'); const nombre = i >= 0 ? p.slice(0, i) : p; const desc = i >= 0 ? p.slice(i + 1).trim() : ''; return `<div class="card-item"><div class="item-name">${nombre}</div><div class="item-desc">${desc}</div></div>`; }).join("")}</div></div>
             <div class="subseccion"><h2>🐚 Mariscos de Orilla</h2><div class="grid-cards">${mariscos.orilla.map(m => `<div class="card-item"><div class="item-name">${m.nombre}</div><div class="item-desc">${m.desc}</div></div>`).join("")}</div>
             <h2>🐚 Mariscos de Fondo</h2><div class="grid-cards">${mariscos.fondo.map(m => `<div class="card-item"><div class="item-name">${m.nombre}</div><div class="item-desc">${m.desc}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>🦞 Crustáceos Chilenos</h2><div class="grid-cards">${crustaceos.map(c => `<div class="card-item"><div class="item-name">${c.nombre}</div><div class="item-desc">${c.desc}</div></div>`).join("")}</div></div>
