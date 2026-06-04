@@ -850,13 +850,13 @@
     const frasesAnimo = [
         "Hoy la sala es tuya. ¡A brillar! ✨",
         "Mise en place listo, actitud lista. ¡Vamos! 🔥",
-        "Cada plato que sale lleva tu firma. ¡Con orgullo! 🍽️",
+        "Cada mesa que atiendes lleva tu sello. ¡Con orgullo! 🍽️",
         "Sonríe, respira y sal a la cancha. 💪",
         "El cliente se va, pero el buen trato se queda. 🤝",
         "En el rubro no se nace crack: se hace turno a turno. 🙌",
         "La propina es consecuencia, no objetivo. Da lo mejor. 😉",
         "Hoy puede ser la mejor mesa de alguien. Hazla memorable. 🥂",
-        "Cocina con cariño, sirve con onda. ❤️",
+        "Atiende con cariño, sirve con onda. ❤️",
         "Que el cansancio no te apague la sonrisa. ¡Tú puedes! ☕",
         "Buen pulso, buena onda y a darle. ¡Éxito en el turno! 🛎️",
         "Equipo unido saca cualquier servicio adelante. 🤜🤛"
@@ -1075,6 +1075,7 @@
         else if (tab === 'diccionario') renderDiccionario();
         else if (tab === 'favoritos') renderFavoritos();
         decorateFavorites();
+        setFraseAnimo();
         window.scrollTo(0, 0);
     }
 
@@ -1095,8 +1096,10 @@
     document.addEventListener('DOMContentLoaded', () => {
         initDarkMode();
         updateFavCount();
-        setFraseAnimo();
         document.getElementById('motivationBar').addEventListener('click', setFraseAnimo);
+        // Cambiar la frase cada vez que se vuelve a abrir/enfocar la app (clave en PWA del celular)
+        document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') setFraseAnimo(); });
+        window.addEventListener('pageshow', (e) => { if (e.persisted) setFraseAnimo(); });
         document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
         document.querySelectorAll('.main-btn').forEach(btn => {
             btn.addEventListener('click', () => setMainTab(btn.getAttribute('data-tab')));
