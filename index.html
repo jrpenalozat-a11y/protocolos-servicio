@@ -428,8 +428,7 @@
             { nombre: "Tapapecho", equivalente: "Brisket", desc: "Corte del pecho con grasa y colágeno, pensado para cocciones muy largas (BBQ, mechada). Se deshace al cocinarse bien.", punto: "Cocción lenta y prolongada hasta que se deshaga.", maridaje: "Syrah o Malbec (también una buena cerveza negra)." },
             { nombre: "Garrón", equivalente: "Shank", desc: "Corte de la pierna, rico en colágeno y con el hueso central (caracú). Base del clásico osobuco y de estofados.", punto: "Cocción lenta hasta gelatinizar el colágeno.", maridaje: "Cabernet Sauvignon o tinto con cuerpo." },
             { nombre: "Abastero", equivalente: "Heel of Round", desc: "Corte económico de fibra gruesa, ideal para desmechar (carne mechada) tras una cocción larga.", punto: "Cocción lenta y completa para desmechar.", maridaje: "Carmenère o Merlot." },
-            { nombre: "Huachalomo", equivalente: "Chuck roll", desc: "Corte del cuello/lomo alto con grasa entreverada, perfecto para guisos y cocciones lentas que lo vuelven muy jugoso.", punto: "Cocción lenta (guisos, estofados).", maridaje: "Carmenère o Merlot." },
-            { nombre: "Sobrebarriga", equivalente: "Flank steak", desc: "Corte plano y fibroso de buen sabor. Sirve para parrilla rápida (cortado contra la fibra) o estofados largos.", punto: "Bien cocido (estofado largo); si va a la parrilla, cortar contra la fibra.", maridaje: "Malbec o Syrah." }
+            { nombre: "Huachalomo", equivalente: "Chuck roll", desc: "Corte del cuello/lomo alto con grasa entreverada, perfecto para guisos y cocciones lentas que lo vuelven muy jugoso.", punto: "Cocción lenta (guisos, estofados).", maridaje: "Carmenère o Merlot." }
         ],
         cerdo: [
             { nombre: "Lomo de cerdo (filete)", desc: "Corte magro y tierno, de sabor suave. A la plancha, al horno o relleno; se seca con facilidad si se pasa de cocción.", punto: "Bien cocido pero jugoso (63 °C + reposo).", maridaje: "Pinot Noir o Chardonnay con cuerpo." },
@@ -458,6 +457,15 @@
             { nombre: "Conejo", desc: "Carne blanca, delicada y magra. Guisado, estofado o a la cazuela para mantenerla jugosa.", punto: "Bien cocido pero jugoso.", maridaje: "Chardonnay con cuerpo o Pinot Noir." },
             { nombre: "Ciervo (corzo)", desc: "Similar al venado pero más pequeño y fino. Estofados o lomo a la plancha con salsas de fruta.", punto: "Entre inglesa y a punto.", maridaje: "Syrah o Cabernet Sauvignon." },
             { nombre: "Ñandú (sur de Chile)", desc: "Ave corredora de carne roja, magra y sabrosa, parecida al avestruz. Filetes a la parrilla.", punto: "Entre inglesa y a punto.", maridaje: "Merlot o Pinot Noir." }
+        ],
+        alPalo: [
+            { nombre: "Cordero entero (al palo)", desc: "El clásico patagónico: cordero abierto en cruz o estaca, a unos 45° del fuego, asado lento 3 a 4 horas. Se parte por las piernas y paletas y se termina por el costillar.", punto: "Bien cocido y dorado por fuera, jugoso por dentro.", maridaje: "Syrah, Merlot o Carmenère." },
+            { nombre: "Tapabarriga (vacío)", desc: "Corte fino e irregular del costado, muy sabroso y con bastante grasa (en Argentina se llama 'vacío'). Estrella del asado al palo y a fuego lento; también a la parrilla u horno.", punto: "Bien cocido y lento (al palo / espiedo); queda jugoso por la grasa.", maridaje: "Malbec o Syrah." },
+            { nombre: "Plateada", desc: "Corte plano con una capa de grasa que lo mantiene jugoso en cocciones largas. Ideal al palo, al horno o a la olla.", punto: "Cocción lenta y completa (bien cocido).", maridaje: "Cabernet Sauvignon o Carmenère." },
+            { nombre: "Costillar (vacuno / cerdo / cordero)", desc: "Costillas grandes que al espiedo o al palo quedan doradas y jugosas tras una cocción lenta.", punto: "Bien cocido, hasta que la carne ceda del hueso.", maridaje: "Malbec o Syrah." },
+            { nombre: "Punta picana / Picaña", desc: "Con su capa de grasa característica, perfecta para el espiedo: la grasa se funde y baña la carne mientras gira.", punto: "A punto / Medio, con la grasa bien dorada.", maridaje: "Cabernet Sauvignon o Malbec." },
+            { nombre: "Pierna / Pernil (cordero o cerdo)", desc: "Piezas grandes con hueso, ideales para el espiedo y el palo por su cocción pareja y lenta.", punto: "Bien cocido y jugoso.", maridaje: "Syrah o Carmenère." },
+            { nombre: "Lechón / Chancho entero", desc: "Cerdo entero al palo o al asador; tras varias horas a fuego suave la piel queda crocante y la carne jugosa.", punto: "Bien cocido, con la piel crocante.", maridaje: "Carmenère o un blanco con cuerpo." }
         ],
         puntosCarne: [
             { chile: "Término azul / Sellado", usa: "Blue rare", temp: "46-49°C", desc: "Sellado por fuera, centro frío.", tiempo: "1-2 min/lado" },
@@ -820,6 +828,7 @@
             <div class="subseccion"><h2>🦌 Venado</h2><div class="grid-cards">${carnes.venado.map(c => card(c, false)).join("")}</div></div>
             <div class="subseccion"><h2>🐗 Jabalí</h2><div class="grid-cards">${carnes.jabali.map(c => card(c, false)).join("")}</div></div>
             <div class="subseccion"><h2>🌿 Otras carnes</h2><div class="grid-cards">${carnes.otrasCarnes.map(c => card(c, false)).join("")}</div></div>
+            <div class="subseccion"><h2>🔥 Al palo / Espiedo (asado lento)</h2><div class="service-desc">Cortes y piezas grandes ideales para cocción lenta girando frente al fuego (al palo, en cruz o al espiedo): quedan dorados por fuera y jugosos por dentro.</div><div class="grid-cards">${carnes.alPalo.map(c => card(c, false)).join("")}</div></div>
             <div class="subseccion"><h2>🌡️ Puntos de Cocción</h2><div class="grid-cards">${carnes.puntosCarne.map(p => p.nota ? `<div class="card-item"><div class="item-name">⚠️ Nota</div><div class="item-desc">${p.nota}</div></div>` : `<div class="card-item"><div class="item-name">🇨🇱 ${p.chile} <span class="std-badge">Chile</span><br>🇺🇸 ${p.usa}</div><div class="item-desc">🌡️ ${p.temp} · ⏱️ ${p.tiempo}<br>${p.desc}</div></div>`).join("")}</div></div>`;
     }
 
