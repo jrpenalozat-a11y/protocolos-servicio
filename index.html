@@ -168,6 +168,20 @@
             cursor: pointer;
             margin-left: 8px;
         }
+        .motivation-bar {
+            margin: 14px 16px 0;
+            padding: 12px 16px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--btn-bg-active), #1aa893);
+            color: #03201d;
+            font-weight: 700;
+            font-size: 0.92rem;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            box-shadow: 0 4px 14px rgba(45,212,191,0.18);
+        }
+        .motivation-bar:active { transform: scale(0.99); }
         .content-pane {
             padding: 24px 20px 32px;
         }
@@ -356,6 +370,7 @@
         <button class="main-btn" data-tab="diccionario">📖 Diccionario</button>
         <button class="main-btn" data-tab="favoritos">⭐ Favoritos</button>
     </div>
+    <div class="motivation-bar" id="motivationBar" title="Toca para otra frase">¡A darle con todo! 🔥</div>
     <div class="content-pane" id="mainContent">
         <div style="text-align: center; padding: 30px 0;">Cargando...</div>
     </div>
@@ -366,7 +381,7 @@
     // ========================== PROTOCOLOS ==========================
     const protocolos = {
         frances: { titulo: "🇫🇷 Servicio Francés", descripcion: "Origen: Francia, s. XIX. Servicio lujoso con terminación en mesa (guéridon). Flameados, cortes de carne, emplatado delante del comensal.", pasos: ["🔹 Verificar mise en place: guéridon, quemador, utensilios", "🔹 Explicar el plato a terminar", "🔹 Realizar terminación (flambeado, corte, salsa)", "🔹 Emplatar con pinzas y cuchara", "🔹 Servir por la derecha", "🔹 Retirar el guéridon y limpiar migas"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Servicio+Francés" },
-        ingles: { titulo: "🇬🇧 Servicio Inglés", descripcion: "Origen: Inglaterra victoriana. Fuentes en mesa, el camarero sirve las raciones. Formal y eficiente.", pasos: ["🔹 Presentar la fuente principal al anfitrión", "🔹 Servir la ración con cuchara y tenedor", "🔹 Ofrecer guarniciones", "🔹 Preguntar si desea más", "🔹 Retirar la fuente vacía por la derecha"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Servicio+Inglés" },
+        ingles: { titulo: "🇬🇧 Servicio Inglés", descripcion: "Origen: Inglaterra victoriana. Fuentes en mesa, el garzón sirve las raciones. Formal y eficiente.", pasos: ["🔹 Presentar la fuente principal al anfitrión", "🔹 Servir la ración con cuchara y tenedor", "🔹 Ofrecer guarniciones", "🔹 Preguntar si desea más", "🔹 Retirar la fuente vacía por la derecha"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Servicio+Inglés" },
         americano: { titulo: "🇺🇸 Servicio Americano", descripcion: "Origen: EE.UU. Plato emplatado en cocina. Norma: servir y retirar siempre por la derecha.", pasos: ["🔹 Llevar el plato en bandeja", "🔹 Servir por la derecha", "🔹 Servir bebidas por la derecha", "🔹 Retirar platos sucios por la derecha", "🔹 Limpiar migas con paleta"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Servicio+Americano" },
         ruso: { titulo: "🇷🇺 Servicio Ruso", descripcion: "Origen: Rusia zarista. Se muestra la fuente antes de servir, teatral.", pasos: ["🔹 Mostrar la fuente decorada", "🔹 Servir la ración con pinzas", "🔹 Servir a damas, luego caballeros", "🔹 Ofrecer segunda ración", "🔹 Mantener fuentes calientes"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Servicio+Ruso" },
         directo: { titulo: "🍽️ Servicio Directo (Buffet)", descripcion: "Autoservicio. El personal repone alimentos y retira platos.", pasos: ["🔹 Explicar distribución del buffet", "🔹 Mantener utensilios limpios", "🔹 Reponer bandejas", "🔹 Retirar platos sucios", "🔹 Limpiar derrames"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Servicio+Directo" },
@@ -402,11 +417,13 @@
                 { nombre: "Tom Collins", ingredientes: "60 ml Ginebra, 30 ml limón, 20 ml jarabe, soda", preparacion: "Agitar, colar en vaso alto, completar con soda." }
             ],
             chilenos: [
+                { nombre: "Pisco Sour (chileno)", ingredientes: "60 ml Pisco, 30 ml jugo de limón de pica, 20 ml jarabe de goma (azúcar flor)", preparacion: "Batir o licuar con hielo y servir frío en copa. Versión chilena: sin clara de huevo ni amargo." },
                 { nombre: "Piscola", ingredientes: "50 ml Pisco, 150 ml bebida cola", preparacion: "Vaso alto con hielo, pisco y luego cola. Limón." },
                 { nombre: "Terremoto", ingredientes: "300 ml Pipeño, 2 cdas helado piña, granadina", preparacion: "Granadina, helado, pipeño frío." },
                 { nombre: "Borgoña", ingredientes: "1 botella vino tinto, 500 g frutillas, azúcar", preparacion: "Macera frutillas con azúcar, mezclar con vino, reposar." },
                 { nombre: "Cola de Mono", ingredientes: "1 tza aguardiente, 1 tza leche, 1 tza café, 1 tza azúcar, canela, clavo", preparacion: "Calentar leche con café, azúcar y especias, enfriar, agregar aguardiente." },
-                { nombre: "Chilcano de Pisco", ingredientes: "50 ml Pisco, 150 ml Ginger Ale, 15 ml limón", preparacion: "En vaso alto con hielo, pisco y limón, completar con ginger ale." }
+                { nombre: "Chilcano de Pisco", ingredientes: "50 ml Pisco, 150 ml Ginger Ale, 15 ml limón", preparacion: "En vaso alto con hielo, pisco y limón, completar con ginger ale." },
+                { nombre: "Vaina", ingredientes: "60 ml Oporto o vino dulce, 1 yema, 1 cda cacao, 1 cdta azúcar, canela", preparacion: "Batir todo con hielo, colar en copa y espolvorear canela. Clásico de fiestas chilenas." }
             ]
         }
     };
@@ -533,7 +550,7 @@
     const vegetalesChilenos = {
         papas: {
             titulo: "🥔 Papas Chilotas (Papas Nativas de Chiloé)",
-            descripcion: "Chiloé: centro de origen y diversidad mundial. Más de 285 variedades nativas adaptadas a las condiciones de días largos del sur de Chile.",
+            descripcion: "Chiloé: centro de origen y diversidad mundial. Más de 200 variedades nativas adaptadas a las condiciones de días largos del sur de Chile.",
             variedades: [
                 { nombre: "Bruja Morada", desc: "Morada intensa, sabor terroso y textura firme." },
                 { nombre: "Clavela Lisa", desc: "Piel rosada, pulpa blanca/amarilla. Versátil." },
@@ -611,7 +628,13 @@
             { term: "Vermú", definition: "Vino fortificado aromatizado." },
             { term: "Copa de cóctel", definition: "Copa en V para tragos cortos." },
             { term: "Old Fashioned (vaso)", definition: "Vaso corto y ancho." },
-            { term: "Highball", definition: "Vaso alto y estrecho." }
+            { term: "Highball", definition: "Vaso alto y estrecho." },
+            { term: "Mixología", definition: "Arte y técnica de crear y preparar cócteles." },
+            { term: "Destilado", definition: "Licor obtenido por destilación: pisco, ron, whisky, gin, vodka." },
+            { term: "Licor", definition: "Bebida dulce y aromatizada, de menor graduación (amaretto, triple sec)." },
+            { term: "Escarchar", definition: "Decorar el borde del vaso con sal o azúcar (rim)." },
+            { term: "Chaser", definition: "Bebida suave que se toma después de un trago fuerte." },
+            { term: "Aperitivo / Bajativo", definition: "Aperitivo: trago antes de comer; bajativo: trago digestivo al final." }
         ],
         comedor: [
             { term: "Mise en place", definition: "Preparación anticipada para el servicio." },
@@ -621,13 +644,25 @@
             { term: "Couvert", definition: "Cubierto básico (tenedor, cuchillo, cuchara, servilleta)." },
             { term: "Table d'hôte", definition: "Menú fijo a precio cerrado." },
             { term: "À la carte", definition: "Carta con platos independientes." },
-            { term: "Servicio a la inglesa", definition: "Fuentes en mesa, camarero sirve." },
+            { term: "Servicio a la inglesa", definition: "Fuentes en mesa, el garzón sirve." },
             { term: "Servicio a la francesa", definition: "Terminación del plato en mesa." },
             { term: "Servicio americano", definition: "Plato emplatado en cocina, servir por derecha." },
             { term: "Retirar por la derecha", definition: "Norma de servicio americano." },
             { term: "Limpiar migas", definition: "Uso de paleta y cepillo." },
             { term: "Decantación", definition: "Trasvasar vino para oxigenar." },
-            { term: "Sommelier", definition: "Experto en vinos." }
+            { term: "Sommelier", definition: "Experto en vinos." },
+            { term: "Plato de fondo", definition: "El plato principal de la comida (término chileno)." },
+            { term: "Entrada", definition: "Plato pequeño previo al principal, para abrir el apetito." },
+            { term: "Guarnición", definition: "Acompañamiento del plato principal (papas, arroz, ensalada, puré)." },
+            { term: "Garzón", definition: "Quien atiende las mesas (Chile); 'mozo' en Argentina, 'camarero' en España." },
+            { term: "Maître / Jefe de sala", definition: "Responsable del comedor y del equipo de garzones." },
+            { term: "Runner / Garzón de apoyo", definition: "Lleva y retira platos sin tomar la comanda." },
+            { term: "Comensal", definition: "Persona que come en la mesa; el cliente." },
+            { term: "Anfitrión", definition: "Quien encabeza la mesa; recibe la prueba del vino." },
+            { term: "Menú degustación", definition: "Secuencia de varios platos pequeños elegidos por el chef." },
+            { term: "Sobremesa", definition: "Conversación en la mesa después de comer." },
+            { term: "Propina", definition: "Gratificación por el servicio (en Chile, sugerida 10%)." },
+            { term: "No-show", definition: "Reserva que no llega ni avisa." }
         ],
         cocina: [
             { term: "Mise en place (cocina)", definition: "Organización de ingredientes antes de cocinar." },
@@ -647,7 +682,33 @@
             { term: "Ahumado", definition: "Técnica con humo de madera." },
             { term: "Sofrito", definition: "Base de cebolla, ajo y vegetales rehogados." },
             { term: "Blanquear", definition: "Sumergir en agua hirviendo y luego en hielo." },
-            { term: "Confitar", definition: "Cocinar lentamente en grasa." }
+            { term: "Confitar", definition: "Cocinar lentamente en grasa." },
+            { term: "Guarnición", definition: "Acompañamiento del plato principal (papas, arroz, ensalada, puré)." },
+            { term: "Aderezo / Aliño", definition: "Mezcla para sazonar: aceite, vinagre, sal, limón, especias." },
+            { term: "Marinar / Adobar", definition: "Remojar carne o pescado en especias y líquidos para dar sabor y ablandar." },
+            { term: "Sellar", definition: "Dorar rápido la superficie de la carne a fuego fuerte para retener los jugos." },
+            { term: "Saltear", definition: "Cocinar rápido a fuego fuerte con poca grasa, moviendo el alimento." },
+            { term: "Rehogar", definition: "Cocinar suave en grasa, sin dorar, para ablandar (cebolla, ajo)." },
+            { term: "Gratinar", definition: "Dorar la superficie de un plato con calor fuerte por arriba." },
+            { term: "Caramelizar", definition: "Dorar los azúcares de un alimento por calor, dando color y sabor." },
+            { term: "Napar", definition: "Cubrir el plato con una capa fina y pareja de salsa." },
+            { term: "Roux", definition: "Mezcla cocida de harina y grasa, base para espesar salsas." },
+            { term: "Fondo / Caldo", definition: "Líquido sabroso de huesos y verduras, base de salsas y sopas." },
+            { term: "Mirepoix", definition: "Base de cebolla, zanahoria y apio picados para fondos y guisos." },
+            { term: "Bridar", definition: "Atar una pieza (ave o carne) para que conserve su forma al cocinar." },
+            { term: "Baño maría", definition: "Cocinar un recipiente dentro de otro con agua caliente; calor suave." },
+            { term: "Reposar la carne", definition: "Dejarla descansar tras cocinarla para que retenga sus jugos." },
+            { term: "Emplatar", definition: "Disponer y decorar la comida en el plato antes de servir." }
+        ],
+        codigos: [
+            { term: "86", definition: "Producto agotado o fuera de stock. Ej.: «¡Se fue a 86 la plateada!»." },
+            { term: "101", definition: "Producto con sobre stock que la cocina necesita vender rápido. Ej.: «¡Hay que sacar el 101 de merluza hoy!»." },
+            { term: "95", definition: "Cliente que se va del local sin pagar (un 'simpa'). Ej.: «¡95 en la mesa 12!»." },
+            { term: "«Oído» / «Copiado»", definition: "Confirmar que el garzón o el chef escuchó la comanda." },
+            { term: "«Voy caliente» / «¡Cuidado, quema!»", definition: "Se grita al pasar con platos o sartenes muy calientes, para evitar accidentes." },
+            { term: "«Voy atrás»", definition: "Anuncia que un garzón va pasando cerca de un compañero." },
+            { term: "Sacar la mesa", definition: "Despachar todos los platos de una misma cuenta al mismo tiempo." },
+            { term: "Comanda corrida", definition: "La cocina adelanta la preparación de un plato para servirlo justo después del anterior." }
         ]
     };
 
@@ -742,9 +803,9 @@
         { tipo: "Restaurant de hotel (no fine dining)", ejemplos: "Hoteles 4 estrellas, cadenas", protocolo: "Americano o Inglés", icono: "🏨", matiz: "Desayunos: Directo (buffet). Almuerzos/cenas: Americano o Inglés si hay fuentes compartidas." },
         { tipo: "Comida rápida (fast food)", ejemplos: "McDonald's, Burger King, local de completos", protocolo: "Directo", icono: "🍔", matiz: "Cliente paga y retira su bandeja. Autoservicio al 100%." },
         { tipo: "Delivery / Take away", ejemplos: "PedidosYa, Rappi, restaurantes con retiro", protocolo: "Bandeja (adaptado)", icono: "🛵", matiz: "Comida en envases cerrados, sin montaje en mesa. Versión externa del room service." },
-        { tipo: "Alta cocina / Restaurante con estrella", ejemplos: "Boragó, Ambrosía, De Central", protocolo: "Francés o Ruso", icono: "🌟", matiz: "Francés para terminación en mesa; Ruso para presentación teatral. Formalidad máxima, servicio lento y detallado." },
+        { tipo: "Alta cocina / Restaurante con estrella", ejemplos: "Boragó, Ambrosía, La Calma", protocolo: "Francés o Ruso", icono: "🌟", matiz: "Francés para terminación en mesa; Ruso para presentación teatral. Formalidad máxima, servicio lento y detallado." },
         { tipo: "Restaurant de hotel de lujo (5 estrellas)", ejemplos: "Hotel W, Ritz-Carlton, The Singular", protocolo: "Francés (cenas) / Inglés (desayunos)", icono: "👑", matiz: "Cenas: Francés o Inglés según concepto. Desayunos: Directo con personal sirviendo." },
-        { tipo: "Restaurant temático / de autor", ejemplos: "Peumayén, Chila", protocolo: "Ruso o Francés combinado", icono: "🎨", matiz: "Menús degustación. Usan Ruso para presentar y explicar origen, o Francés para terminar platos." },
+        { tipo: "Restaurant temático / de autor", ejemplos: "Peumayén, Pulpería Santa Elvira", protocolo: "Ruso o Francés combinado", icono: "🎨", matiz: "Menús degustación. Usan Ruso para presentar y explicar origen, o Francés para terminar platos." },
         { tipo: "Cocinería (local de comida al paso)", ejemplos: "La Pica del Indio, Donde el Mono", protocolo: "Directo", icono: "🍲", matiz: "Cliente se sirve desde un buffet caliente (el 'servidor'). Directo puro." },
         { tipo: "Restaurant de carretera / área de descanso", ejemplos: "Los Perales, Ruta 5", protocolo: "Americano (muy rápido)", icono: "🛣️", matiz: "Comida pre-cocida o al paso. Americano con platos desechables y servicio exprés." },
         { tipo: "Quincho / Evento campestre", ejemplos: "Asados familiares, fondas dieciocheras", protocolo: "Inglés (adaptado) o Directo", icono: "🏕️", matiz: "Fuentes en el centro. Comensales se sirven solos (Directo) o el anfitrión sirve (Inglés). Mezcla según ambiente." },
@@ -785,10 +846,48 @@
         document.getElementById('darkModeToggle').innerText = isDark ? '☀️' : '🌙';
     }
 
+    // ================== FRASES DE ÁNIMO ==================
+    const frasesAnimo = [
+        "Hoy la sala es tuya. ¡A brillar! ✨",
+        "Mise en place listo, actitud lista. ¡Vamos! 🔥",
+        "Cada plato que sale lleva tu firma. ¡Con orgullo! 🍽️",
+        "Sonríe, respira y sal a la cancha. 💪",
+        "El cliente se va, pero el buen trato se queda. 🤝",
+        "En el rubro no se nace crack: se hace turno a turno. 🙌",
+        "La propina es consecuencia, no objetivo. Da lo mejor. 😉",
+        "Hoy puede ser la mejor mesa de alguien. Hazla memorable. 🥂",
+        "Cocina con cariño, sirve con onda. ❤️",
+        "Que el cansancio no te apague la sonrisa. ¡Tú puedes! ☕",
+        "Buen pulso, buena onda y a darle. ¡Éxito en el turno! 🛎️",
+        "Equipo unido saca cualquier servicio adelante. 🤜🤛"
+    ];
+    function setFraseAnimo() {
+        const bar = document.getElementById('motivationBar');
+        if (!bar) return;
+        let bag;
+        try { bag = JSON.parse(localStorage.getItem('fraseBag')); } catch (e) { bag = null; }
+        let last = parseInt(localStorage.getItem('lastFrase'), 10);
+        if (isNaN(last)) last = -1;
+        if (!Array.isArray(bag) || bag.length === 0) {
+            // Rellenar la "bolsa" con todas las frases y mezclarla
+            bag = frasesAnimo.map((_, idx) => idx);
+            for (let j = bag.length - 1; j > 0; j--) {
+                const r = Math.floor(Math.random() * (j + 1));
+                [bag[j], bag[r]] = [bag[r], bag[j]];
+            }
+            // Evitar que la primera del nuevo ciclo sea igual a la última mostrada
+            if (bag.length > 1 && bag[0] === last) { [bag[0], bag[1]] = [bag[1], bag[0]]; }
+        }
+        const i = bag.shift();
+        localStorage.setItem('fraseBag', JSON.stringify(bag));
+        localStorage.setItem('lastFrase', String(i));
+        bar.textContent = frasesAnimo[i];
+    }
+
     // ================== RENDERIZADO ==================
     function renderProtocolos() {
         const container = document.getElementById('mainContent');
-        let html = `<div class="service-title">📋 Protocolos de Servicio</div><div class="service-desc">Selecciona un estilo:</div><div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">`;
+        let html = `<div class="service-title">📋 Protocolos de Servicio</div><div class="service-desc">Cada estilo tiene su gracia. Elige uno y repasa el paso a paso. 👇</div><div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">`;
         for (const [key, proto] of Object.entries(protocolos)) {
             html += `<button class="proto-btn" data-proto="${key}">${proto.titulo}</button>`;
         }
@@ -812,9 +911,10 @@
     function renderBebestibles() {
         const container = document.getElementById('mainContent');
         container.innerHTML = `<div class="service-title">🍷 Bebestibles</div>
+            <div class="service-desc">Del vino bien servido al pisco sour de la casa. ¡Salud! 🥂</div>
             <div class="subseccion"><h2>🍷 Vinos y Espumantes</h2><div class="service-desc">${bebestibles.vino.descripcion}</div><div class="image-place"><img src="${bebestibles.vino.imagen}" alt="Vinos"></div><div class="checklist" id="checklist-vino"><h3>✅ Protocolo <span class="progress-indicator" id="progressCounter">0/${bebestibles.vino.pasos.length}</span><button class="reset-btn" data-reset>↺ Reiniciar</button></h3>${bebestibles.vino.pasos.map(p => `<label class="checklist-item"><input type="checkbox"> ${p}</label>`).join("")}</div></div>
-            <div class="subseccion"><h2>🍸 Cocteles Internacionales (20)</h2><div class="grid-cards">${bebestibles.cocteles.internacionales.map(c => `<div class="card-item"><div class="item-name">🍸 ${c.nombre}</div><div class="item-ingredients">${c.ingredientes}</div><div class="item-prep">${c.preparacion}</div></div>`).join("")}</div>
-            <h2>🇨🇱 Cocteles Chilenos (5)</h2><div class="grid-cards">${bebestibles.cocteles.chilenos.map(c => `<div class="card-item"><div class="item-name">🍸 ${c.nombre}</div><div class="item-ingredients">${c.ingredientes}</div><div class="item-prep">${c.preparacion}</div></div>`).join("")}</div></div>`;
+            <div class="subseccion"><h2>🍸 Cocteles Internacionales (${bebestibles.cocteles.internacionales.length})</h2><div class="grid-cards">${bebestibles.cocteles.internacionales.map(c => `<div class="card-item"><div class="item-name">🍸 ${c.nombre}</div><div class="item-ingredients">${c.ingredientes}</div><div class="item-prep">${c.preparacion}</div></div>`).join("")}</div>
+            <h2>🇨🇱 Cocteles Chilenos (${bebestibles.cocteles.chilenos.length})</h2><div class="grid-cards">${bebestibles.cocteles.chilenos.map(c => `<div class="card-item"><div class="item-name">🍸 ${c.nombre}</div><div class="item-ingredients">${c.ingredientes}</div><div class="item-prep">${c.preparacion}</div></div>`).join("")}</div></div>`;
         bindChecklist('checklist-vino', 'checklist_vino');
     }
 
@@ -822,6 +922,7 @@
         const container = document.getElementById('mainContent');
         const card = (c, eq) => `<div class="card-item"><div class="item-name">${eq ? `🇨🇱 ${c.nombre} → 🇺🇸 ${c.equivalente}` : c.nombre}</div><div class="item-desc">${c.desc}</div><div class="item-prep">🔥 <strong>Punto:</strong> ${c.punto}</div><div class="item-prep">🍷 <strong>Maridaje:</strong> ${c.maridaje}</div></div>`;
         container.innerHTML = `<div class="service-title">🥩 Carnes</div>
+            <div class="service-desc">Del lomo a la parrilla al asado al palo: cada corte con su punto justo y con qué vino cae mejor. 🔥🍷</div>
             <div class="subseccion"><h2>🐂 Vacuno - Cortes para Parrilla</h2><div class="grid-cards">${carnes.vacunoParrilla.map(c => card(c, true)).join("")}</div>
             <h2>🍲 Vacuno - Cortes para Olla</h2><div class="grid-cards">${carnes.vacunoOlla.map(c => card(c, true)).join("")}</div></div>
             <div class="subseccion"><h2>🐖 Cerdo</h2><div class="grid-cards">${carnes.cerdo.map(c => card(c, false)).join("")}</div></div>
@@ -835,6 +936,7 @@
     function renderProductosMar() {
         const container = document.getElementById('mainContent');
         container.innerHTML = `<div class="service-title">🌊 Productos del Mar</div>
+            <div class="service-desc">Del mar chileno a tu carta: pescados, mariscos y crustáceos, con su sabor, textura y cómo lucirlos. 🌊</div>
             <div class="subseccion"><h2>🐟 Pescados Chilenos (${pescadosChile.length})</h2><div class="grid-cards">${pescadosChile.map(p => { const i = p.indexOf(':'); const nombre = i >= 0 ? p.slice(0, i) : p; const desc = i >= 0 ? p.slice(i + 1).trim() : ''; return `<div class="card-item"><div class="item-name">${nombre}</div><div class="item-desc">${desc}</div></div>`; }).join("")}</div></div>
             <div class="subseccion"><h2>🐚 Mariscos de Orilla</h2><div class="grid-cards">${mariscos.orilla.map(m => `<div class="card-item"><div class="item-name">${m.nombre}</div><div class="item-desc">${m.desc}</div></div>`).join("")}</div>
             <h2>🐚 Mariscos de Fondo</h2><div class="grid-cards">${mariscos.fondo.map(m => `<div class="card-item"><div class="item-name">${m.nombre}</div><div class="item-desc">${m.desc}</div></div>`).join("")}</div></div>
@@ -845,6 +947,7 @@
     function renderVegetales() {
         const container = document.getElementById('mainContent');
         container.innerHTML = `<div class="service-title">🌽 Vegetales Chilenos</div>
+            <div class="service-desc">Tesoros nativos de Chile: papas chilotas, frutos, hierbas y más. Pura identidad. 🌱</div>
             <div class="subseccion"><h2>${vegetalesChilenos.papas.titulo}</h2><div class="service-desc">${vegetalesChilenos.papas.descripcion}</div><div class="grid-cards">${vegetalesChilenos.papas.variedades.map(p => `<div class="card-item"><div class="item-name">${p.nombre}</div><div class="item-desc">${p.desc}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>${vegetalesChilenos.otrosTubérculos.titulo}</h2><div class="service-desc">${vegetalesChilenos.otrosTubérculos.descripcion}</div><div class="grid-cards">${vegetalesChilenos.otrosTubérculos.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>${vegetalesChilenos.frutosNativos.titulo}</h2><div class="service-desc">${vegetalesChilenos.frutosNativos.descripcion}</div><div class="grid-cards">${vegetalesChilenos.frutosNativos.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>
@@ -855,10 +958,11 @@
 
     function renderDiccionario() {
         const container = document.getElementById('mainContent');
-        let html = `<div class="service-title">📖 Diccionario por áreas</div><div class="service-desc">Términos organizados por Barra, Comedor y Cocina.</div>`;
+        let html = `<div class="service-title">📖 Diccionario por áreas</div><div class="service-desc">El idioma secreto del rubro 🤫 — del «mise en place» al grito de «¡86!». Aquí lo cachái todo.</div>`;
+        const meta = { barra: ['🍸', 'Barra'], comedor: ['🍽️', 'Comedor'], cocina: ['👨‍🍳', 'Cocina'], codigos: ['🔢', 'Códigos y jerga'] };
         for (const [area, terms] of Object.entries(diccionario)) {
-            let emoji = area === 'barra' ? '🍸' : (area === 'comedor' ? '🍽️' : '👨‍🍳');
-            html += `<div class="dict-section"><h3>${emoji} ${area.charAt(0).toUpperCase()+area.slice(1)}</h3><div class="dict-grid">${terms.map(t => `<div class="term-card"><div class="term-title">${t.term}</div><div class="term-def">${t.definition}</div></div>`).join("")}</div></div>`;
+            const [emoji, label] = meta[area] || ['📖', area];
+            html += `<div class="dict-section"><h3>${emoji} ${label}</h3><div class="dict-grid">${terms.map(t => `<div class="term-card"><div class="term-title">${t.term}</div><div class="term-def">${t.definition}</div></div>`).join("")}</div></div>`;
         }
         container.innerHTML = html;
     }
@@ -867,7 +971,7 @@
         const container = document.getElementById('mainContent');
         container.innerHTML = `
             <div class="service-title">🛎️ Servicio por Tipo de Local</div>
-            <div class="service-desc">Qué estilo de servicio se recomienda según el tipo de restaurant, con sus matices de informalidad o formalidad. Encuentra tu tipo de local y aplica el protocolo adecuado.</div>
+            <div class="service-desc">Cada local tiene su ritmo. 🛎️ Encuentra tu tipo de restaurant y aplica el estilo de servicio que mejor le calza.</div>
             <div class="grid-cards">
                 ${restaurantesChile.map(r => `
                     <div class="card-item">
@@ -888,7 +992,7 @@
         const container = document.getElementById('mainContent');
         const A = atencionMesa;
         container.innerHTML = `<div class="service-title">🤝 Atención en Mesa</div>
-            <div class="service-desc">El trato y la lectura del cliente: lo que más se nota en la experiencia (y en la propina).</div>
+            <div class="service-desc">El trato y la lectura del cliente: lo que más se nota en la experiencia (y en la propina 😉).</div>
             <div class="subseccion"><h2>${A.secuencia.titulo}</h2><div class="service-desc">${A.secuencia.desc}</div>
                 <div class="grid-cards">${A.secuencia.momentos.map(m => `<div class="card-item"><div class="item-name">${m.momento}</div><div class="item-desc">${m.que}</div><div class="item-prep">💬 <em>${m.frase}</em></div><div class="item-desc" style="color:#c0392b">⚠️ ${m.error}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>${A.gestos.titulo}</h2><div class="service-desc">${A.gestos.desc}</div>
@@ -903,7 +1007,7 @@
     function renderMaridajes() {
         const container = document.getElementById('mainContent');
         container.innerHTML = `<div class="service-title">🍷🍽️ Maridajes</div>
-            <div class="service-desc">Guía rápida de qué vino o trago acompaña mejor cada plato. Son orientaciones: la mejor regla es probar.</div>
+            <div class="service-desc">¿Qué le pongo al lado? 🍷 La guía para que ningún maridaje te pille de sorpresa. Regla de oro: probar y disfrutar.</div>
             <div class="grid-cards">${maridajes.map(m => `<div class="card-item"><div class="item-name">${m.plato}</div><div class="item-ingredients">🍷 <strong>${m.vino}</strong></div><div class="item-prep">${m.motivo}</div></div>`).join("")}</div>`;
     }
 
@@ -990,6 +1094,8 @@
     document.addEventListener('DOMContentLoaded', () => {
         initDarkMode();
         updateFavCount();
+        setFraseAnimo();
+        document.getElementById('motivationBar').addEventListener('click', setFraseAnimo);
         document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
         document.querySelectorAll('.main-btn').forEach(btn => {
             btn.addEventListener('click', () => setMainTab(btn.getAttribute('data-tab')));
