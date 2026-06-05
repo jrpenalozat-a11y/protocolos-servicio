@@ -577,6 +577,8 @@
         <button class="main-btn" data-tab="atencionMesa">🤝 Atención en Mesa</button>
         <button class="main-btn" data-tab="alergenos">🚨 Alérgenos</button>
         <button class="main-btn" data-tab="bebestibles">🍷 Bebestibles</button>
+        <button class="main-btn" data-tab="cervezas">🍺 Cervezas</button>
+        <button class="main-btn" data-tab="barismo">☕ Barismo</button>
         <button class="main-btn" data-tab="maridajes">🍷🍽️ Maridajes</button>
         <button class="main-btn" data-tab="carnes">🥩 Carnes</button>
         <button class="main-btn" data-tab="productosMar">🌊 Productos del Mar</button>
@@ -994,6 +996,61 @@
         ]
     };
 
+    // ========================== CERVEZAS ==========================
+    const cervezas = {
+        lagers: [
+            { nombre: "🇨🇿 Pilsner", tipo: "Lager", desc: "La rubia más famosa del mundo, nacida en Pilsen (Chequia) en 1842. Dorada, brillante y de espuma blanca, con un amargor herbal limpio del lúpulo Saaz. Refrescante y fácil: la que popularizó la cerveza clara.", marida: "Pescados fritos, sushi, ensaladas y quesos frescos." },
+            { nombre: "🍺 Lager (Helles)", tipo: "Lager", desc: "La rubia clásica y equilibrada (estilo 'Helles' de Múnich). Suave, maltosa y de amargor bajo, pensada para beber sin complicaciones. La cerveza de cervecería por excelencia.", marida: "Empanadas, completos, pollo asado y picoteos." },
+            { nombre: "🐐 Bock", tipo: "Lager", desc: "Lager fuerte y maltosa de origen alemán, de color ámbar a marrón. Su nombre significa 'macho cabrío'. Dulzona, con cuerpo y poco amargor; ideal para el frío.", marida: "Carnes asadas, cerdo, embutidos y quesos maduros." },
+            { nombre: "💪 Doppelbock", tipo: "Lager", desc: "La hermana mayor y más potente del Bock ('doble bock'). Oscura e intensa, con notas a pan tostado, caramelo y frutos secos. Los monjes la llamaban 'pan líquido' para el ayuno.", marida: "Estofados, cordero, chocolate y postres." },
+            { nombre: "🍂 Märzen (Oktoberfest)", tipo: "Lager", desc: "La cerveza del Oktoberfest. Ámbar, maltosa y tostada, con final seco. Antiguamente se elaboraba en marzo ('März') y se guardaba para la fiesta de octubre.", marida: "Salchichas, cerdo, papas y pretzels." },
+            { nombre: "🌑 Dunkel", tipo: "Lager", desc: "La lager oscura tradicional de Baviera. Color caoba, con sabores suaves a pan, caramelo y chocolate, pero ligera y muy bebible. Oscura sin ser pesada.", marida: "Carnes a la parrilla, cerdo y quesos semiduros." },
+            { nombre: "⬛ Schwarzbier", tipo: "Lager", desc: "La 'cerveza negra' alemana. Casi negra a la vista pero sorprendentemente liviana y suave, con un toque a café y cacao sin amargor agresivo. Elegante.", marida: "Carnes ahumadas, chocolate y postres." }
+        ],
+        ales: [
+            { nombre: "🇬🇧 Pale Ale", tipo: "Ale", desc: "El ale dorado-cobrizo que equilibra malta y lúpulo. Aromática, fácil y con carácter; base de la revolución cervecera artesanal. Versátil y amable.", marida: "Hamburguesas, carnes a la parrilla y quesos." },
+            { nombre: "🌿 IPA (India Pale Ale)", tipo: "Ale", desc: "La reina de la cerveza artesanal. Cargada de lúpulo: muy aromática (cítricos, fruta tropical, pino) y de amargor marcado. Nació para soportar el viaje de Inglaterra a la India.", marida: "Comida picante, curry, carnes intensas y quesos azules." },
+            { nombre: "⚫ Stout", tipo: "Ale", desc: "La cerveza negra cremosa por excelencia (la Guinness es la más famosa). Tostada, con notas a café, chocolate y final seco. Espuma densa y sedosa.", marida: "Ostras, carnes, chocolate y postres." },
+            { nombre: "🟤 Porter", tipo: "Ale", desc: "La antecesora de la stout, oscura y reconfortante. Sabores a chocolate, caramelo y café tostado, con cuerpo medio. Favorita de los cargadores ('porters') del Londres del s. XVIII.", marida: "Carnes asadas, estofados y quesos ahumados." },
+            { nombre: "🟠 Amber / Red Ale", tipo: "Ale", desc: "Ale de color ámbar a rojizo, con malta caramelo que aporta dulzor tostado y un lúpulo equilibrado. Sabrosa, redonda y muy fácil de disfrutar.", marida: "Carnes rojas, hamburguesas y comida tex-mex." },
+            { nombre: "🟫 Brown Ale", tipo: "Ale", desc: "Ale marrón inglesa, suave y maltosa, con notas a nuez, caramelo y pan tostado. Poco amargor y mucha calidez. Reconfortante.", marida: "Carnes asadas, cerdo, embutidos y quesos." },
+            { nombre: "✨ Kölsch", tipo: "Ale (híbrida)", desc: "Especialidad de Colonia (Köln): fermenta como ale pero madura en frío como lager. Resultado dorado, delicado, frutal y súper bebible. Se sirve en vaso alto y fino ('stange').", marida: "Pescados, mariscos, ensaladas y pollo." },
+            { nombre: "🌾 Saison", tipo: "Ale", desc: "La 'cerveza de granja' belga, antes hecha para refrescar a los trabajadores en verano. Dorada, efervescente, seca y especiada, con levaduras frutales y un toque a pimienta.", marida: "Mariscos, ensaladas, pollo y quesos de cabra." },
+            { nombre: "🇧🇪 Belgian Tripel", tipo: "Ale", desc: "Joya belga rubia y engañosamente fuerte (suele superar 8% de alcohol). Frutal, especiada y de dulzor seco; las abadías la perfeccionaron. Burbujeante y elegante.", marida: "Mariscos, aves, quesos cremosos y platos especiados." },
+            { nombre: "🍯 Barleywine", tipo: "Ale", desc: "El 'vino de cebada': el ale más fuerte y complejo (10%+ de alcohol). Ámbar oscuro, con caramelo, frutos secos, toffee y fruta madura. Para sorber lento como un buen vino.", marida: "Quesos azules, postres, chocolate o de bajativo." }
+        ],
+        trigoYacidas: [
+            { nombre: "🌾 Hefeweizen", tipo: "Ale (trigo)", desc: "La clásica cerveza de trigo bávara, turbia y refrescante. Su levadura aporta inconfundibles aromas a plátano y clavo de olor. Espuma generosa; se sirve en vaso alto curvo.", marida: "Ensaladas, pescados, salchichas blancas y brunch." },
+            { nombre: "🤍 Witbier (blanca belga)", tipo: "Ale (trigo)", desc: "Cerveza blanca belga, pálida y turbia, especiada con cáscara de naranja y cilantro. Ligera, cítrica y muy refrescante (la Hoegaarden la hizo famosa).", marida: "Mariscos, ceviche, ensaladas y quesos frescos." },
+            { nombre: "🍋 Sour / Lambic (ácida)", tipo: "Espontánea", desc: "Cervezas de fermentación espontánea y sabor ácido, originarias de Bélgica. Refrescantes y complejas, a veces con frutas (frambuesa, cereza). Acidez que despierta el paladar: las amas o las odias.", marida: "Ensaladas, quesos, ceviche y postres de fruta." }
+        ]
+    };
+
+    // ========================== BARISMO (CAFÉS) ==========================
+    const cafes = {
+        base: [
+            { nombre: "☕ Espresso", tipo: "Base", desc: "El corazón de todo. Un shot concentrado de café (25–30 ml) extraído a presión en ~25 segundos, coronado por una crema avellanada. Intenso, aromático y base de casi todos los demás cafés.", lleva: "Café molido fino, presión y agua caliente." },
+            { nombre: "⚡ Ristretto", tipo: "Base", desc: "Un espresso 'restringido': la misma dosis de café pero con menos agua (~20 ml). Más concentrado, dulce e intenso, con menos amargor. El golpe de sabor más puro.", lleva: "Espresso corto, con menos agua." },
+            { nombre: "📏 Lungo", tipo: "Base", desc: "El espresso 'largo': se deja correr más agua (~50–60 ml). Más suave y con más líquido, aunque un poco más amargo. Para quien lo quiere más largo sin perder carácter.", lleva: "Espresso con más agua de extracción." },
+            { nombre: "✌️ Doppio", tipo: "Base", desc: "Doble espresso: dos shots en una sola taza (~60 ml). Para los que necesitan el doble de energía y sabor. Base de muchos cafés con leche grandes.", lleva: "Dos espressos en una taza." },
+            { nombre: "🇺🇸 Americano", tipo: "Base", desc: "Espresso alargado con agua caliente: suave y de cuerpo ligero, pero conservando el aroma. Cuenta la historia que nació para los soldados estadounidenses en Europa, que lo querían menos intenso.", lleva: "Espresso + agua caliente." }
+        ],
+        conLeche: [
+            { nombre: "☕ Macchiato", tipo: "Con leche", desc: "Espresso 'manchado' con apenas una cucharada de espuma de leche. Casi tan intenso como un espresso, pero con un toque cremoso que suaviza el final. Pequeño y elegante.", lleva: "Espresso + un toque de espuma." },
+            { nombre: "🥛 Cortado", tipo: "Con leche", desc: "Espresso 'cortado' con un poco de leche tibia en igual proporción, para bajar la acidez sin tapar el café. Equilibrado y muy popular en España y Latinoamérica.", lleva: "Espresso + igual cantidad de leche tibia." },
+            { nombre: "☁️ Cappuccino", tipo: "Con leche", desc: "El equilibrio perfecto en tres tercios: espresso, leche vaporizada y una corona de espuma densa. Suele llevar un toque de cacao o canela arriba. Cremoso y reconfortante.", lleva: "1/3 espresso + 1/3 leche + 1/3 espuma." },
+            { nombre: "🥛 Caffè Latte", tipo: "Con leche", desc: "El más suave y lechoso: un espresso con bastante leche vaporizada y una capa fina de espuma. Amable y cremoso, ideal para quien prefiere el café delicado (y para el latte art).", lleva: "Espresso + mucha leche vaporizada + poca espuma." },
+            { nombre: "🤍 Flat White", tipo: "Con leche", desc: "Originario de Australia/Nueva Zelanda. Como un latte pero más cafetero: doble espresso con microespuma sedosa, sin la capa gruesa de espuma. Textura aterciopelada.", lleva: "Doble espresso + microespuma de leche." },
+            { nombre: "🍫 Mocha", tipo: "Con leche", desc: "El más goloso: espresso, chocolate y leche vaporizada, a veces con crema arriba. La combinación café + cacao que enamora a los más dulces.", lleva: "Espresso + chocolate + leche (+ crema)." },
+            { nombre: "🥄 Café Bombón", tipo: "Con leche", desc: "Originario de Valencia: espresso con leche condensada servido en capas, dulce e intenso. Se sirve en vaso para lucir el contraste de colores. Pura energía dulce.", lleva: "Espresso + leche condensada." }
+        ],
+        especiales: [
+            { nombre: "🍨 Affogato", tipo: "Postre", desc: "Mitad café, mitad postre: un espresso caliente vertido sobre una bola de helado de vainilla que se derrite. Contraste de caliente y frío irresistible. Italiano y delicioso.", lleva: "Espresso caliente sobre helado de vainilla." },
+            { nombre: "🥃 Irish Coffee", tipo: "Con alcohol", desc: "El clásico café cóctel caliente: café, whiskey irlandés, azúcar y una capa de crema apenas batida que flota arriba. Se bebe a través de la crema. Reconfortante para el frío.", lleva: "Café + whiskey + azúcar + crema." },
+            { nombre: "🧊 Cold Brew", tipo: "Frío", desc: "Café de extracción en frío: molido grueso reposado en agua fría 12–24 horas. Resultado suave, dulce y poco ácido, muy refrescante con hielo. Distinto al café helado común (que es café caliente enfriado).", lleva: "Café molido grueso + agua fría, 12–24 h." }
+        ]
+    };
+
     // ========================== ATENCIÓN EN MESA ==========================
     const atencionMesa = {
         secuencia: {
@@ -1173,6 +1230,20 @@
             "Conoce tus tragos y recomienda con seguridad. 😎",
             "La barra también se atiende con onda. 🛎️"
         ],
+        cervezas: [
+            "Cada estilo de cerveza tiene su momento. 🍺",
+            "Lager, ale o trigo: conócelas y recomienda. 😎",
+            "La cerveza justa realza cada plato. 🍻",
+            "Servida fría y con su espuma: pura técnica. 🤙",
+            "Un buen maridaje con cerveza también impresiona. ✨"
+        ],
+        barismo: [
+            "Todo gran café empieza por un buen espresso. ☕",
+            "Leche sedosa = café de otro nivel. 🥛",
+            "Saber de cafés te hace un barista con onda. 😎",
+            "Del cortado al flat white: dominá la carta. 🤙",
+            "Sírvelo al toque: el aroma no espera. ✨"
+        ],
         quesos: [
             "Un buen queso bien descrito sube la cuenta (y la propina). 🧀",
             "Del gouda al roquefort: domina la tabla y luce. 😎",
@@ -1302,6 +1373,48 @@
             <div class="subseccion"><h2>🍸 Cocteles Internacionales (${bebestibles.cocteles.internacionales.length})</h2><div class="grid-cards">${bebestibles.cocteles.internacionales.map(c => `<div class="card-item"><div class="item-name">🍸 ${c.nombre}</div><div class="item-ingredients">${c.ingredientes}</div><div class="item-prep">${c.preparacion}</div></div>`).join("")}</div>
             <h2>🇨🇱 Cocteles Chilenos (${bebestibles.cocteles.chilenos.length})</h2><div class="grid-cards">${bebestibles.cocteles.chilenos.map(c => `<div class="card-item"><div class="item-name">🍸 ${c.nombre}</div><div class="item-ingredients">${c.ingredientes}</div><div class="item-prep">${c.preparacion}</div></div>`).join("")}</div></div>`;
         bindChecklist('checklist-vino', 'checklist_vino');
+    }
+
+    function renderBarismo() {
+        const container = document.getElementById('mainContent');
+        const card = c => `<div class="card-item"><div class="item-name">${c.nombre} <span class="std-badge">${c.tipo}</span></div><div class="item-desc">${c.desc}</div><div class="item-prep">🥛 <strong>Lleva:</strong> ${c.lleva}</div></div>`;
+        container.innerHTML = `<div class="service-title">☕ Barismo</div>
+            <div class="service-desc">Los 15 cafés más importantes que todo garzón y barista debe conocer: del espresso puro al flat white. Saber describirlos y prepararlos es puro nivel. ☕✨</div>
+            <div class="image-place"><img src="img/barismo.jpg" alt="Barismo" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
+            <div class="calc-card">
+                <div class="item-name">☕ Claves del buen café</div>
+                <ul style="margin:8px 0 0 18px; font-size:0.88rem; color:var(--text-secondary); line-height:1.55">
+                    <li style="margin-bottom:5px"><strong>Todo parte del espresso:</strong> casi todos los cafés de cafetería se construyen sobre uno o dos shots de espresso bien extraído.</li>
+                    <li style="margin-bottom:5px"><strong>La leche se vaporiza, no se hierve:</strong> idealmente 55–65 °C. Microespuma sedosa = textura y dulzor natural (y latte art).</li>
+                    <li style="margin-bottom:5px"><strong>Proporción de leche:</strong> a más leche, más suave. Cortado &lt; cappuccino &lt; flat white &lt; latte.</li>
+                    <li style="margin-bottom:5px"><strong>Molienda y frescura:</strong> café recién molido y agua a ~90–96 °C. El café molido pierde aroma rápido.</li>
+                    <li style="margin-bottom:5px"><strong>Sírvelo de inmediato:</strong> el espresso se disfruta al toque; su crema y aroma se van en pocos minutos.</li>
+                </ul>
+            </div>
+            <div class="subseccion"><h2>☕ Espresso y base (${cafes.base.length})</h2><div class="grid-cards">${cafes.base.map(card).join("")}</div></div>
+            <div class="subseccion"><h2>🥛 Con leche (${cafes.conLeche.length})</h2><div class="grid-cards">${cafes.conLeche.map(card).join("")}</div></div>
+            <div class="subseccion"><h2>✨ Especiales y fríos (${cafes.especiales.length})</h2><div class="grid-cards">${cafes.especiales.map(card).join("")}</div></div>`;
+    }
+
+    function renderCervezas() {
+        const container = document.getElementById('mainContent');
+        const card = c => `<div class="card-item"><div class="item-name">${c.nombre} <span class="std-badge">${c.tipo}</span></div><div class="item-desc">${c.desc}</div><div class="item-prep">🍽️ <strong>Marida con:</strong> ${c.marida}</div></div>`;
+        container.innerHTML = `<div class="service-title">🍺 Cervezas</div>
+            <div class="service-desc">Los 20 estilos de cerveza más importantes del mundo, explicados con onda para que sepas describirlos y recomendarlos. De la rubia fácil a la negra cremosa. 🍺✨</div>
+            <div class="image-place"><img src="img/cervezas.jpg" alt="Cervezas" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
+            <div class="calc-card">
+                <div class="item-name">🍺 Claves para servir y describir cervezas</div>
+                <ul style="margin:8px 0 0 18px; font-size:0.88rem; color:var(--text-secondary); line-height:1.55">
+                    <li style="margin-bottom:5px"><strong>Las familias:</strong> Lager (baja fermentación, limpia y fresca), Ale (alta fermentación, frutal y con carácter), de Trigo (turbias y suaves) y Espontáneas (ácidas).</li>
+                    <li style="margin-bottom:5px"><strong>Temperatura:</strong> rubias/lagers bien frías (3–5 °C); ales y oscuras un poco menos frías (7–12 °C) para que liberen su aroma.</li>
+                    <li style="margin-bottom:5px"><strong>Espuma:</strong> dos dedos de espuma protegen el aroma y el gas. Sirve inclinando el vaso y endereza al final.</li>
+                    <li style="margin-bottom:5px"><strong>Cada estilo, su vaso:</strong> pilsner en vaso alto, weizen en vaso curvo, belgas en cáliz. Realza aroma y presentación.</li>
+                    <li style="margin-bottom:5px"><strong>Frescura:</strong> la cerveza es perecible; las IPA sobre todo (el lúpulo se apaga). Mientras más fresca, mejor.</li>
+                </ul>
+            </div>
+            <div class="subseccion"><h2>🍺 Lagers — baja fermentación (${cervezas.lagers.length})</h2><div class="grid-cards">${cervezas.lagers.map(card).join("")}</div></div>
+            <div class="subseccion"><h2>🌿 Ales — alta fermentación (${cervezas.ales.length})</h2><div class="grid-cards">${cervezas.ales.map(card).join("")}</div></div>
+            <div class="subseccion"><h2>🌾 De trigo y ácidas (${cervezas.trigoYacidas.length})</h2><div class="grid-cards">${cervezas.trigoYacidas.map(card).join("")}</div></div>`;
     }
 
     function renderQuesos() {
@@ -1453,6 +1566,8 @@
         productosMar: () => pescadosChile.length + mariscos.orilla.length + mariscos.fondo.length + crustaceos.length,
         vegetales: () => vegetalesChilenos.papas.variedades.length + vegetalesChilenos.otrosTubérculos.lista.length + vegetalesChilenos.frutosNativos.lista.length + vegetalesChilenos.hierbasCondimentos.lista.length + vegetalesChilenos.otros.lista.length,
         quesos: () => quesos.internacionales.length + quesos.chilenos.length,
+        cervezas: () => cervezas.lagers.length + cervezas.ales.length + cervezas.trigoYacidas.length,
+        barismo: () => cafes.base.length + cafes.conLeche.length + cafes.especiales.length,
         maridajes: () => maridajes.length,
         bebestibles: () => bebestibles.cocteles.internacionales.length + bebestibles.cocteles.chilenos.length,
         alergenos: () => alergenos.lista.length,
@@ -1463,7 +1578,8 @@
         const container = document.getElementById('mainContent');
         const meta = {
             carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Productos del Mar'], vegetales: ['🌽', 'Vegetales Chilenos'],
-            quesos: ['🧀', 'Quesos'], maridajes: ['🍷', 'Maridajes'], bebestibles: ['🍸', 'Bebestibles'],
+            quesos: ['🧀', 'Quesos'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Barismo'],
+            maridajes: ['🍷', 'Maridajes'], bebestibles: ['🍸', 'Bebestibles'],
             alergenos: ['🚨', 'Alérgenos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Servicio por Local']
         };
         const ap = loadAprendidoCards();
@@ -1580,7 +1696,7 @@
         if (btn) btn.textContent = n ? `⭐ Favoritos (${n})` : '⭐ Favoritos';
     }
     // ================== APRENDIDO POR TARJETA ==================
-    const tabsAprendizaje = ['carnes', 'productosMar', 'vegetales', 'quesos', 'maridajes', 'bebestibles', 'alergenos', 'atencionMesa', 'restaurantes'];
+    const tabsAprendizaje = ['carnes', 'productosMar', 'vegetales', 'quesos', 'cervezas', 'barismo', 'maridajes', 'bebestibles', 'alergenos', 'atencionMesa', 'restaurantes'];
     function loadAprendidoCards() { try { return JSON.parse(localStorage.getItem('aprendidoCards') || '{}'); } catch (e) { return {}; } }
     function saveAprendidoCards(o) { localStorage.setItem('aprendidoCards', JSON.stringify(o)); }
     function cardLearnId(titleText) { return currentTab + '::' + titleText.trim(); }
@@ -1677,6 +1793,8 @@
         else if (tab === 'atencionMesa') renderAtencionMesa();
         else if (tab === 'alergenos') renderAlergenos();
         else if (tab === 'bebestibles') renderBebestibles();
+        else if (tab === 'cervezas') renderCervezas();
+        else if (tab === 'barismo') renderBarismo();
         else if (tab === 'maridajes') renderMaridajes();
         else if (tab === 'carnes') renderCarnes();
         else if (tab === 'productosMar') renderProductosMar();
