@@ -466,6 +466,20 @@
         .learn-check.on { background: #16a34a; border-color: #16a34a; color: #fff; }
         .card-item.has-learn .item-name { padding-left: 32px; }
         .card-item.aprendida-card { box-shadow: inset 0 0 0 2px #16a34a; }
+        /* ===== PANEL MI AVANCE ===== */
+        .avance-total { display: flex; align-items: center; gap: 18px; background: var(--checklist-bg); border-radius: 22px; padding: 18px; margin-bottom: 20px; }
+        .avance-ring { position: relative; width: 116px; height: 116px; border-radius: 50%; flex: none; background: conic-gradient(var(--accent) calc(var(--pct) * 1%), var(--border-light) 0); }
+        .avance-ring::before { content: ""; position: absolute; inset: 11px; border-radius: 50%; background: var(--bg-card); }
+        .avance-ring-num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.7rem; color: var(--accent); }
+        .avance-total-big { font-weight: 800; font-family: 'Poppins', sans-serif; font-size: 1.05rem; color: var(--text-primary); }
+        .avance-total-sub { font-size: 0.85rem; color: var(--text-secondary); margin-top: 5px; }
+        .avance-list { display: flex; flex-direction: column; gap: 12px; }
+        .avance-row { width: 100%; text-align: left; background: var(--checklist-bg); border: none; border-radius: 16px; padding: 14px 16px; cursor: pointer; font-family: inherit; }
+        .avance-row-top { display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: var(--text-primary); font-size: 0.95rem; }
+        .avance-row-pct { font-family: 'Poppins', sans-serif; font-weight: 800; }
+        .avance-mini { height: 8px; background: var(--border-light); border-radius: 20px; overflow: hidden; margin: 9px 0 5px; }
+        .avance-mini-fill { height: 100%; border-radius: 20px; transition: width 0.5s ease; }
+        .avance-row-sub { font-size: 0.75rem; color: var(--text-secondary); }
         .quiz-btn.learn { background: var(--btn-bg); color: var(--btn-text); }
         .quiz-btn.learn.on { background: #16a34a; color: #fff; }
         .dict-section {
@@ -571,6 +585,7 @@
         <button class="main-btn" data-tab="restaurantes">🛎️ Servicio por Local</button>
         <button class="main-btn" data-tab="diccionario">📖 Diccionario</button>
         <button class="main-btn" data-tab="quiz">🧠 Quiz</button>
+        <button class="main-btn" data-tab="avance">📊 Mi Avance</button>
         <button class="main-btn" data-tab="favoritos">⭐ Favoritos</button>
     </div>
     <div class="motivation-bar" id="motivationBar" title="Toca para otra frase">¡A darle con todo! 🔥</div>
@@ -1207,6 +1222,13 @@
             "Un garzón que sabe, se nota. 😎",
             "Aprende una palabra nueva cada turno. 🧠"
         ],
+        avance: [
+            "Cada tarjeta aprendida te acerca a la maestría. 📊",
+            "Mira crecer tu avance, tema a tema. 📈",
+            "Lo que mides, mejora. ¡Vamos! 💪",
+            "Un poco cada día y dominas el curso. 🌱",
+            "Tu progreso es tuyo: a seguir sumando. ✨"
+        ],
         quiz: [
             "Practicar hoy es lucirse mañana. 🧠",
             "Cada pregunta que dominas, suma seguridad. 💪",
@@ -1425,6 +1447,51 @@
         document.getElementById('quizNext').addEventListener('click', () => { quizIdx++; mostrarPreguntaQuiz(); });
     }
 
+    // ================== MI AVANCE (panel global) ==================
+    const totalsData = {
+        carnes: () => carnes.vacunoParrilla.length + carnes.vacunoOlla.length + carnes.cerdo.length + carnes.venado.length + carnes.jabali.length + carnes.otrasCarnes.length + carnes.alPalo.length + carnes.puntosCarne.length,
+        productosMar: () => pescadosChile.length + mariscos.orilla.length + mariscos.fondo.length + crustaceos.length,
+        vegetales: () => vegetalesChilenos.papas.variedades.length + vegetalesChilenos.otrosTubérculos.lista.length + vegetalesChilenos.frutosNativos.lista.length + vegetalesChilenos.hierbasCondimentos.lista.length + vegetalesChilenos.otros.lista.length,
+        quesos: () => quesos.internacionales.length + quesos.chilenos.length,
+        maridajes: () => maridajes.length,
+        bebestibles: () => bebestibles.cocteles.internacionales.length + bebestibles.cocteles.chilenos.length,
+        alergenos: () => alergenos.lista.length,
+        atencionMesa: () => atencionMesa.secuencia.momentos.length + atencionMesa.gestos.senales.length,
+        restaurantes: () => restaurantesChile.length
+    };
+    function renderAvance() {
+        const container = document.getElementById('mainContent');
+        const meta = {
+            carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Productos del Mar'], vegetales: ['🌽', 'Vegetales Chilenos'],
+            quesos: ['🧀', 'Quesos'], maridajes: ['🍷', 'Maridajes'], bebestibles: ['🍸', 'Bebestibles'],
+            alergenos: ['🚨', 'Alérgenos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Servicio por Local']
+        };
+        const ap = loadAprendidoCards();
+        let totalLearned = 0, totalAll = 0;
+        const rows = tabsAprendizaje.map(tab => {
+            const total = totalsData[tab] ? totalsData[tab]() : 0;
+            const learned = Object.keys(ap).filter(k => k.startsWith(tab + '::')).length;
+            totalLearned += learned; totalAll += total;
+            const pct = total ? Math.round(learned / total * 100) : 0;
+            const col = pct >= 75 ? '#16a34a' : pct >= 40 ? '#f59e0b' : (pct > 0 ? '#ef4444' : 'var(--text-secondary)');
+            const [emoji, label] = meta[tab];
+            return `<button class="avance-row" data-goto="${tab}">
+                    <div class="avance-row-top"><span>${emoji} ${label}</span><span class="avance-row-pct" style="color:${col}">${pct}%</span></div>
+                    <div class="avance-mini"><div class="avance-mini-fill" style="width:${pct}%;background:${col}"></div></div>
+                    <div class="avance-row-sub">${learned} de ${total} aprendidas</div>
+                </button>`;
+        }).join('');
+        const totalPct = totalAll ? Math.round(totalLearned / totalAll * 100) : 0;
+        container.innerHTML = `<div class="service-title">📊 Mi Avance</div>
+            <div class="service-desc">Tu progreso del curso, tema por tema. Marca ✅ las tarjetas en cada sección y míralo subir aquí. Toca un tema para ir a reforzarlo.</div>
+            <div class="avance-total">
+                <div class="avance-ring" style="--pct:${totalPct}"><div class="avance-ring-num">${totalPct}%</div></div>
+                <div class="avance-total-txt"><div class="avance-total-big">Avance total del curso</div><div class="avance-total-sub">${totalLearned} de ${totalAll} tarjetas aprendidas</div></div>
+            </div>
+            <div class="avance-list">${rows}</div>`;
+        container.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => setMainTab(b.getAttribute('data-goto'))));
+    }
+
     function renderDiccionario() {
         const container = document.getElementById('mainContent');
         let html = `<div class="service-title">📖 Diccionario por áreas</div><div class="service-desc">El idioma secreto del rubro 🤫 — del «mise en place» al grito de «¡86!». Aquí lo cachái todo.</div>`;
@@ -1518,7 +1585,7 @@
     function saveAprendidoCards(o) { localStorage.setItem('aprendidoCards', JSON.stringify(o)); }
     function cardLearnId(titleText) { return currentTab + '::' + titleText.trim(); }
     function updateLearnBar() {
-        const cards = [...document.querySelectorAll('#mainContent .card-item')];
+        const cards = [...document.querySelectorAll('#mainContent .card-item')].filter(c => c.querySelector('.item-name'));
         const total = cards.length; if (!total) return;
         const ap = loadAprendidoCards();
         const count = cards.filter(c => { const t = c.querySelector('.item-name'); return t && ap[cardLearnId(t.textContent)]; }).length;
@@ -1530,7 +1597,7 @@
     function decorateLearned() {
         const old = document.getElementById('learnBar'); if (old) old.remove();
         if (!tabsAprendizaje.includes(currentTab)) return;
-        const cards = [...document.querySelectorAll('#mainContent .card-item')];
+        const cards = [...document.querySelectorAll('#mainContent .card-item')].filter(c => c.querySelector('.item-name'));
         if (!cards.length) return;
         const ap = loadAprendidoCards(); let count = 0;
         cards.forEach(card => {
@@ -1618,6 +1685,7 @@
         else if (tab === 'restaurantes') renderRestaurantesChile();
         else if (tab === 'diccionario') renderDiccionario();
         else if (tab === 'quiz') renderQuiz();
+        else if (tab === 'avance') renderAvance();
         else if (tab === 'favoritos') renderFavoritos();
         decorateFavorites();
         decorateLearned();
