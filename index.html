@@ -450,6 +450,22 @@
         .speak-btn:hover { opacity: 1; }
         .speak-btn:active { transform: scale(0.85); }
         .no-tts .speak-btn { display: none; }
+        /* ===== APRENDIDO POR TARJETA (avance por sección) ===== */
+        .learn-bar-card { background: var(--checklist-bg); border-radius: 18px; padding: 14px 16px; margin: 0 0 20px; }
+        .learn-bar-top { display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: var(--text-primary); font-size: 0.9rem; margin-bottom: 8px; }
+        .learn-bar-top span:last-child { color: #16a34a; font-family: 'Poppins', sans-serif; font-size: 1.2rem; font-weight: 800; }
+        .learn-bar { height: 12px; background: var(--border-light); border-radius: 20px; overflow: hidden; }
+        .learn-bar-fill { height: 100%; width: 0; background: linear-gradient(90deg, #16a34a, #4ade80); border-radius: 20px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+        .learn-bar-sub { font-size: 0.78rem; color: var(--text-secondary); margin-top: 7px; }
+        .learn-check {
+            position: absolute; top: 10px; left: 12px; width: 24px; height: 24px;
+            border-radius: 50%; border: 2px solid var(--border-light); background: var(--bg-card);
+            color: #16a34a; font-weight: 800; font-size: 0.8rem; line-height: 1; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; padding: 0;
+        }
+        .learn-check.on { background: #16a34a; border-color: #16a34a; color: #fff; }
+        .card-item.has-learn .item-name { padding-left: 32px; }
+        .card-item.aprendida-card { box-shadow: inset 0 0 0 2px #16a34a; }
         .quiz-btn.learn { background: var(--btn-bg); color: var(--btn-text); }
         .quiz-btn.learn.on { background: #16a34a; color: #fff; }
         .dict-section {
@@ -1496,6 +1512,56 @@
         const btn = document.querySelector('[data-tab="favoritos"]');
         if (btn) btn.textContent = n ? `⭐ Favoritos (${n})` : '⭐ Favoritos';
     }
+    // ================== APRENDIDO POR TARJETA ==================
+    const tabsAprendizaje = ['carnes', 'productosMar', 'vegetales', 'quesos', 'maridajes', 'bebestibles', 'alergenos', 'atencionMesa', 'restaurantes'];
+    function loadAprendidoCards() { try { return JSON.parse(localStorage.getItem('aprendidoCards') || '{}'); } catch (e) { return {}; } }
+    function saveAprendidoCards(o) { localStorage.setItem('aprendidoCards', JSON.stringify(o)); }
+    function cardLearnId(titleText) { return currentTab + '::' + titleText.trim(); }
+    function updateLearnBar() {
+        const cards = [...document.querySelectorAll('#mainContent .card-item')];
+        const total = cards.length; if (!total) return;
+        const ap = loadAprendidoCards();
+        const count = cards.filter(c => { const t = c.querySelector('.item-name'); return t && ap[cardLearnId(t.textContent)]; }).length;
+        const pct = Math.round(count / total * 100);
+        const f = document.getElementById('learnFill'); if (f) f.style.width = pct + '%';
+        const p = document.getElementById('learnPct'); if (p) p.textContent = pct + '%';
+        const s = document.getElementById('learnSub'); if (s) s.textContent = count + ' de ' + total + ' tarjetas aprendidas';
+    }
+    function decorateLearned() {
+        const old = document.getElementById('learnBar'); if (old) old.remove();
+        if (!tabsAprendizaje.includes(currentTab)) return;
+        const cards = [...document.querySelectorAll('#mainContent .card-item')];
+        if (!cards.length) return;
+        const ap = loadAprendidoCards(); let count = 0;
+        cards.forEach(card => {
+            const titleEl = card.querySelector('.item-name'); if (!titleEl) return;
+            const id = cardLearnId(titleEl.textContent);
+            const isL = !!ap[id];
+            card.classList.add('has-learn');
+            if (isL) { card.classList.add('aprendida-card'); count++; }
+            if (card.querySelector('.learn-check')) return;
+            const b = document.createElement('button');
+            b.type = 'button'; b.className = 'learn-check' + (isL ? ' on' : ''); b.textContent = isL ? '✓' : '';
+            b.title = 'Marcar como aprendido'; b.setAttribute('aria-label', 'Marcar como aprendido');
+            b.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const l = loadAprendidoCards();
+                if (l[id]) { delete l[id]; card.classList.remove('aprendida-card'); b.classList.remove('on'); b.textContent = ''; }
+                else { l[id] = 1; card.classList.add('aprendida-card'); b.classList.add('on'); b.textContent = '✓'; }
+                saveAprendidoCards(l); updateLearnBar();
+            });
+            card.appendChild(b);
+        });
+        const total = cards.length; const pct = Math.round(count / total * 100);
+        const bar = document.createElement('div'); bar.id = 'learnBar'; bar.className = 'learn-bar-card';
+        bar.innerHTML = `<div class="learn-bar-top"><span>✅ Aprendido en esta sección</span><span id="learnPct">${pct}%</span></div>`
+            + `<div class="learn-bar"><div class="learn-bar-fill" id="learnFill" style="width:${pct}%"></div></div>`
+            + `<div class="learn-bar-sub" id="learnSub">${count} de ${total} tarjetas aprendidas</div>`;
+        const anchor = document.querySelector('#mainContent .service-desc');
+        if (anchor) anchor.insertAdjacentElement('afterend', bar);
+        else document.getElementById('mainContent').prepend(bar);
+    }
+
     function decorateFavorites() {
         const favs = loadFavs();
         document.querySelectorAll('#mainContent .card-item, #mainContent .term-card').forEach(card => {
@@ -1554,6 +1620,7 @@
         else if (tab === 'quiz') renderQuiz();
         else if (tab === 'favoritos') renderFavoritos();
         decorateFavorites();
+        decorateLearned();
         setFraseAnimo();
         window.scrollTo(0, 0);
     }
