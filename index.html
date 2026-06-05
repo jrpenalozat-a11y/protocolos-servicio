@@ -65,9 +65,59 @@
         }
         .header-bar {
             display: flex;
-            justify-content: flex-end;
-            padding: 12px 16px 0 16px;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+            padding: 12px 16px 4px 16px;
         }
+        .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .brand-mark { width: 48px; height: 48px; flex: none; }
+        .brand-text { display: flex; flex-direction: column; line-height: 1.04; min-width: 0; }
+        .brand-title { font-weight: 800; font-size: 1.1rem; color: var(--accent); letter-spacing: .2px; white-space: nowrap; }
+        .brand-tag { font-size: .56rem; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-secondary); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .header-actions { display: flex; align-items: center; gap: 8px; flex: none; }
+        @media (max-width: 400px){ .brand-title{ font-size: .95rem; } .brand-mark{ width: 42px; height: 42px; } .brand-tag{ letter-spacing: .8px; } }
+        /* ===== SPLASH / PUERTA ===== */
+        #splash { position: fixed; inset: 0; z-index: 9999; overflow: hidden; }
+        #splash.cerrado { display: none; }
+        .puerta {
+            position: absolute; top: 0; bottom: 0; width: 50.5%;
+            background: linear-gradient(135deg, #11171e 0%, #0a0d11 100%);
+            transition: transform 1s cubic-bezier(.76,0,.24,1);
+            z-index: 1;
+        }
+        .puerta.izq { left: 0; border-right: 2px solid rgba(45,212,191,.35); box-shadow: inset -18px 0 30px rgba(0,0,0,.4); }
+        .puerta.der { right: 0; border-left: 2px solid rgba(45,212,191,.35); box-shadow: inset 18px 0 30px rgba(0,0,0,.4); }
+        /* manija/línea decorativa en cada puerta */
+        .puerta.izq::after, .puerta.der::after {
+            content: ""; position: absolute; top: 50%; transform: translateY(-50%);
+            width: 4px; height: 90px; border-radius: 4px; background: rgba(45,212,191,.5);
+        }
+        .puerta.izq::after { right: 14px; }
+        .puerta.der::after { left: 14px; }
+        #splash.abierta .puerta.izq { transform: translateX(-100%); }
+        #splash.abierta .puerta.der { transform: translateX(100%); }
+        .splash-centro {
+            position: absolute; inset: 0; z-index: 2;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 8px; text-align: center; padding: 24px;
+            transition: opacity .55s ease, transform .55s ease;
+        }
+        #splash.abierta .splash-centro { opacity: 0; transform: scale(1.15); pointer-events: none; }
+        .splash-logo { width: 132px; height: 132px; filter: drop-shadow(0 6px 18px rgba(45,212,191,.25)); animation: floaty 3s ease-in-out infinite; }
+        @keyframes floaty { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-8px); } }
+        .splash-title { font-size: 1.7rem; font-weight: 800; color: var(--accent); margin-top: 6px; }
+        .splash-tag { font-size: .68rem; letter-spacing: 3px; text-transform: uppercase; color: #9aa6b2; }
+        .splash-btn {
+            margin-top: 26px; background: var(--accent); color: #06231f;
+            border: none; border-radius: 40px; padding: 15px 40px;
+            font-size: 1.08rem; font-weight: 800; cursor: pointer;
+            box-shadow: 0 8px 24px rgba(45,212,191,.4); transition: transform .15s ease, box-shadow .15s ease;
+        }
+        .splash-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(45,212,191,.55); }
+        .splash-btn:active { transform: translateY(0); }
+        .splash-btn-icon { display: inline-block; }
         .dark-mode-toggle {
             background: var(--btn-bg);
             border: none;
@@ -404,23 +454,55 @@
     </style>
 </head>
 <body>
+<div id="splash">
+    <div class="puerta izq"></div>
+    <div class="puerta der"></div>
+    <div class="splash-centro">
+        <svg class="splash-logo" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo">
+            <path d="M5 45 L20 20 L26 29 L34 14 L48 45" stroke="#2dd4bf" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 45 L13 33 L18 39" stroke="#5eead4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+            <path d="M37.5 30 C33.5 26 36.2 21.5 38 18 C38.8 20.8 41 20.6 40.6 23.4 C42.6 24 42 28 39.6 29 C41 30.7 39 32 37.5 30 Z" fill="#ef9b4b" stroke="#ef9b4b" stroke-width="0.6" stroke-linejoin="round"/>
+            <path d="M7 47 C20 51 35 49 44 41 C49 36.5 45 30.5 40.5 33 C36.8 35 39.5 39.5 43 38.5" stroke="#2dd4bf" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="splash-title">Protocolos de Servicio</div>
+        <div class="splash-tag">Altura · Imparidad · Movimiento</div>
+        <button class="splash-btn" onclick="abrirPuerta()">Entrar <span class="splash-btn-icon">🚪</span></button>
+    </div>
+</div>
 <div class="app-card">
     <div class="header-bar">
-        <button class="install-btn" id="installBtn" hidden>⬇️ Instalar app</button>
-        <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
+        <div class="brand">
+            <svg class="brand-mark" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo">
+                <!-- montaña (Altura) -->
+                <path d="M5 45 L20 20 L26 29 L34 14 L48 45" stroke="#2dd4bf" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 45 L13 33 L18 39" stroke="#5eead4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+                <!-- llama (fuego/pasión) -->
+                <path d="M37.5 30 C33.5 26 36.2 21.5 38 18 C38.8 20.8 41 20.6 40.6 23.4 C42.6 24 42 28 39.6 29 C41 30.7 39 32 37.5 30 Z" fill="#ef9b4b" stroke="#ef9b4b" stroke-width="0.6" stroke-linejoin="round"/>
+                <!-- ola en espiral (Movimiento) -->
+                <path d="M7 47 C20 51 35 49 44 41 C49 36.5 45 30.5 40.5 33 C36.8 35 39.5 39.5 43 38.5" stroke="#2dd4bf" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="brand-text">
+                <span class="brand-title">Protocolos de Servicio</span>
+                <span class="brand-tag">Altura · Imparidad · Movimiento</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="install-btn" id="installBtn" hidden>⬇️ Instalar app</button>
+            <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
+        </div>
     </div>
     <div class="main-buttons" id="mainNav">
-        <button class="main-btn" data-tab="protocolos">📋 Protocolos</button>
+        <button class="main-btn active" data-tab="protocolos">📋 Protocolos</button>
         <button class="main-btn" data-tab="atencionMesa">🤝 Atención en Mesa</button>
         <button class="main-btn" data-tab="alergenos">🚨 Alérgenos</button>
         <button class="main-btn" data-tab="bebestibles">🍷 Bebestibles</button>
         <button class="main-btn" data-tab="maridajes">🍷🍽️ Maridajes</button>
         <button class="main-btn" data-tab="carnes">🥩 Carnes</button>
-        <button class="main-btn active" data-tab="productosMar">🌊 Productos del Mar</button>
+        <button class="main-btn" data-tab="productosMar">🌊 Productos del Mar</button>
         <button class="main-btn" data-tab="vegetales">🌽 Vegetales Chilenos</button>
+        <button class="main-btn" data-tab="quesos">🧀 Quesos</button>
         <button class="main-btn" data-tab="restaurantes">🛎️ Servicio por Local</button>
         <button class="main-btn" data-tab="diccionario">📖 Diccionario</button>
-        <button class="main-btn" data-tab="calculadora">🧮 Cuenta</button>
         <button class="main-btn" data-tab="favoritos">⭐ Favoritos</button>
     </div>
     <div class="motivation-bar" id="motivationBar" title="Toca para otra frase">¡A darle con todo! 🔥</div>
@@ -435,7 +517,7 @@
     const protocolos = {
         frances: { titulo: "🇫🇷 Servicio Francés", descripcion: "Origen: Francia, s. XIX. Servicio lujoso con terminación en mesa (guéridon). Flameados, cortes de carne, emplatado delante del comensal.", pasos: ["🔹 Verificar mise en place: guéridon, quemador, utensilios", "🔹 Explicar el plato a terminar", "🔹 Realizar terminación (flambeado, corte, salsa)", "🔹 Emplatar con pinzas y cuchara", "🔹 Servir por la derecha", "🔹 Retirar el guéridon y limpiar migas"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Servicio+Francés" },
         ingles: { titulo: "🇬🇧 Servicio Inglés", descripcion: "Origen: Inglaterra victoriana. Fuentes en mesa, el garzón sirve las raciones. Formal y eficiente.", pasos: ["🔹 Presentar la fuente principal al anfitrión", "🔹 Servir la ración con cuchara y tenedor", "🔹 Ofrecer guarniciones", "🔹 Preguntar si desea más", "🔹 Retirar la fuente vacía por la derecha"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Servicio+Inglés" },
-        americano: { titulo: "🇺🇸 Servicio Americano", descripcion: "Origen: EE.UU. Plato emplatado en cocina. Norma: servir y retirar siempre por la derecha.", pasos: ["🔹 Llevar el plato en bandeja", "🔹 Servir por la derecha", "🔹 Servir bebidas por la derecha", "🔹 Retirar platos sucios por la derecha", "🔹 Limpiar migas con paleta"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Servicio+Americano" },
+        americano: { titulo: "🇺🇸 Servicio Americano", descripcion: "Origen: EE.UU. Plato emplatado en cocina. En el americano clásico se sirve y se retira por la derecha (el plato ya viene listo, no hay que presentar fuente). ⚠️ Ojo: esta norma puede variar según el local; algunos sirven la comida por la izquierda. Lo que NO cambia: las bebidas y el retiro siempre van por la derecha.", pasos: ["🔹 Llevar el plato en bandeja", "🔹 Servir el plato por la derecha (norma clásica del americano)", "🔹 Servir bebidas por la derecha", "🔹 Retirar platos sucios por la derecha", "🔹 Limpiar migas con paleta", "🔹 Nota: confirma el lado de servir según el protocolo de tu local"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Servicio+Americano" },
         ruso: { titulo: "🇷🇺 Servicio Ruso", descripcion: "Origen: Rusia zarista. Se muestra la fuente antes de servir, teatral.", pasos: ["🔹 Mostrar la fuente decorada", "🔹 Servir la ración con pinzas", "🔹 Servir a damas, luego caballeros", "🔹 Ofrecer segunda ración", "🔹 Mantener fuentes calientes"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Servicio+Ruso" },
         directo: { titulo: "🍽️ Servicio Directo (Buffet)", descripcion: "Autoservicio. El personal repone alimentos y retira platos.", pasos: ["🔹 Explicar distribución del buffet", "🔹 Mantener utensilios limpios", "🔹 Reponer bandejas", "🔹 Retirar platos sucios", "🔹 Limpiar derrames"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Servicio+Directo" },
         bandeja: { titulo: "🛎️ Servicio en Bandeja (Room Service)", descripcion: "Servicio en habitaciones de hotel.", pasos: ["🔹 Llamar e identificarse", "🔹 Preguntar dónde colocar", "🔹 Desplegar mantelería", "🔹 Destapar los platos", "🔹 Acordar horario para retirar"], imagen: "https://placehold.co/400x200/e8dccc/5a3e2b?text=Room+Service" },
@@ -801,6 +883,34 @@
         { plato: "🍰 Postres dulces", vino: "Late Harvest · Moscato", motivo: "Regla de oro: el vino debe ser más dulce que el postre." }
     ];
 
+    // ========================== QUESOS ==========================
+    const quesos = {
+        internacionales: [
+            { nombre: "🇳🇱 Gouda", familia: "Semiduro", desc: "El favorito de los chilenos, ¡y con razón! Semiduro, cremoso y con ese dulzor a nuez que conquista a todos. Funde de maravilla y es el rey indiscutido de las tablas, sándwiches y el desayuno.", marida: "Carmenère, Merlot o una cerveza rubia." },
+            { nombre: "🇬🇧 Cheddar", familia: "Semiduro", desc: "Intenso, firme y de un naranjo inconfundible. Su sabor profundo y ligeramente ácido sube de potencia con los años de maduración. ¡Estrella absoluta de hamburguesas, salsas y nachos!", marida: "Cabernet Sauvignon o una cerveza ámbar." },
+            { nombre: "🇮🇹 Grana Padano", familia: "Duro", desc: "El hermano accesible y encantador del parmesano. Duro, granuloso y cargado de umami salado. Rallado sobre las pastas es pura magia, y en lascas con un buen vino, un lujo.", marida: "Chianti, Sangiovese o un espumante brut." },
+            { nombre: "🇮🇹 Parmigiano Reggiano", familia: "Duro", desc: "¡El Rey de los Quesos! Duro, con cristales crujientes que estallan en sabor umami. 24 meses o más de paciencia en cada lasca. Imprescindible en risottos, pastas y picoteos gourmet.", marida: "Lambrusco, tinto con cuerpo o aceto balsámico." },
+            { nombre: "🇫🇷 Camembert", familia: "Blando de corteza", desc: "Una joyita francesa de corteza blanca aterciopelada e interior que se derrite como mantequilla. Aroma campestre y sabor a champiñón. ¡Tibio al horno es una experiencia inolvidable!", marida: "Sidra, Chardonnay o Pinot Noir." },
+            { nombre: "🇫🇷 Brie", familia: "Blando de corteza", desc: "Elegante, suave y mantecoso, apodado 'el Rey de los Quesos' en Francia. Su textura sedosa y sabor delicado lo hacen perfecto para tablas finas. ¡Con un toque de miel, irresistible!", marida: "Espumante, Chardonnay o Champagne." },
+            { nombre: "🇪🇸 Manchego", familia: "Duro", desc: "El orgullo español hecho de leche de oveja. Firme, con notas a frutos secos y un final picantito que enamora. La estrella de cualquier tabla de tapas que se respete.", marida: "Tempranillo, Rioja o un Jerez." },
+            { nombre: "🇨🇭 Gruyère", familia: "Duro", desc: "El alma de la fondue suiza. Duro, con un dulzor a nuez que se intensifica al madurar. Funde de forma espectacular y da carácter a gratinados y al clásico croque monsieur.", marida: "Chardonnay, vino blanco seco o Pinot Noir." },
+            { nombre: "🇨🇭 Emmental", familia: "Semiduro", desc: "¡El de los famosos agujeros! Suave, dulzón y con un sabor amable que gusta a grandes y chicos. Funde precioso y es otro pilar de la fondue. El queso 'de dibujo animado' por excelencia.", marida: "Vino blanco afrutado o sidra." },
+            { nombre: "🇮🇹 Mozzarella", familia: "Fresco", desc: "La reina absoluta de la pizza. Fresca, elástica y lechosa, con esa textura que se estira y enamora. En una caprese con tomate y albahaca, es pura poesía italiana.", marida: "Pinot Grigio, Sauvignon Blanc o espumante." },
+            { nombre: "🇮🇹 Provolone", familia: "Semiduro", desc: "Semiduro y de personalidad fuerte. ¡A la parrilla se transforma en la legendaria provoleta, dorada por fuera y fundida por dentro! Un imperdible del asado.", marida: "Malbec, Bonarda o tinto joven." },
+            { nombre: "🇫🇷 Roquefort", familia: "Azul", desc: "El rey de los azules, de leche de oveja y vetas verde-azuladas. Intenso, salado y picante, con un carácter que no deja indiferente. Para paladares valientes y amantes del sabor potente.", marida: "Late Harvest, Oporto o Sauternes." },
+            { nombre: "🇮🇹 Gorgonzola", familia: "Azul", desc: "El azul italiano más seductor: cremoso, con un equilibrio perfecto entre dulce y picante. Derretido en una salsa para ñoquis o pastas, es un abrazo al paladar.", marida: "Vino dulce, Moscato o tinto con cuerpo." },
+            { nombre: "🇳🇱 Edam", familia: "Semiduro", desc: "Reconocible por su bolita de cera roja. Suave, ligero y de sabor amable que madura hacia notas más intensas. Súper popular en Chile para sándwiches y picoteos del día a día.", marida: "Merlot suave o cerveza lager." },
+            { nombre: "🇮🇹 Pecorino", familia: "Duro", desc: "Queso de oveja salado e intenso, con muchísimo carácter. El protagonista de la auténtica cacio e pepe romana. Rallado sobre las pastas, lleva el sabor a otro nivel.", marida: "Tinto italiano con cuerpo o Chianti." }
+        ],
+        chilenos: [
+            { nombre: "🇨🇱 Chanco", familia: "Semiduro", desc: "¡El emblema quesero de Chile! Semiblando, suave y mantecoso, originario de la zona de Chanco en el Maule. Derrite delicioso en un sándwich caliente o un buen pastel. Sabor de hogar.", marida: "Carmenère, País o una cerveza artesanal chilena." },
+            { nombre: "🇨🇱 Mantecoso", familia: "Semiduro", desc: "Cremoso, untable y con un sabor suave que es puro cariño. Hermano del chanco pero más blando y mantequilloso. ¡Sobre una marraqueta calentita es el desayuno perfecto del chileno!", marida: "Sauvignon Blanc o vino País." },
+            { nombre: "🇨🇱 Quesillo", familia: "Fresco", desc: "Fresco, blanco y bajito en sal, ligero y húmedo. Versátil como pocos: en ensaladas, con tomate, dentro de sopaipillas o con un chorrito de miel. ¡Sano y rico a la vez!", marida: "Vino blanco fresco o agua de hierbas." },
+            { nombre: "🇨🇱 Queso de Cabra", familia: "Fresco", desc: "Artesanal e intenso, con esa acidez característica que lo hace inconfundible. Se elabora en el norte y centro del país en pequeñas rondas. Untado en pan tostado, una delicia con personalidad.", marida: "Sauvignon Blanc o un espumante seco." },
+            { nombre: "🇨🇱 Queso de Hoja", familia: "Fresco", desc: "Tesoro del sur de Chile: fresco y delicado, madurado envuelto en hojas de acelga que le dan su forma y aroma únicos. Pura tradición campesina en cada bocado.", marida: "Vino blanco suave o chicha." }
+        ]
+    };
+
     // ========================== ATENCIÓN EN MESA ==========================
     const atencionMesa = {
         secuencia: {
@@ -979,6 +1089,13 @@
             "Conoce tus tragos y recomienda con seguridad. 😎",
             "La barra también se atiende con onda. 🛎️"
         ],
+        quesos: [
+            "Un buen queso bien descrito sube la cuenta (y la propina). 🧀",
+            "Del gouda al roquefort: domina la tabla y luce. 😎",
+            "Recomienda el queso justo para cada vino. 🍷",
+            "Saber de quesos te hace un garzón gourmet. ✨",
+            "La tabla de quesos también se cuenta con onda. 🙌"
+        ],
         maridajes: [
             "El maridaje correcto hace brillar el plato. 🍷",
             "Sugiere un buen vino y suma a la experiencia. ✨",
@@ -1020,13 +1137,6 @@
             "Saber los términos te da seguridad. 💬",
             "Un garzón que sabe, se nota. 😎",
             "Aprende una palabra nueva cada turno. 🧠"
-        ],
-        calculadora: [
-            "Cuenta clara, cliente contento. 🧮",
-            "10% sugerido: la propina del buen servicio. 💰",
-            "Divide la cuenta sin enredos. ✌️",
-            "Rapidez y exactitud al cobrar. 👌",
-            "Buen servicio = buena propina. ¡Vamos! 😉"
         ],
         favoritos: [
             "Tus tarjetas clave, siempre a mano. ⭐",
@@ -1080,7 +1190,7 @@
         const proto = protocolos[key];
         const div = document.getElementById('protoContent');
         if (!div) return;
-        const conFoto = { frances: 1, ingles: 1, americano: 1, ruso: 1, directo: 1, bandeja: 1 };
+        const conFoto = { frances: 1, ingles: 1, americano: 1, ruso: 1, directo: 1, bandeja: 1, montaje: 1, quejas: 1 };
         const media = conFoto[key] ? `<img class="proto-illus" src="img/${key}.jpg" alt="${proto.titulo}" loading="lazy">` : (protoArte[key] || protoArte.montaje);
         div.innerHTML = `<div class="service-title">${proto.titulo}</div><div class="service-desc">${proto.descripcion}</div><div class="image-place">${media}</div><div class="checklist" id="checklist-${key}"><h3>✅ Checklist <span class="progress-indicator" id="progressCounter">0/${proto.pasos.length}</span><button class="reset-btn" data-reset>↺ Reiniciar</button></h3>${proto.pasos.map(p => `<label class="checklist-item"><input type="checkbox"> ${p}</label>`).join("")}</div>`;
         bindChecklist(`checklist-${key}`, `proto_${key}`);
@@ -1096,11 +1206,32 @@
         bindChecklist('checklist-vino', 'checklist_vino');
     }
 
+    function renderQuesos() {
+        const container = document.getElementById('mainContent');
+        const card = q => `<div class="card-item"><div class="item-name">${q.nombre} <span class="std-badge">${q.familia}</span></div><div class="item-desc">${q.desc}</div><div class="item-prep">🍷 <strong>Marida con:</strong> ${q.marida}</div></div>`;
+        container.innerHTML = `<div class="service-title">🧀 Quesos</div>
+            <div class="service-desc">El queso es el gran protagonista de una buena tabla, de una entrada con onda o del cierre perfecto de una comida. Conocer su origen, su textura y su sabor te permite <strong>describirlo con seguridad, recomendar el maridaje justo y elevar toda la experiencia</strong> (y de paso, la propina 😉). Aquí tienes los clásicos del mundo que más se lucen en las mesas chilenas y nuestros quesos nacionales, con identidad y tradición propia. 🧀✨</div>
+            <div class="image-place"><img src="img/quesos.jpg" alt="Quesos" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
+            <div class="calc-card">
+                <div class="item-name">🧀 Claves para lucirte con los quesos</div>
+                <ul style="margin:8px 0 0 18px; font-size:0.88rem; color:var(--text-secondary); line-height:1.55">
+                    <li style="margin-bottom:5px"><strong>Las 5 familias:</strong> frescos (quesillo, mozzarella), blandos de corteza (brie, camembert), semiduros (gouda, chanco), duros (parmesano, grana padano) y azules (roquefort, gorgonzola).</li>
+                    <li style="margin-bottom:5px"><strong>Temperatura:</strong> sácalos del frío <strong>30 a 60 min antes</strong> de servir. A temperatura ambiente despliegan todo su aroma y sabor.</li>
+                    <li style="margin-bottom:5px"><strong>Orden en la tabla:</strong> del más suave al más intenso, así el paladar no se satura. El azul y el más añejo, siempre al final.</li>
+                    <li style="margin-bottom:5px"><strong>Acompáñalos:</strong> frutos secos, miel, mermeladas, uvas, higos y un buen pan o galletas elevan cualquier tabla.</li>
+                    <li style="margin-bottom:5px"><strong>Cómo describirlos:</strong> menciona su <em>origen</em>, su <em>textura</em> (cremoso, firme, granuloso) y una <em>nota de sabor</em> (a nuez, mantequilla, picante). ¡Eso vende!</li>
+                </ul>
+            </div>
+            <div class="subseccion"><h2>🌍 Quesos del Mundo (${quesos.internacionales.length})</h2><div class="grid-cards">${quesos.internacionales.map(card).join("")}</div></div>
+            <div class="subseccion"><h2>🇨🇱 Quesos Chilenos (${quesos.chilenos.length})</h2><div class="grid-cards">${quesos.chilenos.map(card).join("")}</div></div>`;
+    }
+
     function renderCarnes() {
         const container = document.getElementById('mainContent');
         const card = (c, eq) => `<div class="card-item"><div class="item-name">${eq ? `🇨🇱 ${c.nombre} → 🇺🇸 ${c.equivalente}` : c.nombre}</div><div class="item-desc">${c.desc}</div><div class="item-prep">🔥 <strong>Punto:</strong> ${c.punto}</div><div class="item-prep">🍷 <strong>Maridaje:</strong> ${c.maridaje}</div></div>`;
         container.innerHTML = `<div class="service-title">🥩 Carnes</div>
             <div class="service-desc">Del lomo a la parrilla al asado al palo: cada corte con su punto justo y con qué vino cae mejor. 🔥🍷</div>
+            <div class="image-place"><img src="img/carnes.jpg" alt="Parrilla y carnes" loading="lazy"></div>
             <div class="subseccion"><h2>🐂 Vacuno - Cortes para Parrilla</h2><div class="grid-cards">${carnes.vacunoParrilla.map(c => card(c, true)).join("")}</div>
             <h2>🍲 Vacuno - Cortes para Olla</h2><div class="grid-cards">${carnes.vacunoOlla.map(c => card(c, true)).join("")}</div></div>
             <div class="subseccion"><h2>🐖 Cerdo</h2><div class="grid-cards">${carnes.cerdo.map(c => card(c, false)).join("")}</div></div>
@@ -1108,31 +1239,30 @@
             <div class="subseccion"><h2>🐗 Jabalí</h2><div class="grid-cards">${carnes.jabali.map(c => card(c, false)).join("")}</div></div>
             <div class="subseccion"><h2>🌿 Otras carnes</h2><div class="grid-cards">${carnes.otrasCarnes.map(c => card(c, false)).join("")}</div></div>
             <div class="subseccion"><h2>🔥 Al palo / Espiedo (asado lento)</h2><div class="service-desc">Cortes y piezas grandes ideales para cocción lenta girando frente al fuego (al palo, en cruz o al espiedo): quedan dorados por fuera y jugosos por dentro.</div><div class="grid-cards">${carnes.alPalo.map(c => card(c, false)).join("")}</div></div>
-            <div class="subseccion"><h2>🌡️ Puntos de Cocción</h2><div class="grid-cards">${carnes.puntosCarne.map(p => p.nota ? `<div class="card-item"><div class="item-name">⚠️ Nota</div><div class="item-desc">${p.nota}</div></div>` : `<div class="card-item"><div class="item-name">🇨🇱 ${p.chile} <span class="std-badge">Chile</span><br>🇺🇸 ${p.usa}</div><div class="item-desc">🌡️ ${p.temp} · ⏱️ ${p.tiempo}<br>${p.desc}</div></div>`).join("")}</div></div>
-            <div class="image-place"><img src="img/carnes.jpg" alt="Parrilla y carnes" loading="lazy"></div>`;
+            <div class="subseccion"><h2>🌡️ Puntos de Cocción</h2><div class="grid-cards">${carnes.puntosCarne.map(p => p.nota ? `<div class="card-item"><div class="item-name">⚠️ Nota</div><div class="item-desc">${p.nota}</div></div>` : `<div class="card-item"><div class="item-name">🇨🇱 ${p.chile} <span class="std-badge">Chile</span><br>🇺🇸 ${p.usa}</div><div class="item-desc">🌡️ ${p.temp} · ⏱️ ${p.tiempo}<br>${p.desc}</div></div>`).join("")}</div></div>`;
     }
 
     function renderProductosMar() {
         const container = document.getElementById('mainContent');
         container.innerHTML = `<div class="service-title">🌊 Productos del Mar</div>
             <div class="service-desc">Del mar chileno a tu carta: pescados, mariscos y crustáceos, con su sabor, textura y cómo lucirlos. 🌊</div>
+            <div class="image-place"><img src="img/mar.jpg" alt="Productos del mar" loading="lazy"></div>
             <div class="subseccion"><h2>🐟 Pescados Chilenos (${pescadosChile.length})</h2><div class="grid-cards">${pescadosChile.map(p => `<div class="card-item"><div class="item-name">${p.nombre}</div><div class="item-desc">${p.desc}</div><div class="item-prep">🍷 <strong>Maridaje:</strong> ${p.maridaje}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>🐚 Mariscos de Orilla</h2><div class="grid-cards">${mariscos.orilla.map(m => `<div class="card-item"><div class="item-name">${m.nombre}</div><div class="item-desc">${m.desc}</div><div class="item-prep">🍷 <strong>Maridaje:</strong> ${m.maridaje}</div></div>`).join("")}</div>
             <h2>🐚 Mariscos de Fondo</h2><div class="grid-cards">${mariscos.fondo.map(m => `<div class="card-item"><div class="item-name">${m.nombre}</div><div class="item-desc">${m.desc}</div><div class="item-prep">🍷 <strong>Maridaje:</strong> ${m.maridaje}</div></div>`).join("")}</div></div>
-            <div class="subseccion"><h2>🦞 Crustáceos Chilenos</h2><div class="grid-cards">${crustaceos.map(c => `<div class="card-item"><div class="item-name">${c.nombre}</div><div class="item-desc">${c.desc}</div><div class="item-prep">🍷 <strong>Maridaje:</strong> ${c.maridaje}</div></div>`).join("")}</div></div>
-            <div class="image-place"><img src="img/mar.jpg" alt="Productos del mar" loading="lazy"></div>`;
+            <div class="subseccion"><h2>🦞 Crustáceos Chilenos</h2><div class="grid-cards">${crustaceos.map(c => `<div class="card-item"><div class="item-name">${c.nombre}</div><div class="item-desc">${c.desc}</div><div class="item-prep">🍷 <strong>Maridaje:</strong> ${c.maridaje}</div></div>`).join("")}</div></div>`;
     }
 
     function renderVegetales() {
         const container = document.getElementById('mainContent');
         container.innerHTML = `<div class="service-title">🌽 Vegetales Chilenos</div>
             <div class="service-desc">Tesoros nativos de Chile: papas chilotas, frutos, hierbas y más. Pura identidad. 🌱</div>
+            <div class="image-place"><img src="img/vegetales.jpg" alt="Vegetales chilenos" loading="lazy"></div>
             <div class="subseccion"><h2>${vegetalesChilenos.papas.titulo}</h2><div class="service-desc">${vegetalesChilenos.papas.descripcion}</div><div class="grid-cards">${vegetalesChilenos.papas.variedades.map(p => `<div class="card-item"><div class="item-name">${p.nombre}</div><div class="item-desc">${p.desc}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>${vegetalesChilenos.otrosTubérculos.titulo}</h2><div class="service-desc">${vegetalesChilenos.otrosTubérculos.descripcion}</div><div class="grid-cards">${vegetalesChilenos.otrosTubérculos.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>${vegetalesChilenos.frutosNativos.titulo}</h2><div class="service-desc">${vegetalesChilenos.frutosNativos.descripcion}</div><div class="grid-cards">${vegetalesChilenos.frutosNativos.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>${vegetalesChilenos.hierbasCondimentos.titulo}</h2><div class="service-desc">${vegetalesChilenos.hierbasCondimentos.descripcion}</div><div class="grid-cards">${vegetalesChilenos.hierbasCondimentos.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>
-            <div class="subseccion"><h2>${vegetalesChilenos.otros.titulo}</h2><div class="service-desc">${vegetalesChilenos.otros.descripcion}</div><div class="grid-cards">${vegetalesChilenos.otros.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>
-            <div class="image-place"><img src="img/vegetales.jpg" alt="Vegetales chilenos" loading="lazy"></div>`;
+            <div class="subseccion"><h2>${vegetalesChilenos.otros.titulo}</h2><div class="service-desc">${vegetalesChilenos.otros.descripcion}</div><div class="grid-cards">${vegetalesChilenos.otros.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>`;
     }
 
     function renderDiccionario() {
@@ -1151,6 +1281,9 @@
         container.innerHTML = `
             <div class="service-title">🛎️ Servicio por Tipo de Local</div>
             <div class="service-desc">Cada local tiene su ritmo. 🛎️ Encuentra tu tipo de restaurant y aplica el estilo de servicio que mejor le calza.</div>
+            <div class="image-place">
+                <img src="img/local.jpg" alt="Restaurante chileno" loading="lazy">
+            </div>
             <div class="grid-cards">
                 ${restaurantesChile.map(r => `
                     <div class="card-item">
@@ -1161,9 +1294,6 @@
                     </div>
                 `).join("")}
             </div>
-            <div class="image-place">
-                <img src="img/local.jpg" alt="Restaurante chileno" loading="lazy">
-            </div>
         `;
     }
 
@@ -1172,6 +1302,7 @@
         const A = atencionMesa;
         container.innerHTML = `<div class="service-title">🤝 Atención en Mesa</div>
             <div class="service-desc">El trato y la lectura del cliente: lo que más se nota en la experiencia (y en la propina 😉).</div>
+            <div class="image-place"><img src="img/atencion-mesa.jpg" alt="Atención en mesa" loading="lazy"></div>
             <div class="subseccion"><h2>${A.secuencia.titulo}</h2><div class="service-desc">${A.secuencia.desc}</div>
                 <div class="grid-cards">${A.secuencia.momentos.map(m => `<div class="card-item"><div class="item-name">${m.momento}</div><div class="item-desc">${m.que}</div><div class="item-prep">💬 <em>${m.frase}</em></div><div class="item-desc" style="color:#ff8a80">⚠️ ${m.error}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>${A.gestos.titulo}</h2><div class="service-desc">${A.gestos.desc}</div>
@@ -1187,6 +1318,7 @@
         const container = document.getElementById('mainContent');
         container.innerHTML = `<div class="service-title">🍷🍽️ Maridajes</div>
             <div class="service-desc">¿Qué le pongo al lado? 🍷 La guía para que ningún maridaje te pille de sorpresa. Regla de oro: probar y disfrutar.</div>
+            <div class="image-place"><img src="img/maridajes.jpg" alt="Maridajes" loading="lazy"></div>
             <div class="calc-card">
                 <div class="item-name">🍷 ¿Qué es el maridaje?</div>
                 <div class="item-desc" style="margin-top:8px">Es el arte de juntar un plato con una bebida (vino, trago o cerveza) para que los dos se luzcan más juntos que por separado. Cuando calza bien es como un 1 + 1 = 3: el plato realza a la bebida y la bebida realza al plato. 😎</div>
@@ -1210,35 +1342,6 @@
             <div class="checklist" id="checklist-alergenos"><h3>✅ Protocolo <span class="progress-indicator" id="progressCounter">0/${A.protocolo.length}</span><button class="reset-btn" data-reset>↺ Reiniciar</button></h3>${A.protocolo.map(p => `<label class="checklist-item"><input type="checkbox"> ${p}</label>`).join("")}</div>
             <div class="subseccion"><h2>Los 14 alérgenos principales</h2><div class="grid-cards">${A.lista.map(a => `<div class="card-item"><div class="item-name">⚠️ ${a.nombre}</div><div class="item-desc"><strong>Dónde se esconde:</strong> ${a.donde}</div></div>`).join("")}</div></div>`;
         bindChecklist('checklist-alergenos', 'checklist_alergenos');
-    }
-
-    function renderCalculadora() {
-        const container = document.getElementById('mainContent');
-        container.innerHTML = `<div class="service-title">🧮 Cuenta y Propina</div>
-            <div class="service-desc">Calcula la propina sugerida y divide la cuenta entre los comensales. En Chile la propina sugerida es 10%.</div>
-            <div class="calc-card">
-                <label class="calc-label">Monto de la cuenta ($)</label>
-                <input id="calcMonto" class="calc-input" type="number" inputmode="numeric" min="0" placeholder="0">
-                <label class="calc-label">N° de personas</label>
-                <input id="calcPers" class="calc-input" type="number" inputmode="numeric" min="1" value="1">
-                <label class="calc-label">Propina (%)</label>
-                <input id="calcTip" class="calc-input" type="number" inputmode="numeric" min="0" value="10">
-            </div>
-            <div class="calc-card" id="calcResultado"></div>`;
-        const fmt = n => '$' + Math.round(n).toLocaleString('es-CL');
-        const compute = () => {
-            const monto = parseFloat(document.getElementById('calcMonto').value) || 0;
-            const pers = Math.max(1, parseInt(document.getElementById('calcPers').value) || 1);
-            const tip = parseFloat(document.getElementById('calcTip').value) || 0;
-            const propina = monto * tip / 100;
-            const total = monto + propina;
-            document.getElementById('calcResultado').innerHTML = `
-                <div class="calc-result-row"><span>Propina (${tip}%)</span><strong>${fmt(propina)}</strong></div>
-                <div class="calc-result-row"><span>Total con propina</span><strong>${fmt(total)}</strong></div>
-                <div class="calc-result-row" style="border:none"><span>Por persona (÷${pers})</span><strong>${fmt(total / pers)}</strong></div>`;
-        };
-        ['calcMonto', 'calcPers', 'calcTip'].forEach(id => document.getElementById(id).addEventListener('input', compute));
-        compute();
     }
 
     // ================== FAVORITOS ==================
@@ -1286,7 +1389,7 @@
     }
 
     // ================== NAVEGACIÓN PRINCIPAL ==================
-    let currentTab = 'productosMar';
+    let currentTab = 'protocolos';
     function setMainTab(tab) {
         currentTab = tab;
         document.querySelectorAll('.main-btn').forEach(btn => {
@@ -1301,9 +1404,9 @@
         else if (tab === 'carnes') renderCarnes();
         else if (tab === 'productosMar') renderProductosMar();
         else if (tab === 'vegetales') renderVegetales();
+        else if (tab === 'quesos') renderQuesos();
         else if (tab === 'restaurantes') renderRestaurantesChile();
         else if (tab === 'diccionario') renderDiccionario();
-        else if (tab === 'calculadora') renderCalculadora();
         else if (tab === 'favoritos') renderFavoritos();
         decorateFavorites();
         setFraseAnimo();
@@ -1324,6 +1427,13 @@
         deferredPrompt = null;
     });
 
+    function abrirPuerta() {
+        const s = document.getElementById('splash');
+        if (!s) return;
+        s.classList.add('abierta');
+        setTimeout(() => s.classList.add('cerrado'), 1050);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         initDarkMode();
         updateFavCount();
@@ -1343,7 +1453,7 @@
             deferredPrompt = null;
             installBtn.hidden = true;
         });
-        setMainTab('productosMar');
+        setMainTab('protocolos');
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
         }
