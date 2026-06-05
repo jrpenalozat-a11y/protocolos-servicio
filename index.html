@@ -166,6 +166,31 @@
             color: var(--btn-text-active);
             box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
+        .sub-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            padding: 11px 16px;
+            background: var(--checklist-bg);
+            justify-content: center;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .sub-buttons:empty { display: none; }
+        .sub-btn {
+            background: transparent;
+            border: 1.5px solid var(--border-light);
+            padding: 7px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--btn-text);
+            cursor: pointer;
+        }
+        .sub-btn.active {
+            background: var(--btn-bg-active);
+            color: var(--btn-text-active);
+            border-color: var(--btn-bg-active);
+        }
         .proto-btn {
             background: var(--btn-bg);
             border: 1px solid var(--accent);
@@ -573,23 +598,17 @@
         </div>
     </div>
     <div class="main-buttons" id="mainNav">
-        <button class="main-btn active" data-tab="protocolos">📋 Protocolos</button>
-        <button class="main-btn" data-tab="atencionMesa">🤝 Atención en Mesa</button>
-        <button class="main-btn" data-tab="alergenos">🚨 Alérgenos</button>
-        <button class="main-btn" data-tab="bebestibles">🍷 Bebestibles</button>
-        <button class="main-btn" data-tab="cervezas">🍺 Cervezas</button>
-        <button class="main-btn" data-tab="barismo">☕ Barismo</button>
+        <button class="main-btn active" data-tab="servicio">📋 Servicio</button>
+        <button class="main-btn" data-tab="carta">🍽️ La Carta</button>
+        <button class="main-btn" data-tab="bebestibles">🥂 Bebestibles</button>
         <button class="main-btn" data-tab="maridajes">🍷🍽️ Maridajes</button>
-        <button class="main-btn" data-tab="carnes">🥩 Carnes</button>
-        <button class="main-btn" data-tab="productosMar">🌊 Productos del Mar</button>
-        <button class="main-btn" data-tab="vegetales">🌽 Vegetales Chilenos</button>
-        <button class="main-btn" data-tab="quesos">🧀 Quesos</button>
-        <button class="main-btn" data-tab="restaurantes">🛎️ Servicio por Local</button>
+        <button class="main-btn" data-tab="alergenos">🚨 Alérgenos</button>
         <button class="main-btn" data-tab="diccionario">📖 Diccionario</button>
         <button class="main-btn" data-tab="quiz">🧠 Quiz</button>
         <button class="main-btn" data-tab="avance">📊 Mi Avance</button>
         <button class="main-btn" data-tab="favoritos">⭐ Favoritos</button>
     </div>
+    <div class="sub-buttons" id="subNav"></div>
     <div class="motivation-bar" id="motivationBar" title="Toca para otra frase">¡A darle con todo! 🔥</div>
     <div class="content-pane" id="mainContent">
         <div style="text-align: center; padding: 30px 0;">Cargando...</div>
@@ -1051,6 +1070,50 @@
         ]
     };
 
+    // ========================== SIN ALCOHOL ==========================
+    const sinAlcohol = {
+        jugos: [
+            { nombre: "🍊 Jugo Natural", tipo: "Jugo", desc: "Fruta exprimida al momento (naranja, frutilla, piña...). Fresco, lleno de vitaminas y sin agregados. Lo más simple y lo más agradecido.", lleva: "Fruta fresca exprimida, con o sin hielo." },
+            { nombre: "🍋 Limonada", tipo: "Refresco", desc: "El refresco clásico: jugo de limón, agua y un toque de azúcar. Refrescante y universal; admite menta o jengibre para subirle el nivel.", lleva: "Limón, agua y azúcar." },
+            { nombre: "🍵 Té Helado", tipo: "Refresco", desc: "Té frío endulzado, servido con hielo y a veces limón o durazno. Refrescante y menos dulce que una bebida. Ideal para el calor.", lleva: "Té infusionado, frío, con hielo y limón." },
+            { nombre: "💧 Agua Saborizada", tipo: "Refresco", desc: "Agua fresca infusionada con frutas, hierbas o pepino. Hidrata con un toque de sabor y cero azúcar. Elegante y saludable.", lleva: "Agua + frutas/hierbas en infusión fría." },
+            { nombre: "🫧 Soda / Agua con Gas", tipo: "Refresco", desc: "Agua carbonatada, sola o con un toque de jarabe o cítrico. Limpia el paladar y acompaña sin competir. La base de muchos mocktails.", lleva: "Agua carbonatada (+ cítrico o jarabe)." }
+        ],
+        batidos: [
+            { nombre: "🥤 Smoothie", tipo: "Batido", desc: "Batido cremoso de fruta con hielo, yogur o jugo. Espeso, nutritivo y muy popular como snack o desayuno líquido.", lleva: "Fruta + hielo/yogur/jugo, licuado." },
+            { nombre: "🍦 Milkshake", tipo: "Batido", desc: "El clásico batido con leche y helado, dulce y cremoso. Vainilla, chocolate o frutilla; un gusto de toda la vida.", lleva: "Leche + helado, licuado." },
+            { nombre: "🧊 Frappé de Fruta", tipo: "Batido", desc: "Bebida fría y batida con hielo molido, de textura granizada. Refrescante y vistosa, ideal para el verano.", lleva: "Fruta o jarabe + hielo molido, batido." }
+        ],
+        mocktails: [
+            { nombre: "🌿 Virgin Mojito", tipo: "Mocktail", desc: "El mojito sin ron: lima, menta, azúcar y soda. Refrescante, aromático y sin alcohol. El mocktail más pedido.", lleva: "Lima, menta, azúcar y soda." },
+            { nombre: "🍍 Virgin Piña Colada", tipo: "Mocktail", desc: "Piña y crema de coco licuadas con hielo, sin ron. Tropical, cremosa y dulce; unas vacaciones en vaso.", lleva: "Piña, crema de coco y hielo." },
+            { nombre: "🍒 Shirley Temple", tipo: "Mocktail", desc: "Clásico sin alcohol: ginger ale (o lima-limón) con granadina y una cereza. Dulce, burbujeante y festivo; el favorito de los niños.", lleva: "Ginger ale + granadina + cereza." },
+            { nombre: "🍅 Virgin Mary", tipo: "Mocktail", desc: "La Bloody Mary sin vodka: jugo de tomate, limón, salsa inglesa y un toque picante. Sabrosa y salada, ideal de aperitivo.", lleva: "Jugo de tomate, limón y especias." },
+            { nombre: "🫚 Limonada de Jengibre", tipo: "Mocktail", desc: "Limonada con un golpe de jengibre fresco: refrescante con un final picantito y digestivo. Distinta y muy agradable.", lleva: "Limón, jengibre, agua y azúcar." }
+        ]
+    };
+
+    // ========================== SIN CARNE ==========================
+    const sinCarne = {
+        dietas: [
+            { nombre: "🥗 Vegetariano", tipo: "Dieta", desc: "No come carnes ni pescados, pero sí huevos y lácteos (la versión más común es la ovolactovegetariana). Evita la carne, no todo lo animal." },
+            { nombre: "🌱 Vegano", tipo: "Dieta", desc: "No consume NADA de origen animal: ni carne, pescado, huevos, lácteos ni miel. También suele evitar productos de origen animal en general." },
+            { nombre: "🐟 Pescetariano", tipo: "Dieta", desc: "Vegetariano que SÍ come pescados y mariscos, pero no carnes rojas ni blancas (pollo, cerdo, vacuno)." },
+            { nombre: "🍳 Ovolactovegetariano", tipo: "Dieta", desc: "Vegetariano que incluye huevos (ovo) y lácteos (lacto). Es la forma de vegetarianismo más frecuente." },
+            { nombre: "🔄 Flexitariano", tipo: "Dieta", desc: "Base mayoritariamente vegetariana, pero come carne o pescado de vez en cuando. Reduce el consumo, no lo elimina." }
+        ],
+        productos: [
+            { nombre: "🧊 Tofu", tipo: "Sustituto", desc: "Cuajada de soya, suave y neutra; absorbe los sabores que la acompañan. Alta en proteína. Se saltea, fríe o agrega a sopas.", uso: "Salteados, currys y a la parrilla." },
+            { nombre: "🌾 Tempeh", tipo: "Sustituto", desc: "Soya fermentada en bloque firme y de sabor a nuez. Más proteína y textura que el tofu. Se marina y se dora.", uso: "Sándwiches, salteados y a la plancha." },
+            { nombre: "💪 Seitán", tipo: "Sustituto", desc: "Gluten de trigo cocido, la 'carne vegetal' por su textura fibrosa y masticable. Muy proteico (no apto para celíacos).", uso: "Guisos, milanesas y fajitas." },
+            { nombre: "🫘 Legumbres", tipo: "Base", desc: "Lentejas, garbanzos y porotos: la proteína vegetal más accesible y nutritiva. Base de hamburguesas, guisos y untables como el hummus.", uso: "Guisos, hamburguesas y hummus." },
+            { nombre: "🥩 Proteína Vegetal Texturizada", tipo: "Sustituto", desc: "Soya deshidratada que imita la carne molida al hidratarse. Económica y versátil para reemplazar la carne picada.", uso: "Boloñesa, tacos y rellenos." },
+            { nombre: "🥛 Leches Vegetales", tipo: "Sustituto", desc: "Bebidas de soya, almendra, avena o coco que reemplazan la leche. Cada una con su sabor; ideales para veganos e intolerantes.", uso: "Café, batidos y repostería." },
+            { nombre: "🌾 Quinoa", tipo: "Base", desc: "Pseudocereal andino con proteína completa (todos los aminoácidos esenciales). Sin gluten, versátil y muy nutritiva.", uso: "Ensaladas, guarniciones y bowls." },
+            { nombre: "🥜 Frutos Secos y Semillas", tipo: "Base", desc: "Almendras, nueces, maní, chía y maravilla: aportan proteína, grasas buenas y textura. Clave en la dieta vegetal.", uso: "Snacks, ensaladas y salsas." }
+        ]
+    };
+
     // ========================== ATENCIÓN EN MESA ==========================
     const atencionMesa = {
         secuencia: {
@@ -1230,6 +1293,34 @@
             "Conoce tus tragos y recomienda con seguridad. 😎",
             "La barra también se atiende con onda. 🛎️"
         ],
+        vinos: [
+            "Temperatura justa, copa justa. ¡Salud! 🍷",
+            "Mostrar la etiqueta y servir la prueba: puro protocolo. 😎",
+            "Tinto, blanco o espumante: cada uno a su temperatura. 🌡️",
+            "Un buen servicio de vino se nota (y se agradece). 🙌",
+            "Descorcha con calma y sirve con estilo. 🍷"
+        ],
+        cocteles: [
+            "Conoce tus tragos y recomienda con seguridad. 🍸",
+            "El pisco sour de la casa es tu carta ganadora. 🇨🇱",
+            "Un clásico bien hecho nunca falla. 🍹",
+            "La coctelería también entra por los ojos. ✨",
+            "Equilibrio: ni muy dulce, ni muy fuerte. 🤙"
+        ],
+        sinAlcohol: [
+            "Quien no toma también merece algo rico. 🧃",
+            "Un buen mocktail iguala a cualquier trago. 🌿",
+            "Jugos y batidos frescos: pura buena onda. 🥤",
+            "Atender al que maneja con un mocktail es un golazo. 🚗",
+            "Refrescante y sin alcohol, igual de bien servido. ✨"
+        ],
+        sinCarne: [
+            "Saber de dietas te hace atender mejor. 🌱",
+            "Vegano, vegetariano o pescetariano: conoce la diferencia. 🥗",
+            "Cuida la contaminación cruzada: detalle que suma. 🛡️",
+            "Una opción sin carne bien explicada fideliza. 💚",
+            "Cada vez más clientes lo agradecen. 🙌"
+        ],
         cervezas: [
             "Cada estilo de cerveza tiene su momento. 🍺",
             "Lager, ale o trigo: conócelas y recomienda. 😎",
@@ -1365,14 +1456,42 @@
         bindChecklist(`checklist-${key}`, `proto_${key}`);
     }
 
-    function renderBebestibles() {
+    function renderVinos() {
         const container = document.getElementById('mainContent');
-        container.innerHTML = `<div class="service-title">🍷 Bebestibles</div>
-            <div class="service-desc">Del vino bien servido al pisco sour de la casa. ¡Salud! 🥂</div>
-            <div class="subseccion"><h2>🍷 Vinos y Espumantes</h2><div class="service-desc">${bebestibles.vino.descripcion}</div><div class="image-place"><img src="img/bebestibles.jpg" alt="Servicio de vino" loading="lazy"></div><div class="checklist" id="checklist-vino"><h3>✅ Protocolo <span class="progress-indicator" id="progressCounter">0/${bebestibles.vino.pasos.length}</span><button class="reset-btn" data-reset>↺ Reiniciar</button></h3>${bebestibles.vino.pasos.map(p => `<label class="checklist-item"><input type="checkbox"> ${p}</label>`).join("")}</div></div>
-            <div class="subseccion"><h2>🍸 Cocteles Internacionales (${bebestibles.cocteles.internacionales.length})</h2><div class="grid-cards">${bebestibles.cocteles.internacionales.map(c => `<div class="card-item"><div class="item-name">🍸 ${c.nombre}</div><div class="item-ingredients">${c.ingredientes}</div><div class="item-prep">${c.preparacion}</div></div>`).join("")}</div>
-            <h2>🇨🇱 Cocteles Chilenos (${bebestibles.cocteles.chilenos.length})</h2><div class="grid-cards">${bebestibles.cocteles.chilenos.map(c => `<div class="card-item"><div class="item-name">🍸 ${c.nombre}</div><div class="item-ingredients">${c.ingredientes}</div><div class="item-prep">${c.preparacion}</div></div>`).join("")}</div></div>`;
+        container.innerHTML = `<div class="service-title">🍷 Vinos y Espumantes</div>
+            <div class="service-desc">${bebestibles.vino.descripcion}</div>
+            <div class="image-place"><img src="img/bebestibles.jpg" alt="Servicio de vino" loading="lazy"></div>
+            <div class="checklist" id="checklist-vino"><h3>✅ Protocolo de servicio <span class="progress-indicator" id="progressCounter">0/${bebestibles.vino.pasos.length}</span><button class="reset-btn" data-reset>↺ Reiniciar</button></h3>${bebestibles.vino.pasos.map(p => `<label class="checklist-item"><input type="checkbox"> ${p}</label>`).join("")}</div>`;
         bindChecklist('checklist-vino', 'checklist_vino');
+    }
+    function renderCocteles() {
+        const container = document.getElementById('mainContent');
+        const card = c => `<div class="card-item"><div class="item-name">🍸 ${c.nombre}</div><div class="item-ingredients">${c.ingredientes}</div><div class="item-prep">${c.preparacion}</div></div>`;
+        container.innerHTML = `<div class="service-title">🍸 Cócteles</div>
+            <div class="service-desc">Clásicos del mundo y de la casa. Conócelos para recomendar y prepararlos con seguridad. ¡Salud! 🍹</div>
+            <div class="subseccion"><h2>🍸 Cócteles Internacionales (${bebestibles.cocteles.internacionales.length})</h2><div class="grid-cards">${bebestibles.cocteles.internacionales.map(card).join("")}</div></div>
+            <div class="subseccion"><h2>🇨🇱 Cócteles Chilenos (${bebestibles.cocteles.chilenos.length})</h2><div class="grid-cards">${bebestibles.cocteles.chilenos.map(card).join("")}</div></div>`;
+    }
+    function renderSinAlcohol() {
+        const container = document.getElementById('mainContent');
+        const card = x => `<div class="card-item"><div class="item-name">${x.nombre} <span class="std-badge">${x.tipo}</span></div><div class="item-desc">${x.desc}</div><div class="item-prep">🍹 <strong>Lleva:</strong> ${x.lleva}</div></div>`;
+        container.innerHTML = `<div class="service-title">🧃 Sin Alcohol</div>
+            <div class="service-desc">Jugos, batidos y mocktails para quien no toma alcohol —o anda manejando 🚗—. Recomendarlos con onda es atender a todos por igual. 🧃✨</div>
+            <div class="image-place"><img src="img/sinalcohol.jpg" alt="Bebidas sin alcohol" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
+            <div class="subseccion"><h2>🍊 Jugos y refrescos (${sinAlcohol.jugos.length})</h2><div class="grid-cards">${sinAlcohol.jugos.map(card).join("")}</div></div>
+            <div class="subseccion"><h2>🥤 Batidos (${sinAlcohol.batidos.length})</h2><div class="grid-cards">${sinAlcohol.batidos.map(card).join("")}</div></div>
+            <div class="subseccion"><h2>🌿 Mocktails — cócteles sin alcohol (${sinAlcohol.mocktails.length})</h2><div class="grid-cards">${sinAlcohol.mocktails.map(card).join("")}</div></div>`;
+    }
+    function renderSinCarne() {
+        const container = document.getElementById('mainContent');
+        const dietaCard = x => `<div class="card-item"><div class="item-name">${x.nombre} <span class="std-badge">${x.tipo}</span></div><div class="item-desc">${x.desc}</div></div>`;
+        const prodCard = x => `<div class="card-item"><div class="item-name">${x.nombre} <span class="std-badge">${x.tipo}</span></div><div class="item-desc">${x.desc}</div><div class="item-prep">🍴 <strong>Ideal para:</strong> ${x.uso}</div></div>`;
+        container.innerHTML = `<div class="service-title">🌱 Sin Carne</div>
+            <div class="service-desc">Cada vez más clientes piden opciones sin carne. Conocer las diferencias entre vegetariano, vegano y pescetariano —y los productos que reemplazan a la carne— te hace atender con seguridad y sin meter la pata. 🌱</div>
+            <div class="image-place"><img src="img/sincarne.jpg" alt="Sin carne" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
+            <div class="calc-card"><div class="item-name">⚠️ Ojo al atender</div><div class="item-desc" style="margin-top:8px">Pregunta siempre el grado: un <strong>vegano</strong> no come huevo, lácteos ni miel; un <strong>vegetariano</strong> sí. Cuida la <strong>contaminación cruzada</strong> (misma parrilla o aceite que la carne) y revisa salsas escondidas (anchoa, gelatina, caldo de carne).</div></div>
+            <div class="subseccion"><h2>🍽️ Tipos de dieta (${sinCarne.dietas.length})</h2><div class="grid-cards">${sinCarne.dietas.map(dietaCard).join("")}</div></div>
+            <div class="subseccion"><h2>🌿 Productos y sustitutos (${sinCarne.productos.length})</h2><div class="grid-cards">${sinCarne.productos.map(prodCard).join("")}</div></div>`;
     }
 
     function renderBarismo() {
@@ -1566,10 +1685,12 @@
         productosMar: () => pescadosChile.length + mariscos.orilla.length + mariscos.fondo.length + crustaceos.length,
         vegetales: () => vegetalesChilenos.papas.variedades.length + vegetalesChilenos.otrosTubérculos.lista.length + vegetalesChilenos.frutosNativos.lista.length + vegetalesChilenos.hierbasCondimentos.lista.length + vegetalesChilenos.otros.lista.length,
         quesos: () => quesos.internacionales.length + quesos.chilenos.length,
+        sinCarne: () => sinCarne.dietas.length + sinCarne.productos.length,
+        cocteles: () => bebestibles.cocteles.internacionales.length + bebestibles.cocteles.chilenos.length,
         cervezas: () => cervezas.lagers.length + cervezas.ales.length + cervezas.trigoYacidas.length,
         barismo: () => cafes.base.length + cafes.conLeche.length + cafes.especiales.length,
+        sinAlcohol: () => sinAlcohol.jugos.length + sinAlcohol.batidos.length + sinAlcohol.mocktails.length,
         maridajes: () => maridajes.length,
-        bebestibles: () => bebestibles.cocteles.internacionales.length + bebestibles.cocteles.chilenos.length,
         alergenos: () => alergenos.lista.length,
         atencionMesa: () => atencionMesa.secuencia.momentos.length + atencionMesa.gestos.senales.length,
         restaurantes: () => restaurantesChile.length
@@ -1578,8 +1699,9 @@
         const container = document.getElementById('mainContent');
         const meta = {
             carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Productos del Mar'], vegetales: ['🌽', 'Vegetales Chilenos'],
-            quesos: ['🧀', 'Quesos'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Barismo'],
-            maridajes: ['🍷', 'Maridajes'], bebestibles: ['🍸', 'Bebestibles'],
+            quesos: ['🧀', 'Quesos'], sinCarne: ['🌱', 'Sin Carne'],
+            cocteles: ['🍸', 'Cócteles'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Cafés'], sinAlcohol: ['🧃', 'Sin Alcohol'],
+            maridajes: ['🍷', 'Maridajes'],
             alergenos: ['🚨', 'Alérgenos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Servicio por Local']
         };
         const ap = loadAprendidoCards();
@@ -1696,7 +1818,7 @@
         if (btn) btn.textContent = n ? `⭐ Favoritos (${n})` : '⭐ Favoritos';
     }
     // ================== APRENDIDO POR TARJETA ==================
-    const tabsAprendizaje = ['carnes', 'productosMar', 'vegetales', 'quesos', 'cervezas', 'barismo', 'maridajes', 'bebestibles', 'alergenos', 'atencionMesa', 'restaurantes'];
+    const tabsAprendizaje = ['carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'atencionMesa', 'restaurantes'];
     function loadAprendidoCards() { try { return JSON.parse(localStorage.getItem('aprendidoCards') || '{}'); } catch (e) { return {}; } }
     function saveAprendidoCards(o) { localStorage.setItem('aprendidoCards', JSON.stringify(o)); }
     function cardLearnId(titleText) { return currentTab + '::' + titleText.trim(); }
@@ -1782,34 +1904,50 @@
     }
 
     // ================== NAVEGACIÓN PRINCIPAL ==================
+    // ================== NAVEGACIÓN (hubs + sub-pestañas) ==================
+    const hubs = {
+        servicio: ['protocolos', 'atencionMesa', 'restaurantes'],
+        carta: ['carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne'],
+        bebestibles: ['vinos', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol']
+    };
+    const subMeta = {
+        protocolos: ['📋', 'Protocolos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Por Local'],
+        carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Mar'], vegetales: ['🌽', 'Vegetales'], quesos: ['🧀', 'Quesos'], sinCarne: ['🌱', 'Sin Carne'],
+        vinos: ['🍷', 'Vinos'], cocteles: ['🍸', 'Cócteles'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Cafés'], sinAlcohol: ['🧃', 'Sin Alcohol']
+    };
+    const hubOf = {}; Object.keys(hubs).forEach(h => hubs[h].forEach(s => hubOf[s] = h));
+    const lastSub = { servicio: 'protocolos', carta: 'carnes', bebestibles: 'vinos' };
+    const renderers = {
+        protocolos: renderProtocolos, atencionMesa: renderAtencionMesa, restaurantes: renderRestaurantesChile,
+        carnes: renderCarnes, productosMar: renderProductosMar, vegetales: renderVegetales, quesos: renderQuesos, sinCarne: renderSinCarne,
+        vinos: renderVinos, cocteles: renderCocteles, cervezas: renderCervezas, barismo: renderBarismo, sinAlcohol: renderSinAlcohol,
+        alergenos: renderAlergenos, maridajes: renderMaridajes, diccionario: renderDiccionario, quiz: renderQuiz, avance: renderAvance, favoritos: renderFavoritos
+    };
     let currentTab = 'protocolos';
-    function setMainTab(tab) {
-        currentTab = tab;
-        document.querySelectorAll('.main-btn').forEach(btn => {
-            if (btn.getAttribute('data-tab') === tab) btn.classList.add('active');
-            else btn.classList.remove('active');
+    let currentHub = null;
+    function renderSubNav() {
+        const sn = document.getElementById('subNav');
+        if (!sn) return;
+        if (!currentHub) { sn.innerHTML = ''; return; }
+        sn.innerHTML = hubs[currentHub].map(s => { const [e, l] = subMeta[s]; return `<button class="sub-btn${s === currentTab ? ' active' : ''}" data-sub="${s}">${e} ${l}</button>`; }).join('');
+        sn.querySelectorAll('[data-sub]').forEach(b => b.addEventListener('click', () => goTo(b.getAttribute('data-sub'))));
+    }
+    function goTo(section) {
+        currentTab = section;
+        currentHub = hubOf[section] || null;
+        if (currentHub) lastSub[currentHub] = section;
+        document.querySelectorAll('.main-btn').forEach(b => {
+            const t = b.getAttribute('data-tab');
+            b.classList.toggle('active', t === section || t === currentHub);
         });
-        if (tab === 'protocolos') renderProtocolos();
-        else if (tab === 'atencionMesa') renderAtencionMesa();
-        else if (tab === 'alergenos') renderAlergenos();
-        else if (tab === 'bebestibles') renderBebestibles();
-        else if (tab === 'cervezas') renderCervezas();
-        else if (tab === 'barismo') renderBarismo();
-        else if (tab === 'maridajes') renderMaridajes();
-        else if (tab === 'carnes') renderCarnes();
-        else if (tab === 'productosMar') renderProductosMar();
-        else if (tab === 'vegetales') renderVegetales();
-        else if (tab === 'quesos') renderQuesos();
-        else if (tab === 'restaurantes') renderRestaurantesChile();
-        else if (tab === 'diccionario') renderDiccionario();
-        else if (tab === 'quiz') renderQuiz();
-        else if (tab === 'avance') renderAvance();
-        else if (tab === 'favoritos') renderFavoritos();
+        renderSubNav();
+        (renderers[section] || function () { })();
         decorateFavorites();
         decorateLearned();
         setFraseAnimo();
         window.scrollTo(0, 0);
     }
+    function setMainTab(target) { if (hubs[target]) goTo(lastSub[target] || hubs[target][0]); else goTo(target); }
 
     // ================== PWA (instalación + offline) ==================
     let deferredPrompt = null;
