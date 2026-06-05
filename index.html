@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Protocolos de Restaurante | App profesional</title>
     <meta name="description" content="Protocolos de servicio, cócteles, carnes, productos del mar, vegetales chilenos y diccionario gastronómico.">
-    <meta name="theme-color" content="#2b323d">
+    <meta name="theme-color" content="#0c0f13">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Protocolos">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -19,20 +22,21 @@
             transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
         }
         :root {
-            --bg-body: #2b323d;
-            --bg-card: #363f4b;
-            --text-primary: #f6f8fb;
-            --text-secondary: #cdd5de;
-            --btn-bg: #3e4856;
-            --btn-bg-active: #2dd4bf;
-            --btn-text: #e6ebf1;
-            --btn-text-active: #05221e;
-            --border-light: #45505e;
-            --checklist-bg: #323b47;
-            --accent: #2dd4bf;
-            --placeholder-bg: #323b47;
-            --term-card-bg: #323b47;
-            --term-border: #2dd4bf;
+            /* ☀️ Tema CLARO real */
+            --bg-body: #e7edf3;
+            --bg-card: #ffffff;
+            --text-primary: #1c2430;
+            --text-secondary: #586473;
+            --btn-bg: #e6ecf3;
+            --btn-bg-active: #14b8a6;
+            --btn-text: #2b323d;
+            --btn-text-active: #04201c;
+            --border-light: #d6dee8;
+            --checklist-bg: #f1f5f9;
+            --accent: #0d9488;
+            --placeholder-bg: #eef2f7;
+            --term-card-bg: #f1f5f9;
+            --term-border: #0d9488;
         }
         body.dark {
             --bg-body: #0c0f13;
@@ -52,8 +56,12 @@
         }
         body {
             background: var(--bg-body);
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
             padding: 16px;
+        }
+        .service-title, .subseccion h2, .subseccion h3, .checklist h3, .item-name,
+        .brand-title, .splash-title, .dict-section h3, .term-title, .quiz-q {
+            font-family: 'Poppins', system-ui, sans-serif;
         }
         .app-card {
             max-width: 700px;
@@ -402,6 +410,40 @@
             display: inline-block;
             margin-left: 8px;
         }
+        .quiz-card {
+            background: var(--checklist-bg);
+            border-radius: 24px;
+            padding: 22px 18px;
+            margin-top: 18px;
+            border-left: 4px solid var(--accent);
+        }
+        .quiz-cat { font-size: 0.74rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+        .quiz-q { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin: 12px 0 16px; line-height: 1.35; }
+        .quiz-a {
+            font-size: 0.98rem; color: var(--text-primary); line-height: 1.5;
+            background: var(--bg-card); border: 1px solid var(--border-light);
+            border-radius: 16px; padding: 14px 16px; margin-bottom: 16px;
+            animation: quizReveal .35s ease;
+        }
+        @keyframes quizReveal { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+        .quiz-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .quiz-btn {
+            flex: 1 0 auto; background: var(--btn-bg-active); color: var(--btn-text-active);
+            border: none; border-radius: 40px; padding: 13px 18px;
+            font-weight: 700; font-size: 0.95rem; cursor: pointer;
+        }
+        .quiz-btn.ghost { background: var(--btn-bg); color: var(--btn-text); }
+        .quiz-progress { font-size: 0.82rem; color: var(--text-secondary); margin-top: 14px; text-align: center; }
+        .quiz-prog-card { background: var(--checklist-bg); border-radius: 20px; padding: 16px; margin: 16px 0; }
+        .quiz-prog-top { display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: var(--text-primary); font-size: 0.95rem; margin-bottom: 10px; }
+        .quiz-prog-top span:last-child { color: var(--accent); font-size: 1.35rem; font-family: 'Poppins', sans-serif; font-weight: 800; }
+        .quiz-bar { height: 14px; background: var(--border-light); border-radius: 20px; overflow: hidden; }
+        .quiz-bar-fill { height: 100%; width: 0; background: linear-gradient(90deg, #14b8a6, #5eead4); border-radius: 20px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+        .quiz-prog-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 9px; font-size: 0.8rem; color: var(--text-secondary); }
+        .quiz-reset { background: none; border: none; color: var(--text-secondary); font-size: 0.78rem; cursor: pointer; text-decoration: underline; }
+        .quiz-card.aprendida { border-left-color: #16a34a; }
+        .quiz-btn.learn { background: var(--btn-bg); color: var(--btn-text); }
+        .quiz-btn.learn.on { background: #16a34a; color: #fff; }
         .dict-section {
             margin-bottom: 28px;
         }
@@ -488,6 +530,7 @@
         </div>
         <div class="header-actions">
             <button class="install-btn" id="installBtn" hidden>⬇️ Instalar app</button>
+            <button class="dark-mode-toggle" id="soundToggle" title="Sonido" aria-label="Activar o silenciar sonido">🔊</button>
             <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
         </div>
     </div>
@@ -503,6 +546,7 @@
         <button class="main-btn" data-tab="quesos">🧀 Quesos</button>
         <button class="main-btn" data-tab="restaurantes">🛎️ Servicio por Local</button>
         <button class="main-btn" data-tab="diccionario">📖 Diccionario</button>
+        <button class="main-btn" data-tab="quiz">🧠 Quiz</button>
         <button class="main-btn" data-tab="favoritos">⭐ Favoritos</button>
     </div>
     <div class="motivation-bar" id="motivationBar" title="Toca para otra frase">¡A darle con todo! 🔥</div>
@@ -1049,7 +1093,8 @@
     }
 
     function initDarkMode() {
-        const dark = localStorage.getItem('darkMode') === 'true';
+        const saved = localStorage.getItem('darkMode');
+        const dark = saved === null ? true : saved === 'true'; // por defecto arranca en modo noche
         if (dark) { document.body.classList.add('dark'); document.getElementById('darkModeToggle').innerText = '☀️'; }
         else { document.body.classList.remove('dark'); document.getElementById('darkModeToggle').innerText = '🌙'; }
     }
@@ -1137,6 +1182,13 @@
             "Saber los términos te da seguridad. 💬",
             "Un garzón que sabe, se nota. 😎",
             "Aprende una palabra nueva cada turno. 🧠"
+        ],
+        quiz: [
+            "Practicar hoy es lucirse mañana. 🧠",
+            "Cada pregunta que dominas, suma seguridad. 💪",
+            "Repasa entre turno y turno. 📚",
+            "El que sabe, atiende con onda. 😎",
+            "Entrena tu memoria gastronómica. ✨"
         ],
         favoritos: [
             "Tus tarjetas clave, siempre a mano. ⭐",
@@ -1263,6 +1315,90 @@
             <div class="subseccion"><h2>${vegetalesChilenos.frutosNativos.titulo}</h2><div class="service-desc">${vegetalesChilenos.frutosNativos.descripcion}</div><div class="grid-cards">${vegetalesChilenos.frutosNativos.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>${vegetalesChilenos.hierbasCondimentos.titulo}</h2><div class="service-desc">${vegetalesChilenos.hierbasCondimentos.descripcion}</div><div class="grid-cards">${vegetalesChilenos.hierbasCondimentos.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>
             <div class="subseccion"><h2>${vegetalesChilenos.otros.titulo}</h2><div class="service-desc">${vegetalesChilenos.otros.descripcion}</div><div class="grid-cards">${vegetalesChilenos.otros.lista.map(v => `<div class="card-item"><div class="item-name">${v.nombre}</div><div class="item-desc">${v.desc}</div></div>`).join("")}</div></div>`;
+    }
+
+    // ================== QUIZ / ENTRENAMIENTO ==================
+    let quizPool = [], quizIdx = 0;
+    function sinBandera(s) { return s.replace(/^\p{Extended_Pictographic}+\s*/u, '').trim(); }
+    function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; } return a; }
+    function buildQuizPool() {
+        const pool = [];
+        try {
+            [...quesos.internacionales, ...quesos.chilenos].forEach(q => {
+                const n = sinBandera(q.nombre);
+                pool.push({ cat: '🧀 Quesos', q: `¿A qué familia pertenece el queso ${n}?`, a: q.familia });
+                pool.push({ cat: '🧀 Quesos', q: `¿Con qué marida el ${n}?`, a: q.marida });
+            });
+        } catch (e) {}
+        try { maridajes.forEach(m => pool.push({ cat: '🍷 Maridajes', q: `¿Qué bebida marida con ${sinBandera(m.plato)}?`, a: `${m.vino} — ${m.motivo}` })); } catch (e) {}
+        try { Object.values(diccionario).flat().forEach(t => pool.push({ cat: '📖 Diccionario', q: `¿Qué significa «${t.term}»?`, a: t.definition })); } catch (e) {}
+        try { [...carnes.vacunoParrilla, ...carnes.vacunoOlla, ...carnes.cerdo].forEach(c => { if (c.punto) pool.push({ cat: '🥩 Carnes', q: `¿Cuál es el punto de cocción recomendado para ${sinBandera(c.nombre)}?`, a: c.punto }); }); } catch (e) {}
+        try { pescadosChile.forEach(p => pool.push({ cat: '🌊 Productos del Mar', q: `¿Con qué marida ${sinBandera(p.nombre)}?`, a: p.maridaje })); } catch (e) {}
+        return pool;
+    }
+    // avance del curso (se guarda en el dispositivo)
+    function loadAprendidas() { try { return JSON.parse(localStorage.getItem('quizAprendidas') || '{}'); } catch (e) { return {}; } }
+    function saveAprendidas(o) { localStorage.setItem('quizAprendidas', JSON.stringify(o)); }
+    function quizId(item) { return item.cat + '|' + item.q; }
+    function updateQuizProgress() {
+        const total = quizPool.length;
+        const ap = loadAprendidas();
+        const learned = quizPool.filter(it => ap[quizId(it)]).length;
+        const pct = total ? Math.round(learned / total * 100) : 0;
+        const fill = document.getElementById('quizBarFill');
+        const lbl = document.getElementById('quizPct');
+        const sub = document.getElementById('quizSub');
+        if (fill) fill.style.width = pct + '%';
+        if (lbl) lbl.textContent = pct + '%';
+        if (sub) sub.textContent = learned + ' de ' + total + ' aprendidas';
+    }
+    function renderQuiz() {
+        const container = document.getElementById('mainContent');
+        quizPool = shuffle(buildQuizPool());
+        quizIdx = 0;
+        container.innerHTML = `<div class="service-title">🧠 Quiz de Entrenamiento</div>
+            <div class="service-desc">Pon a prueba lo que sabes 💪. Revela la respuesta y marca ✅ las que ya dominas. Tu avance del curso se guarda solo en este dispositivo.</div>
+            <div class="quiz-prog-card">
+                <div class="quiz-prog-top"><span>📈 Avance del curso</span><span id="quizPct">0%</span></div>
+                <div class="quiz-bar"><div class="quiz-bar-fill" id="quizBarFill"></div></div>
+                <div class="quiz-prog-bottom"><span id="quizSub">0 de 0 aprendidas</span><button class="quiz-reset" id="quizReset">↺ Reiniciar avance</button></div>
+            </div>
+            <div id="quizBox"></div>`;
+        document.getElementById('quizReset').addEventListener('click', () => {
+            if (confirm('¿Reiniciar tu avance del curso? Se desmarcarán todas las preguntas aprendidas.')) {
+                saveAprendidas({}); updateQuizProgress(); mostrarPreguntaQuiz();
+            }
+        });
+        updateQuizProgress();
+        mostrarPreguntaQuiz();
+    }
+    function mostrarPreguntaQuiz() {
+        const box = document.getElementById('quizBox');
+        if (!box || !quizPool.length) return;
+        if (quizIdx >= quizPool.length) { shuffle(quizPool); quizIdx = 0; }
+        const item = quizPool[quizIdx];
+        const learned = !!loadAprendidas()[quizId(item)];
+        box.innerHTML = `<div class="quiz-card${learned ? ' aprendida' : ''}">
+                <div class="quiz-cat">${item.cat}${learned ? ' · ✅ aprendida' : ''}</div>
+                <div class="quiz-q">${item.q}</div>
+                <div class="quiz-a" id="quizA" hidden>${item.a}</div>
+                <div class="quiz-actions">
+                    <button class="quiz-btn" id="quizReveal">👁️ Mostrar respuesta</button>
+                    <button class="quiz-btn learn${learned ? ' on' : ''}" id="quizLearn">${learned ? '✅ Aprendida' : '☑️ Marcar aprendida'}</button>
+                    <button class="quiz-btn ghost" id="quizNext">Siguiente ➡️</button>
+                </div>
+            </div>
+            <div class="quiz-progress">Pregunta ${quizIdx + 1} de ${quizPool.length}</div>`;
+        document.getElementById('quizReveal').addEventListener('click', () => {
+            document.getElementById('quizA').hidden = false;
+            document.getElementById('quizReveal').hidden = true;
+        });
+        document.getElementById('quizLearn').addEventListener('click', () => {
+            const a = loadAprendidas(); const id = quizId(item);
+            if (a[id]) delete a[id]; else a[id] = 1;
+            saveAprendidas(a); updateQuizProgress(); mostrarPreguntaQuiz();
+        });
+        document.getElementById('quizNext').addEventListener('click', () => { quizIdx++; mostrarPreguntaQuiz(); });
     }
 
     function renderDiccionario() {
@@ -1407,6 +1543,7 @@
         else if (tab === 'quesos') renderQuesos();
         else if (tab === 'restaurantes') renderRestaurantesChile();
         else if (tab === 'diccionario') renderDiccionario();
+        else if (tab === 'quiz') renderQuiz();
         else if (tab === 'favoritos') renderFavoritos();
         decorateFavorites();
         setFraseAnimo();
@@ -1429,12 +1566,25 @@
 
     // ================== SONIDO (Web Audio, sin archivos) ==================
     let _audioCtx = null;
+    let sonidoActivado = localStorage.getItem('sonido') !== 'false'; // por defecto ON
     function getAudio() {
+        if (!sonidoActivado) return null;
         try {
             if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             if (_audioCtx.state === 'suspended') _audioCtx.resume();
             return _audioCtx;
         } catch (e) { return null; }
+    }
+    function initSound() {
+        const b = document.getElementById('soundToggle');
+        if (b) b.innerText = sonidoActivado ? '🔊' : '🔇';
+    }
+    function toggleSound() {
+        sonidoActivado = !sonidoActivado;
+        localStorage.setItem('sonido', sonidoActivado);
+        const b = document.getElementById('soundToggle');
+        if (b) b.innerText = sonidoActivado ? '🔊' : '🔇';
+        if (sonidoActivado) sonidoBoton(); // pequeño feedback al reactivar
     }
     // un tono con envolvente suave
     function tono(freq, delay, dur, tipo, vol) {
@@ -1466,6 +1616,7 @@
     function abrirPuerta() {
         const s = document.getElementById('splash');
         if (!s) return;
+        sessionStorage.setItem('splashVisto', '1');
         sonidoPuerta();
         s.classList.add('abierta');
         setTimeout(() => s.classList.add('cerrado'), 1050);
@@ -1473,10 +1624,17 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         initDarkMode();
+        initSound();
+        document.getElementById('soundToggle').addEventListener('click', toggleSound);
+        // Splash solo la primera vez por sesión: si ya se vio, se oculta al toque
+        if (sessionStorage.getItem('splashVisto') === '1') {
+            const s = document.getElementById('splash');
+            if (s) { s.classList.add('abierta'); s.classList.add('cerrado'); }
+        }
         // Sonido sutil en cada botón (la puerta tiene su propio sonido)
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('button');
-            if (!btn || btn.classList.contains('splash-btn')) return;
+            if (!btn || btn.classList.contains('splash-btn') || btn.id === 'soundToggle') return;
             sonidoBoton();
         }, true);
         updateFavCount();
