@@ -1427,15 +1427,58 @@
         deferredPrompt = null;
     });
 
+    // ================== SONIDO (Web Audio, sin archivos) ==================
+    let _audioCtx = null;
+    function getAudio() {
+        try {
+            if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (_audioCtx.state === 'suspended') _audioCtx.resume();
+            return _audioCtx;
+        } catch (e) { return null; }
+    }
+    // un tono con envolvente suave
+    function tono(freq, delay, dur, tipo, vol) {
+        const ctx = getAudio(); if (!ctx) return;
+        const t0 = ctx.currentTime + (delay || 0);
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = tipo || 'sine';
+        osc.frequency.value = freq;
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(vol, t0 + 0.012);
+        g.gain.exponentialRampToValueAtTime(0.0006, t0 + dur);
+        osc.connect(g).connect(ctx.destination);
+        osc.start(t0);
+        osc.stop(t0 + dur + 0.03);
+    }
+    // tic suave al apretar un botón
+    function sonidoBoton() {
+        tono(430, 0, 0.07, 'triangle', 0.05);
+        tono(640, 0.004, 0.05, 'sine', 0.035);
+    }
+    // campanita alegre al abrir la puerta (arpegio Do-Mi-Sol-Do)
+    function sonidoPuerta() {
+        const notas = [523.25, 659.25, 783.99, 1046.50];
+        notas.forEach((f, i) => tono(f, i * 0.085, 0.5, 'sine', 0.11));
+        tono(1318.51, 0.34, 0.6, 'sine', 0.05); // brillo final
+    }
+
     function abrirPuerta() {
         const s = document.getElementById('splash');
         if (!s) return;
+        sonidoPuerta();
         s.classList.add('abierta');
         setTimeout(() => s.classList.add('cerrado'), 1050);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
         initDarkMode();
+        // Sonido sutil en cada botón (la puerta tiene su propio sonido)
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('button');
+            if (!btn || btn.classList.contains('splash-btn')) return;
+            sonidoBoton();
+        }, true);
         updateFavCount();
         document.getElementById('motivationBar').addEventListener('click', setFraseAnimo);
         // Cambiar la frase cada vez que se vuelve a abrir/enfocar la app (clave en PWA del celular)
