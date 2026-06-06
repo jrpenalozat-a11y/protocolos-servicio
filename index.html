@@ -1706,17 +1706,34 @@
     function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; } return a; }
     function buildQuizPool() {
         const pool = [];
+        const add = (cat, g, q, a) => { if (a) pool.push({ cat, g, q, a }); };
         try {
             [...quesos.internacionales, ...quesos.chilenos].forEach(q => {
                 const n = sinBandera(q.nombre);
-                pool.push({ cat: '🧀 Quesos', q: `¿A qué familia pertenece el queso ${n}?`, a: q.familia });
-                pool.push({ cat: '🧀 Quesos', q: `¿Con qué marida el ${n}?`, a: q.marida });
+                add('🧀 Quesos', 'familia', `¿A qué familia pertenece el queso ${n}?`, q.familia);
+                add('🧀 Quesos', 'maridaje', `¿Con qué marida el ${n}?`, q.marida);
             });
         } catch (e) {}
-        try { maridajes.forEach(m => pool.push({ cat: '🍷 Maridajes', q: `¿Qué bebida marida con ${sinBandera(m.plato)}?`, a: `${m.vino} — ${m.motivo}` })); } catch (e) {}
-        try { Object.values(diccionario).flat().forEach(t => pool.push({ cat: '📖 Diccionario', q: `¿Qué significa «${t.term}»?`, a: t.definition })); } catch (e) {}
-        try { [...carnes.vacunoParrilla, ...carnes.vacunoOlla, ...carnes.cerdo].forEach(c => { if (c.punto) pool.push({ cat: '🥩 Carnes', q: `¿Cuál es el punto de cocción recomendado para ${sinBandera(c.nombre)}?`, a: c.punto }); }); } catch (e) {}
-        try { pescadosChile.forEach(p => pool.push({ cat: '🌊 Productos del Mar', q: `¿Con qué marida ${sinBandera(p.nombre)}?`, a: p.maridaje })); } catch (e) {}
+        try { maridajes.forEach(m => add('🍷 Maridajes', 'maridaje-largo', `¿Qué bebida marida con ${sinBandera(m.plato)}?`, `${m.vino} — ${m.motivo}`)); } catch (e) {}
+        try { Object.values(diccionario).flat().forEach(t => add('📖 Diccionario', 'definicion', `¿Qué significa «${t.term}»?`, t.definition)); } catch (e) {}
+        try { [...carnes.vacunoParrilla, ...carnes.vacunoOlla, ...carnes.cerdo].forEach(c => add('🥩 Carnes', 'punto', `¿Cuál es el punto de cocción recomendado para ${sinBandera(c.nombre)}?`, c.punto)); } catch (e) {}
+        try { pescadosChile.forEach(p => add('🌊 Productos del Mar', 'maridaje', `¿Con qué marida ${sinBandera(p.nombre)}?`, p.maridaje)); } catch (e) {}
+        try {
+            [...cervezas.lagers, ...cervezas.ales, ...cervezas.trigoYacidas].forEach(c => {
+                const n = sinBandera(c.nombre);
+                add('🍺 Cervezas', 'cerveza-tipo', `¿De qué tipo es la cerveza ${n}?`, c.tipo);
+                add('🍺 Cervezas', 'maridaje', `¿Con qué marida la cerveza ${n}?`, c.marida);
+            });
+        } catch (e) {}
+        try { [...cafes.base, ...cafes.conLeche, ...cafes.especiales].forEach(c => add('☕ Cafés', 'composicion', `¿Qué lleva un ${sinBandera(c.nombre)}?`, c.lleva)); } catch (e) {}
+        try { [...platosChilenos.guisos, ...platosChilenos.hornoMasas, ...platosChilenos.delMar, ...platosChilenos.contundentes].forEach(p => add('🍲 Platos Típicos', 'maridaje', `¿Con qué marida ${sinBandera(p.nombre)}?`, p.maridaje)); } catch (e) {}
+        try { [...bebestibles.cocteles.internacionales, ...bebestibles.cocteles.chilenos].forEach(c => add('🍸 Cócteles', 'composicion', `¿Qué lleva un ${c.nombre}?`, c.ingredientes)); } catch (e) {}
+        try { [...sinAlcohol.jugos, ...sinAlcohol.batidos, ...sinAlcohol.mocktails].forEach(x => add('🧃 Sin Alcohol', 'composicion', `¿Qué lleva un ${sinBandera(x.nombre)}?`, x.lleva)); } catch (e) {}
+        try {
+            sinCarne.dietas.forEach(d => add('🌱 Sin Carne', 'definicion', `¿En qué consiste la dieta ${sinBandera(d.nombre)}?`, d.desc));
+            sinCarne.productos.forEach(p => add('🌱 Sin Carne', 'definicion', `¿Qué es el ${sinBandera(p.nombre)}?`, p.desc));
+        } catch (e) {}
+        try { [...vegetalesChilenos.papas.variedades, ...vegetalesChilenos.otrosTubérculos.lista, ...vegetalesChilenos.frutosNativos.lista, ...vegetalesChilenos.hierbasCondimentos.lista, ...vegetalesChilenos.otros.lista].forEach(v => add('🌽 Vegetales', 'definicion', `¿Qué es ${sinBandera(v.nombre)}?`, v.desc)); } catch (e) {}
         return pool;
     }
     // avance del curso (se guarda en el dispositivo)
@@ -1757,11 +1774,12 @@
         mostrarPreguntaQuiz();
     }
     function opcionesQuiz(item) {
-        // 3 distractores plausibles (misma categoría si se puede) + la correcta
+        // 3 distractores plausibles: mismo grupo de respuesta (mismo tipo) > misma categoría > cualquiera
         const usados = new Set([item.a]);
+        const mismoGrupo = shuffle(quizPool.filter(it => it.g === item.g && it.a !== item.a));
         const mismaCat = shuffle(quizPool.filter(it => it.cat === item.cat && it.a !== item.a));
         const otras = shuffle(quizPool.filter(it => it.a !== item.a));
-        const fuente = mismaCat.length >= 3 ? mismaCat : mismaCat.concat(otras);
+        const fuente = mismoGrupo.length >= 3 ? mismoGrupo : mismoGrupo.concat(mismaCat, otras);
         const distractores = [];
         for (const it of fuente) {
             if (distractores.length >= 3) break;
