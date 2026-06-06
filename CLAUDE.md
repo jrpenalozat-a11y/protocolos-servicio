@@ -1,8 +1,9 @@
-# CLAUDE.md — Protocolos de Servicio
+# CLAUDE.md — Servicio a la Mano
 
 ## Descripción
-App web PWA educativa para **garzones y personal de restaurante** en Chile.
-Herramienta de consulta rápida y capacitación, instalable en el celular y funciona offline.
+**"Servicio a la Mano"** — *Academia de bolsillo del garzón*. App web PWA educativa para **garzones y personal de restaurante** en Chile.
+Academia/curso de bolsillo + herramienta de consulta rápida, instalable en el celular y funciona offline.
+> Nota: el repo y la URL siguen llamándose `protocolos-servicio` (no se migraron); solo cambió el **nombre visible** de la app. "Protocolos de Servicio" pasó a ser una **sección** dentro del hub Servicio.
 
 ## URLs
 - **App en línea:** https://protocolos-servicio.vercel.app/
@@ -16,7 +17,7 @@ Herramienta de consulta rápida y capacitación, instalable en el celular y func
 ## Stack
 - HTML + CSS + JavaScript puro (un solo `index.html`)
 - Sin frameworks ni dependencias
-- PWA (manifest + service worker v11, offline funcional)
+- PWA (manifest + service worker v13, offline funcional)
 - Deploy: Vercel conectado a GitHub (auto-deploy en cada push)
 - Servidor local: config `protocolos` en `.claude/launch.json` (`npx serve`, puerto 4321)
 
@@ -25,10 +26,10 @@ Herramienta de consulta rápida y capacitación, instalable en el celular y func
 - Tipografía: **Inter** (texto) + **Poppins** (títulos), vía Google Fonts (cacheado por el SW para offline)
 - Tarjetas con ⭐ favoritos (guardados en localStorage)
 - Banner motivacional turquesa con 5 frases por apartado
-- **Encabezado/banner** con emblema SVG vectorial (montaña + llama + ola = **Altura · Imparidad · Movimiento**) + nombre "Protocolos de Servicio" + lema, junto a los botones 🔊/🔇 y 🌙/☀️
+- **Encabezado/banner** con emblema SVG vectorial (montaña + llama + ola) + nombre **"Servicio a la Mano"** + bajada **"Academia de bolsillo del garzón"**, junto a los botones 🔊/🔇 y 🌙/☀️
 - **Sonido (Web Audio, sin archivos):** campanita al abrir la puerta + "tic" sutil en cada botón. Botón 🔊/🔇 para silenciar (preferencia guardada en localStorage, key `sonido`)
-- **Pantalla de bienvenida (splash):** dos puertas que se abren al tocar "Entrar 🚪" y revelan la app (CSS+JS puro). Aparece **solo la primera vez por sesión** (`sessionStorage` key `splashVisto`)
-- **Filosofía gastronómica de la marca:** Altura · Imparidad · Movimiento (principios del emplatado)
+- **Pantalla de bienvenida (splash):** título "Servicio a la Mano" + las 3 palabras **Altura · Imparidad · Movimiento** apareciendo una a una (animación escalonada `filoAparece`), y dos puertas que se abren al tocar "Entrar 🚪". Aparece **solo la primera vez por sesión** (`sessionStorage` key `splashVisto`)
+- **Filosofía gastronómica de la marca:** Altura · Imparidad · Movimiento (principios del emplatado); va destacada en el splash
 - La app **arranca siempre en Protocolos** (sub-pestaña del hub Servicio)
 - **Navegación en 2 niveles (hubs + sub-pestañas):** 9 botones arriba. 3 son hubs con una fila de sub-botones (chips) que se muestra solo dentro del hub:
   - 📋 **Servicio** → Protocolos · Atención en Mesa · Servicio por Local
@@ -39,16 +40,17 @@ Herramienta de consulta rápida y capacitación, instalable en el celular y func
 - **Sistema de aprendizaje (curso con seguimiento):**
   - Cada tarjeta de las secciones de contenido tiene un **check ✅ "aprendido"** (esquina) que se guarda en localStorage (key `aprendidoCards`, id `seccion::titulo`)
   - **Barra de % por sección** arriba (decorador central `decorateLearned`). Protocolos y Vinos usan barra basada en sus **checklists** (función `progresoDe` unifica tarjetas y checklists)
-  - **📊 Mi Avance:** panel con anillo de % total del curso (conic-gradient) + cada una de las 17 secciones con su mini-barra y % (color rojo/ámbar/verde según avance). Lista en `avanceSecciones`
-  - **🎉 Celebración:** al completar el 100% de una sección, overlay "¡Felicidades!" con confeti + fanfarria + frase motivadora **acorde al % global** (Gran comienzo / Buen ritmo / Ya pasaste la mitad / Ya casi lo dominas / Completaste TODO)
-- **Pronunciación (Web Speech API):** botón 🔊 junto a cada término del Diccionario y en cada pregunta del Quiz; lee la palabra con la voz del dispositivo (offline). Independiente del botón silenciar
+  - **📊 Mi Avance:** panel con anillo de % total del curso (conic-gradient) + cada una de las **18 secciones** con su mini-barra y % (color rojo/ámbar/verde según avance). Lista en `avanceSecciones`
+  - **🎉 Celebración:** al completar el 100% de una sección, overlay "¡Felicidades!" con confeti + fanfarria + frase motivadora **acorde al % global** (Gran comienzo / Buen ritmo / Ya pasaste la mitad / Ya casi lo dominas / Completaste TODO) + el avance real del curso. Tiene botón **"Continuar"** y fondo tenue: **no se cierra sola** (da tiempo de leer; red de seguridad a los 15 s)
+- **Pronunciación (Web Speech API):** botón 🔊 junto a cada término del Diccionario y en cada pregunta del Quiz; lee con la voz del dispositivo (offline). **Por idioma:** los términos del Diccionario están clasificados (en `idiomaDe`) para sonar en inglés (en-US, ~25), francés (fr-FR, ~14) o portugués (pt-BR, Cachaça), no con fonética española; lee solo la palabra principal (antes de "/" o "("). Independiente del botón silenciar
 
-## Secciones (9 botones top-level; ~17 secciones de contenido)
+## Secciones (9 botones top-level; ~18 secciones de contenido)
 
 ### 📋 Servicio (hub)
 - **Protocolos** — 8 estilos con checklist + fotos chilenizadas. Americano aclarado (servir por la derecha = norma clásica, puede variar según el local). Barra de avance según los pasos de los 8 checklists
 - **Atención en Mesa** — secuencia, gestos, venta sugestiva, presencia atenta (con foto)
 - **Servicio por Local** — 15 tipos de restaurant chileno con protocolo recomendado
+- **🍔 Comida Rápida** — 8 claves del servicio rápido: toma de pedido en caja, venta sugestiva, drive-thru/para llevar, manejo de fila y peak, higiene, autoservicio/limpieza, trabajo por estaciones, reclamos rápidos
 
 ### 🍽️ La Carta (hub)
 - **🍲 Platos Típicos Chilenos** — 15 platos (cazuela, valdiviano, charquicán, porotos granados, ajiaco, pastel de choclo/papas, empanada, humitas, sopaipillas, caldillo de congrio, paila marina, curanto, lomo a lo pobre, chorrillana) con descripción + maridaje
@@ -69,7 +71,7 @@ Herramienta de consulta rápida y capacitación, instalable en el celular y func
 - **🍷🍽️ Maridajes** — guía + explicación de qué es el maridaje (con foto)
 - **🚨 Alérgenos** — 14 alérgenos + protocolo (checklist) + foto del cartel de alérgenos
 - **📖 Diccionario** — Barra, Destilados, Comedor, Cocina, Códigos y jerga chilena. 113 términos con 🔊 pronunciación + check aprendido
-- **🧠 Quiz / Entrenamiento** — ~200 preguntas auto-generadas (quesos, maridajes, diccionario, carnes, mar). Flash card con "Mostrar respuesta" + 🔊 + "Siguiente". Barra de avance propia, "marcar aprendida" (key `quizAprendidas`) + reiniciar
+- **🧠 Quiz / Entrenamiento** — **opción múltiple A/B/C/D**, ~**351 preguntas** auto-generadas de casi todas las secciones (diccionario, quesos, cervezas, cócteles, vegetales, mar, cafés, platos, sin carne, sin alcohol, carnes, maridajes). Cada pregunta lleva un **grupo** (`g`) y los distractores salen del mismo tipo de respuesta para que no se delate la correcta. Al **acertar**, la pregunta se marca como aprendida (key `quizAprendidas`) y suma al avance; con 🔊 y botón reiniciar
 - **📊 Mi Avance** — panel dashboard del progreso (ver Diseño)
 - **⭐ Favoritos** — tarjetas guardadas (key `favoritos`)
 
@@ -104,18 +106,23 @@ Herramienta de consulta rápida y capacitación, instalable en el celular y func
 - ✅ **Sistema de aprendizaje:** check ✅ por tarjeta + barra de % por sección, en TODAS las secciones (incluido Diccionario, Protocolos y Vinos)
 - ✅ **📊 Mi Avance** — panel con anillo de % total + 17 secciones con su progreso
 - ✅ **🎉 Celebración** al completar una sección (confeti + frase motivadora según avance)
-- ✅ **🔊 Pronunciación** (TTS) en Diccionario y Quiz
-- ✅ Fotos nuevas en Cervezas, Cafés, Sin Alcohol, Quiz, Mi Avance, Favoritos, Alérgenos y Platos
+- ✅ **🔊 Pronunciación** (TTS) en Diccionario y Quiz, ahora **por idioma** (inglés/francés/portugués, no fonética española)
+- ✅ Fotos en TODAS las secciones (incluye `comidarapida.jpg` pendiente de subir)
+- ✅ **🍔 Comida Rápida** (nueva sub-pestaña del hub Servicio, 8 claves)
+- ✅ **Quiz de opción múltiple A/B/C/D** (351 preguntas, distractores por tipo, acertar marca aprendida)
+- ✅ **Rebranding a "Servicio a la Mano"** + bajada "Academia de bolsillo del garzón" (encabezado, splash con filosofía animada, title, manifest)
+- ✅ **Celebración con botón "Continuar"** (no se cierra sola; muestra avance real)
 
 ## Pendiente (próximos pasos / ideas)
-1. **Más preguntas/curado del Quiz** — agregar preguntas de protocolos, cervezas, cafés, platos típicos
+1. **Subir `img/comidarapida.jpg`** — única sección sin foto
 2. **Afinar tema claro** — revisar contraste en alguna sección puntual si hace falta
-3. Cualquier idea nueva del dueño 🙌
+3. **¿URL propia?** — si se quiere `servicio-a-la-mano.vercel.app` hay que reconfigurar el deploy (hoy sigue `protocolos-servicio`)
+4. Cualquier idea nueva del dueño 🙌
 
 ## Notas importantes
 - **Escala de puntos de cocción chilena:** Inglesa · A punto · Medio · 3/4 · Bien cocido
 - **Garzón** (no "camarero" ni "mesero") — toda la app usa términos chilenos
-- Service worker **v11** → cachea HTML, imágenes, fuentes y assets para offline (subir la versión cada vez que se cambien imágenes/íconos en la lista `ASSETS` de `sw.js`). ⚠️ No agregar a `ASSETS` un archivo que aún no existe: `addAll` falla entero y rompe el offline
+- Service worker **v13** → cachea HTML, imágenes, fuentes y assets para offline (subir la versión cada vez que se cambien imágenes/íconos/manifest en la lista `ASSETS` de `sw.js`). ⚠️ No agregar a `ASSETS` un archivo que aún no existe: `addAll` falla entero y rompe el offline
 - Datos en localStorage: `aprendidoCards` (checks de tarjetas), `quizAprendidas` (quiz), `favoritos`, `darkMode`, `sonido`, `proto_*` y `checklist_vino`/`checklist_alergenos` (checklists). sessionStorage: `splashVisto`
 - **Íconos PWA instalados no se actualizan solos:** tras cambiar `icon-*.png` hay que desinstalar/reinstalar la PWA en el celular para ver el ícono nuevo
 - `_canvatest/` está en `.gitignore` (carpeta temporal de descarga de Canva)
