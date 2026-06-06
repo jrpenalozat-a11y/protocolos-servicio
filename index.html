@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Protocolos de Restaurante | App profesional</title>
+    <title>Servicio a la Mano | Academia de bolsillo del garzón</title>
     <meta name="description" content="Protocolos de servicio, cócteles, carnes, productos del mar, vegetales chilenos y diccionario gastronómico.">
     <meta name="theme-color" content="#0c0f13">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Protocolos">
+    <meta name="apple-mobile-web-app-title" content="Servicio a la Mano">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -117,6 +117,10 @@
         @keyframes floaty { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-8px); } }
         .splash-title { font-size: 1.7rem; font-weight: 800; color: var(--accent); margin-top: 6px; }
         .splash-tag { font-size: .68rem; letter-spacing: 3px; text-transform: uppercase; color: #9aa6b2; }
+        .splash-filosofia { display: flex; gap: 9px; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 8px; font-size: .82rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; }
+        .splash-filosofia > span { opacity: 0; animation: filoAparece .6s ease forwards; animation-delay: var(--d, 0s); color: var(--accent); }
+        .splash-filosofia > span.sep { color: #5b6675; font-weight: 400; }
+        @keyframes filoAparece { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .splash-btn {
             margin-top: 26px; background: var(--accent); color: #06231f;
             border: none; border-radius: 40px; padding: 15px 40px;
@@ -492,8 +496,10 @@
         .card-item.has-learn .item-name, .term-card.has-learn .term-title { padding-left: 32px; }
         .card-item.aprendida-card, .term-card.aprendida-card { box-shadow: inset 0 0 0 2px #16a34a; }
         /* ===== CELEBRACIÓN AL COMPLETAR SECCIÓN ===== */
-        .celebra { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
-        .celebra.show { opacity: 1; }
+        .celebra { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
+        .celebra.show { opacity: 1; pointer-events: auto; background: rgba(8,11,15,0.55); }
+        .celebra-btn { margin-top: 20px; background: var(--accent); color: #06231f; border: none; border-radius: 40px; padding: 12px 32px; font-weight: 800; font-size: 1rem; cursor: pointer; box-shadow: 0 8px 22px rgba(45,212,191,0.4); }
+        .celebra-btn:active { transform: translateY(1px); }
         .celebra-conf { position: absolute; inset: 0; overflow: hidden; }
         .confeti { position: absolute; top: -24px; width: 10px; height: 15px; border-radius: 2px; animation-name: confetiCae; animation-timing-function: linear; animation-iteration-count: 1; animation-fill-mode: forwards; }
         @keyframes confetiCae { 0% { top: -24px; opacity: 1; } 100% { top: 108%; opacity: 0.85; } }
@@ -594,8 +600,14 @@
             <path d="M37.5 30 C33.5 26 36.2 21.5 38 18 C38.8 20.8 41 20.6 40.6 23.4 C42.6 24 42 28 39.6 29 C41 30.7 39 32 37.5 30 Z" fill="#ef9b4b" stroke="#ef9b4b" stroke-width="0.6" stroke-linejoin="round"/>
             <path d="M7 47 C20 51 35 49 44 41 C49 36.5 45 30.5 40.5 33 C36.8 35 39.5 39.5 43 38.5" stroke="#2dd4bf" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <div class="splash-title">Protocolos de Servicio</div>
-        <div class="splash-tag">Altura · Imparidad · Movimiento</div>
+        <div class="splash-title">Servicio a la Mano</div>
+        <div class="splash-filosofia">
+            <span style="--d:.25s">Altura</span>
+            <span class="sep" style="--d:.45s">·</span>
+            <span style="--d:.65s">Imparidad</span>
+            <span class="sep" style="--d:.85s">·</span>
+            <span style="--d:1.05s">Movimiento</span>
+        </div>
         <button class="splash-btn" onclick="abrirPuerta()">Entrar <span class="splash-btn-icon">🚪</span></button>
     </div>
 </div>
@@ -612,8 +624,8 @@
                 <path d="M7 47 C20 51 35 49 44 41 C49 36.5 45 30.5 40.5 33 C36.8 35 39.5 39.5 43 38.5" stroke="#2dd4bf" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <div class="brand-text">
-                <span class="brand-title">Protocolos de Servicio</span>
-                <span class="brand-tag">Altura · Imparidad · Movimiento</span>
+                <span class="brand-title">Servicio a la Mano</span>
+                <span class="brand-tag">Academia de bolsillo del garzón</span>
             </div>
         </div>
         <div class="header-actions">
@@ -2049,10 +2061,14 @@
             + `<div class="celebra-sub">Completaste <strong>${label}</strong> al 100% ✅</div>`
             + `<div class="celebra-frase">${frase}</div>`
             + `<div class="celebra-pct">Avance del curso: ${pct}% · ${completas}/${avanceSecciones.length} temas dominados</div>`
+            + `<button class="celebra-btn" id="celebraCont">Continuar ➡️</button>`
             + `</div>`;
         document.body.appendChild(ov);
         requestAnimationFrame(() => ov.classList.add('show'));
-        setTimeout(() => { ov.classList.remove('show'); setTimeout(() => ov.remove(), 450); }, 3400);
+        const cerrar = () => { ov.classList.remove('show'); setTimeout(() => ov.remove(), 450); };
+        ov.querySelector('#celebraCont').addEventListener('click', (e) => { e.stopPropagation(); cerrar(); });
+        ov.addEventListener('click', (e) => { if (e.target === ov) cerrar(); }); // tocar fuera de la tarjeta también cierra
+        setTimeout(() => { if (document.body.contains(ov)) cerrar(); }, 15000); // red de seguridad
     }
 
     function decorateLearned() {

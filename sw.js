@@ -1,5 +1,5 @@
 // Service Worker — Protocolos de Servicio
-const CACHE = 'protocolos-v12';
+const CACHE = 'protocolos-v13';
 const ASSETS = [
   './',
   './index.html',

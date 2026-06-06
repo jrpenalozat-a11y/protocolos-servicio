@@ -1,7 +1,7 @@
 {
-  "name": "Protocolos de Servicio · Gastronomía",
-  "short_name": "Protocolos",
-  "description": "Protocolos de servicio, cócteles, carnes, productos del mar, vegetales chilenos y diccionario gastronómico.",
+  "name": "Servicio a la Mano · Academia del Garzón",
+  "short_name": "Servicio a la Mano",
+  "description": "Academia de bolsillo del garzón: protocolos, carta, bebestibles, maridajes, diccionario y quiz para el personal de servicio gastronómico.",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",
