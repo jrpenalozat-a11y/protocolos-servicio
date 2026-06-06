@@ -17,7 +17,7 @@ Academia/curso de bolsillo + herramienta de consulta rápida, instalable en el c
 ## Stack
 - HTML + CSS + JavaScript puro (un solo `index.html`)
 - Sin frameworks ni dependencias
-- PWA (manifest + service worker v13, offline funcional)
+- PWA (manifest + service worker v14, offline funcional)
 - Deploy: Vercel conectado a GitHub (auto-deploy en cada push)
 - Servidor local: config `protocolos` en `.claude/launch.json` (`npx serve`, puerto 4321)
 
@@ -70,8 +70,8 @@ Academia/curso de bolsillo + herramienta de consulta rápida, instalable en el c
 ### Sueltas (botón directo)
 - **🍷🍽️ Maridajes** — guía + explicación de qué es el maridaje (con foto)
 - **🚨 Alérgenos** — 14 alérgenos + protocolo (checklist) + foto del cartel de alérgenos
-- **📖 Diccionario** — Barra, Destilados, Comedor, Cocina, Códigos y jerga chilena. 113 términos con 🔊 pronunciación + check aprendido
-- **🧠 Quiz / Entrenamiento** — **opción múltiple A/B/C/D**, ~**351 preguntas** auto-generadas de casi todas las secciones (diccionario, quesos, cervezas, cócteles, vegetales, mar, cafés, platos, sin carne, sin alcohol, carnes, maridajes). Cada pregunta lleva un **grupo** (`g`) y los distractores salen del mismo tipo de respuesta para que no se delate la correcta. Al **acertar**, la pregunta se marca como aprendida (key `quizAprendidas`) y suma al avance; con 🔊 y botón reiniciar
+- **📖 Diccionario** — Barra, Destilados, Comedor, Cocina, Códigos y jerga chilena. 143 términos con 🔊 pronunciación + check aprendido
+- **🧠 Quiz / Entrenamiento** — **opción múltiple A/B/C/D**, ~**381 preguntas** auto-generadas de casi todas las secciones (diccionario, quesos, cervezas, cócteles, vegetales, mar, cafés, platos, sin carne, sin alcohol, carnes, maridajes). Cada pregunta lleva un **grupo** (`g`) y los distractores salen del mismo tipo de respuesta para que no se delate la correcta. Al **acertar**, la pregunta se marca como aprendida (key `quizAprendidas`) y suma al avance; con 🔊 y botón reiniciar
 - **📊 Mi Avance** — panel dashboard del progreso (ver Diseño)
 - **⭐ Favoritos** — tarjetas guardadas (key `favoritos`)
 
@@ -122,7 +122,7 @@ Academia/curso de bolsillo + herramienta de consulta rápida, instalable en el c
 ## Notas importantes
 - **Escala de puntos de cocción chilena:** Inglesa · A punto · Medio · 3/4 · Bien cocido
 - **Garzón** (no "camarero" ni "mesero") — toda la app usa términos chilenos
-- Service worker **v13** → cachea HTML, imágenes, fuentes y assets para offline (subir la versión cada vez que se cambien imágenes/íconos/manifest en la lista `ASSETS` de `sw.js`). ⚠️ No agregar a `ASSETS` un archivo que aún no existe: `addAll` falla entero y rompe el offline
+- Service worker **v14** → cachea HTML, imágenes, fuentes y assets para offline (subir la versión cada vez que se cambien imágenes/íconos/manifest en la lista `ASSETS` de `sw.js`). ⚠️ No agregar a `ASSETS` un archivo que aún no existe: `addAll` falla entero y rompe el offline
 - Datos en localStorage: `aprendidoCards` (checks de tarjetas), `quizAprendidas` (quiz), `favoritos`, `darkMode`, `sonido`, `proto_*` y `checklist_vino`/`checklist_alergenos` (checklists). sessionStorage: `splashVisto`
 - **Íconos PWA instalados no se actualizan solos:** tras cambiar `icon-*.png` hay que desinstalar/reinstalar la PWA en el celular para ver el ícono nuevo
 - `_canvatest/` está en `.gitignore` (carpeta temporal de descarga de Canva)
