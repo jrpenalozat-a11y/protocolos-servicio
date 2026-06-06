@@ -1836,7 +1836,11 @@
         const meta = { barra: ['🍸', 'Barra'], destilados: ['🥃', 'Destilados'], comedor: ['🍽️', 'Comedor'], cocina: ['👨‍🍳', 'Cocina'], codigos: ['🔢', 'Códigos y jerga'] };
         for (const [area, terms] of Object.entries(diccionario)) {
             const [emoji, label] = meta[area] || ['📖', area];
-            html += `<div class="dict-section"><h3>${emoji} ${label}</h3><div class="dict-grid">${terms.map(t => `<div class="term-card"><div class="term-title">${t.term} <button class="speak-btn" data-speak="${escAttr(t.term)}" title="Escuchar pronunciación" aria-label="Escuchar pronunciación">🔊</button></div><div class="term-def">${t.definition}</div></div>`).join("")}</div></div>`;
+            html += `<div class="dict-section"><h3>${emoji} ${label}</h3><div class="dict-grid">${terms.map(t => {
+                const lg = idiomaDe(t.term);
+                const sp = textoParaHablar(t.term, lg);
+                return `<div class="term-card"><div class="term-title">${t.term} <button class="speak-btn" data-speak="${escAttr(sp)}" data-lang="${lg || 'es-ES'}" title="Escuchar pronunciación" aria-label="Escuchar pronunciación">🔊</button></div><div class="term-def">${t.definition}</div></div>`;
+            }).join("")}</div></div>`;
         }
         container.innerHTML = html;
     }
@@ -2163,11 +2167,33 @@
     function escAttr(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
     function hablar(texto, lang) {
         if (!('speechSynthesis' in window) || !texto) return;
-        window.speechSynthesis.cancel();
+        const synth = window.speechSynthesis;
+        synth.cancel();
         const u = new SpeechSynthesisUtterance(texto);
         u.lang = lang || 'es-ES';
         u.rate = 0.92;
-        window.speechSynthesis.speak(u);
+        // elegir una voz que calce con el idioma pedido (mejor fonética)
+        try {
+            const pref = (u.lang).slice(0, 2).toLowerCase();
+            const voces = synth.getVoices() || [];
+            const v = voces.find(vo => vo.lang && vo.lang.toLowerCase().startsWith(pref + '-'))
+                || voces.find(vo => vo.lang && vo.lang.toLowerCase().startsWith(pref));
+            if (v) u.voice = v;
+        } catch (e) { }
+        synth.speak(u);
+    }
+    // clasificación de términos del diccionario por idioma (para pronunciarlos bien)
+    const TERMINOS_EN = new Set(["Boston Shaker", "Jigger", "Muddle (Machacar)", "Shake (Agitado)", "Stir (Removido)", "Dry Shake", "Build", "Float", "Dash", "On the rocks", "Straight up", "Neat", "Twist", "Garnish", "Bitter", "Simple Syrup", "Old Fashioned (vaso)", "Highball", "Chaser", "Runner / Garzón de apoyo", "Mixer / Bebida de relleno", "No-show"]);
+    const TERMINOS_FR = new Set(["Guéridon", "Couvert", "Table d'hôte", "À la carte", "Sommelier", "Mise en place", "Mise en place (cocina)", "Sous-vide", "Brunoise", "Chiffonade", "Roux", "Mirepoix", "Orgeat"]);
+    function idiomaDe(term) {
+        if (TERMINOS_EN.has(term)) return 'en-US';
+        if (TERMINOS_FR.has(term)) return 'fr-FR';
+        return null; // español por defecto
+    }
+    // qué texto leer: si es término extranjero, solo la palabra principal (sin la traducción entre paréntesis o tras "/")
+    function textoParaHablar(term, lang) {
+        if (!lang) return term;
+        return term.split('/')[0].split('(')[0].trim();
     }
 
     function abrirPuerta() {
