@@ -521,6 +521,17 @@
         .avance-row-sub { font-size: 0.75rem; color: var(--text-secondary); }
         .quiz-btn.learn { background: var(--btn-bg); color: var(--btn-text); }
         .quiz-btn.learn.on { background: #16a34a; color: #fff; }
+        .quiz-opciones { display: flex; flex-direction: column; gap: 9px; margin: 6px 0 4px; }
+        .quiz-opt { text-align: left; background: var(--bg-card); border: 1.5px solid var(--border-light); border-radius: 14px; padding: 11px 14px; font-size: 0.92rem; color: var(--text-primary); cursor: pointer; display: flex; gap: 11px; align-items: flex-start; font-family: inherit; line-height: 1.4; transition: border-color .15s, background .15s; }
+        .quiz-opt:hover:not(.answered) { border-color: var(--accent); }
+        .quiz-opt .quiz-letra { font-weight: 800; color: var(--accent); flex: none; }
+        .quiz-opt.answered { cursor: default; }
+        .quiz-opt.correcta { background: #16a34a; border-color: #16a34a; color: #fff; }
+        .quiz-opt.correcta .quiz-letra { color: #fff; }
+        .quiz-opt.incorrecta { background: rgba(239,68,68,.14); border-color: #ef4444; }
+        .quiz-feedback { margin: 8px 0 2px; font-weight: 700; font-size: 0.92rem; }
+        .quiz-feedback.ok { color: #16a34a; }
+        .quiz-feedback.no { color: #ef4444; }
         .dict-section {
             margin-bottom: 28px;
         }
@@ -1701,7 +1712,7 @@
         quizPool = shuffle(buildQuizPool());
         quizIdx = 0;
         container.innerHTML = `<div class="service-title">🧠 Quiz de Entrenamiento</div>
-            <div class="service-desc">Pon a prueba lo que sabes 💪. Revela la respuesta y marca ✅ las que ya dominas. Tu avance del curso se guarda solo en este dispositivo.</div>
+            <div class="service-desc">Pon a prueba lo que sabes 💪. Elige la alternativa correcta (A, B, C o D): si aciertas, la pregunta queda <strong>marcada como aprendida</strong> y suma a tu avance. Se guarda solo en este dispositivo.</div>
             <div class="image-place"><img src="img/quiz.jpg" alt="Entrenamiento" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
             <div class="quiz-prog-card">
                 <div class="quiz-prog-top"><span>📈 Avance del curso</span><span id="quizPct">0%</span></div>
@@ -1717,32 +1728,55 @@
         updateQuizProgress();
         mostrarPreguntaQuiz();
     }
+    function opcionesQuiz(item) {
+        // 3 distractores plausibles (misma categoría si se puede) + la correcta
+        const usados = new Set([item.a]);
+        const mismaCat = shuffle(quizPool.filter(it => it.cat === item.cat && it.a !== item.a));
+        const otras = shuffle(quizPool.filter(it => it.a !== item.a));
+        const fuente = mismaCat.length >= 3 ? mismaCat : mismaCat.concat(otras);
+        const distractores = [];
+        for (const it of fuente) {
+            if (distractores.length >= 3) break;
+            if (!usados.has(it.a)) { usados.add(it.a); distractores.push(it.a); }
+        }
+        return shuffle([item.a, ...distractores]);
+    }
     function mostrarPreguntaQuiz() {
         const box = document.getElementById('quizBox');
         if (!box || !quizPool.length) return;
         if (quizIdx >= quizPool.length) { shuffle(quizPool); quizIdx = 0; }
         const item = quizPool[quizIdx];
-        const learned = !!loadAprendidas()[quizId(item)];
+        const id = quizId(item);
+        const learned = !!loadAprendidas()[id];
+        const opciones = opcionesQuiz(item);
+        const letras = ['A', 'B', 'C', 'D'];
         box.innerHTML = `<div class="quiz-card${learned ? ' aprendida' : ''}">
                 <div class="quiz-cat">${item.cat}${learned ? ' · ✅ aprendida' : ''}</div>
                 <div class="quiz-q">${item.q} <button class="speak-btn" data-speak="${escAttr(item.q)}" title="Escuchar pregunta" aria-label="Escuchar pregunta">🔊</button></div>
-                <div class="quiz-a" id="quizA" hidden>${item.a}</div>
-                <div class="quiz-actions">
-                    <button class="quiz-btn" id="quizReveal">👁️ Mostrar respuesta</button>
-                    <button class="quiz-btn learn${learned ? ' on' : ''}" id="quizLearn">${learned ? '✅ Aprendida' : '☑️ Marcar aprendida'}</button>
-                    <button class="quiz-btn ghost" id="quizNext">Siguiente ➡️</button>
-                </div>
+                <div class="quiz-opciones">${opciones.map((o, i) => `<button class="quiz-opt" data-ok="${o === item.a ? '1' : '0'}"><span class="quiz-letra">${letras[i]}</span><span>${o}</span></button>`).join('')}</div>
+                <div class="quiz-feedback" id="quizFb" hidden></div>
+                <div class="quiz-actions"><button class="quiz-btn ghost" id="quizNext">Siguiente ➡️</button></div>
             </div>
             <div class="quiz-progress">Pregunta ${quizIdx + 1} de ${quizPool.length}</div>`;
-        document.getElementById('quizReveal').addEventListener('click', () => {
-            document.getElementById('quizA').hidden = false;
-            document.getElementById('quizReveal').hidden = true;
-        });
-        document.getElementById('quizLearn').addEventListener('click', () => {
-            const a = loadAprendidas(); const id = quizId(item);
-            if (a[id]) delete a[id]; else a[id] = 1;
-            saveAprendidas(a); updateQuizProgress(); mostrarPreguntaQuiz();
-        });
+        const opts = [...box.querySelectorAll('.quiz-opt')];
+        opts.forEach(btn => btn.addEventListener('click', () => {
+            if (box.querySelector('.quiz-opt.answered')) return; // ya respondió
+            const ok = btn.getAttribute('data-ok') === '1';
+            opts.forEach(o => { o.classList.add('answered'); if (o.getAttribute('data-ok') === '1') o.classList.add('correcta'); });
+            if (!ok) btn.classList.add('incorrecta');
+            const fb = document.getElementById('quizFb'); fb.hidden = false;
+            if (ok) {
+                fb.textContent = '✅ ¡Correcto! Marcada como aprendida.';
+                fb.className = 'quiz-feedback ok';
+                const a = loadAprendidas(); a[id] = 1; saveAprendidas(a); updateQuizProgress();
+                const cat = box.querySelector('.quiz-cat'); if (cat && !cat.textContent.includes('aprendida')) cat.textContent = item.cat + ' · ✅ aprendida';
+                tono(659.25, 0, 0.12, 'sine', 0.08); tono(987.77, 0.10, 0.18, 'sine', 0.08);
+            } else {
+                fb.textContent = '❌ Casi. La respuesta correcta está marcada en verde.';
+                fb.className = 'quiz-feedback no';
+                tono(196, 0, 0.25, 'sine', 0.07);
+            }
+        }));
         document.getElementById('quizNext').addEventListener('click', () => { quizIdx++; mostrarPreguntaQuiz(); });
     }
 
@@ -2225,7 +2259,7 @@
         // Sonido sutil en cada botón (la puerta tiene su propio sonido; los 🔊 no llevan tic)
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('button');
-            if (!btn || btn.classList.contains('splash-btn') || btn.id === 'soundToggle' || btn.classList.contains('speak-btn')) return;
+            if (!btn || btn.classList.contains('splash-btn') || btn.id === 'soundToggle' || btn.classList.contains('speak-btn') || btn.classList.contains('quiz-opt')) return;
             sonidoBoton();
         }, true);
         updateFavCount();
