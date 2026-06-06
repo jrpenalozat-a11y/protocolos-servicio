@@ -1128,6 +1128,33 @@
         ]
     };
 
+    // ========================== PLATOS TÍPICOS CHILENOS ==========================
+    const platosChilenos = {
+        guisos: [
+            { nombre: "🍲 Cazuela", tipo: "Guiso", desc: "El plato hogareño chileno por excelencia: un caldo sustancioso con presa de vacuno o pollo, zapallo, papa, choclo, porotos verdes y un toque de arroz o chuchoca. Reconforta el alma.", maridaje: "Tinto liviano (País o Pinot Noir); blanco si es de ave." },
+            { nombre: "🥣 Valdiviano", tipo: "Sopa", desc: "Sopa del sur de Chile a base de charqui (carne seca deshilachada), cebolla, papas y un huevo pochado encima. De origen colonial, contundente y de sabor profundo.", maridaje: "Tinto con cuerpo (Cabernet o Carmenère)." },
+            { nombre: "🥘 Charquicán", tipo: "Guiso", desc: "Guiso campesino de papas y zapallo deshechos, con carne (o charqui), choclo, porotos verdes y zanahoria. Se corona con un huevo frito. Pura tradición criolla.", maridaje: "Carmenère o un tinto joven." },
+            { nombre: "🫘 Porotos Granados", tipo: "Guiso", desc: "Porotos frescos cocidos con 'mazamorra' (choclo molido), zapallo y albahaca. Plato de verano, vegetariano y muy nutritivo. Símbolo de la cocina chilena de la tierra.", maridaje: "Tinto liviano (País) o un rosado." },
+            { nombre: "🍲 Ajiaco", tipo: "Sopa", desc: "Sopa reparadora hecha con las sobras del asado: carne asada en tiras, cebolla, papas en rodajas, ají de color y huevo. El clásico 'levanta muertos' del día después.", maridaje: "Tinto joven o una cerveza lager." }
+        ],
+        hornoMasas: [
+            { nombre: "🌽 Pastel de Choclo", tipo: "Al horno", desc: "Ícono nacional: una base de pino (carne molida, pollo, cebolla, huevo duro y aceituna) cubierta con pasta de choclo molido y gratinada con azúcar. Dulce y salado en perfecta armonía.", maridaje: "Carmenère o un tinto frutal." },
+            { nombre: "🥔 Pastel de Papas", tipo: "Al horno", desc: "Primo del pastel de choclo, pero con puré de papas dorado sobre el pino. Cremoso, reconfortante y muy de casa.", maridaje: "Merlot o Carmenère." },
+            { nombre: "🥟 Empanada de Pino", tipo: "Masa", desc: "La reina de las Fiestas Patrias: masa al horno rellena de pino (carne, cebolla, huevo, aceituna y pasa). Crujiente por fuera, jugosa por dentro.", maridaje: "Cabernet Sauvignon o vino País." },
+            { nombre: "🌽 Humitas", tipo: "Masa", desc: "Pasta de choclo fresco molido con albahaca, envuelta en sus propias hojas y cocida al vapor. Se come dulce o salada. Verano en cada bocado.", maridaje: "Blanco fresco (Sauvignon Blanc) o tinto liviano." },
+            { nombre: "🧆 Sopaipillas", tipo: "Frito", desc: "Masa de harina con zapallo, frita y dorada. Saladas con pebre, o 'pasadas' en chancaca dulce los días de lluvia. El antojo chileno por excelencia.", maridaje: "Saladas: cerveza o tinto joven. Pasadas: café o té." }
+        ],
+        delMar: [
+            { nombre: "🐟 Caldillo de Congrio", tipo: "Del mar", desc: "El plato que Neruda inmortalizó en su 'Oda'. Un caldo aromático de congrio con cebolla, tomate, papas, vino blanco y crema. Elegante y reconfortante.", maridaje: "Sauvignon Blanc o Chardonnay con cuerpo." },
+            { nombre: "🦐 Paila Marina", tipo: "Del mar", desc: "Sopa caliente con todo el mar adentro: choritos, almejas, machas, jaibas y pescado, en un caldo con vino blanco y cilantro. Dicen que también levanta el ánimo.", maridaje: "Sauvignon Blanc bien frío." },
+            { nombre: "🦪 Curanto", tipo: "Del mar", desc: "Tradición de Chiloé: mariscos, carnes, longaniza, papas, milcao y chapaleles cocidos sobre piedras calientes bajo tierra, tapados con hojas de nalca. Una fiesta entera en un plato.", maridaje: "Sauvignon Blanc; un tinto liviano para las carnes." }
+        ],
+        contundentes: [
+            { nombre: "🍳 Lomo a lo Pobre", tipo: "Contundente", desc: "Para el hambre de verdad: un lomo de vacuno a la plancha coronado con papas fritas, cebolla caramelizada y un par de huevos fritos. Glorioso exceso.", maridaje: "Cabernet Sauvignon o Carmenère." },
+            { nombre: "🍟 Chorrillana", tipo: "Para compartir", desc: "Montaña de papas fritas cubiertas con carne, longaniza, cebolla y huevo. Pensada para compartir (y acompañar con cerveza) entre amigos.", maridaje: "Cerveza lager o un tinto joven." }
+        ]
+    };
+
     // ========================== ATENCIÓN EN MESA ==========================
     const atencionMesa = {
         secuencia: {
@@ -1306,6 +1333,13 @@
             "El pisco sour de la casa es tu carta ganadora. 🇨🇱",
             "Conoce tus tragos y recomienda con seguridad. 😎",
             "La barra también se atiende con onda. 🛎️"
+        ],
+        platos: [
+            "Un plato típico bien contado sabe mejor. 🍲",
+            "Conoce nuestra cocina y enorgullécete de ella. 🇨🇱",
+            "Cazuela, pastel de choclo, empanada: clásicos que no fallan. 😋",
+            "Recomendar lo nuestro con onda enamora al turista. 🌎",
+            "Cada plato tiene su historia: cuéntala. 📖"
         ],
         vinos: [
             "Temperatura justa, copa justa. ¡Salud! 🍷",
@@ -1570,6 +1604,18 @@
             <div class="subseccion"><h2>🇨🇱 Quesos Chilenos (${quesos.chilenos.length})</h2><div class="grid-cards">${quesos.chilenos.map(card).join("")}</div></div>`;
     }
 
+    function renderPlatos() {
+        const container = document.getElementById('mainContent');
+        const card = p => `<div class="card-item"><div class="item-name">${p.nombre} <span class="std-badge">${p.tipo}</span></div><div class="item-desc">${p.desc}</div><div class="item-prep">🍷 <strong>Maridaje:</strong> ${p.maridaje}</div></div>`;
+        container.innerHTML = `<div class="service-title">🍲 Platos Típicos Chilenos</div>
+            <div class="service-desc">Los clásicos de la cocina chilena que todo garzón debe saber describir y recomendar —y con qué vino lucirlos—. Pura identidad en el plato. 🇨🇱</div>
+            <div class="image-place"><img src="img/platos.jpg" alt="Platos típicos chilenos" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
+            <div class="subseccion"><h2>🍲 Sopas y guisos (${platosChilenos.guisos.length})</h2><div class="grid-cards">${platosChilenos.guisos.map(card).join("")}</div></div>
+            <div class="subseccion"><h2>🌽 Al horno y masas (${platosChilenos.hornoMasas.length})</h2><div class="grid-cards">${platosChilenos.hornoMasas.map(card).join("")}</div></div>
+            <div class="subseccion"><h2>🐟 Del mar (${platosChilenos.delMar.length})</h2><div class="grid-cards">${platosChilenos.delMar.map(card).join("")}</div></div>
+            <div class="subseccion"><h2>🍳 Contundentes y para compartir (${platosChilenos.contundentes.length})</h2><div class="grid-cards">${platosChilenos.contundentes.map(card).join("")}</div></div>`;
+    }
+
     function renderCarnes() {
         const container = document.getElementById('mainContent');
         const card = (c, eq) => `<div class="card-item"><div class="item-name">${eq ? `🇨🇱 ${c.nombre} → 🇺🇸 ${c.equivalente}` : c.nombre}</div><div class="item-desc">${c.desc}</div><div class="item-prep">🔥 <strong>Punto:</strong> ${c.punto}</div><div class="item-prep">🍷 <strong>Maridaje:</strong> ${c.maridaje}</div></div>`;
@@ -1696,6 +1742,7 @@
 
     // ================== MI AVANCE (panel global) ==================
     const totalsData = {
+        platos: () => platosChilenos.guisos.length + platosChilenos.hornoMasas.length + platosChilenos.delMar.length + platosChilenos.contundentes.length,
         carnes: () => carnes.vacunoParrilla.length + carnes.vacunoOlla.length + carnes.cerdo.length + carnes.venado.length + carnes.jabali.length + carnes.otrasCarnes.length + carnes.alPalo.length + carnes.puntosCarne.length,
         productosMar: () => pescadosChile.length + mariscos.orilla.length + mariscos.fondo.length + crustaceos.length,
         vegetales: () => vegetalesChilenos.papas.variedades.length + vegetalesChilenos.otrosTubérculos.lista.length + vegetalesChilenos.frutosNativos.lista.length + vegetalesChilenos.hierbasCondimentos.lista.length + vegetalesChilenos.otros.lista.length,
@@ -1713,7 +1760,7 @@
     function renderAvance() {
         const container = document.getElementById('mainContent');
         const meta = {
-            carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Productos del Mar'], vegetales: ['🌽', 'Vegetales Chilenos'],
+            platos: ['🍲', 'Platos Típicos'], carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Productos del Mar'], vegetales: ['🌽', 'Vegetales Chilenos'],
             quesos: ['🧀', 'Quesos'], sinCarne: ['🌱', 'Sin Carne'],
             cocteles: ['🍸', 'Cócteles'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Cafés'], sinAlcohol: ['🧃', 'Sin Alcohol'],
             maridajes: ['🍷', 'Maridajes'],
@@ -1835,7 +1882,7 @@
         if (btn) btn.textContent = n ? `⭐ Favoritos (${n})` : '⭐ Favoritos';
     }
     // ================== APRENDIDO POR TARJETA ==================
-    const tabsAprendizaje = ['carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'atencionMesa', 'restaurantes'];
+    const tabsAprendizaje = ['platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'atencionMesa', 'restaurantes'];
     function loadAprendidoCards() { try { return JSON.parse(localStorage.getItem('aprendidoCards') || '{}'); } catch (e) { return {}; } }
     function saveAprendidoCards(o) { localStorage.setItem('aprendidoCards', JSON.stringify(o)); }
     function cardLearnId(titleText) { return currentTab + '::' + titleText.trim(); }
@@ -1972,20 +2019,20 @@
     // ================== NAVEGACIÓN (hubs + sub-pestañas) ==================
     const hubs = {
         servicio: ['protocolos', 'atencionMesa', 'restaurantes'],
-        carta: ['carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne'],
+        carta: ['platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne'],
         bebestibles: ['vinos', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol']
     };
     const subMeta = {
         protocolos: ['📋', 'Protocolos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Por Local'],
-        carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Mar'], vegetales: ['🌽', 'Vegetales'], quesos: ['🧀', 'Quesos'], sinCarne: ['🌱', 'Sin Carne'],
+        platos: ['🍲', 'Platos Típicos'], carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Mar'], vegetales: ['🌽', 'Vegetales'], quesos: ['🧀', 'Quesos'], sinCarne: ['🌱', 'Sin Carne'],
         vinos: ['🍷', 'Vinos'], cocteles: ['🍸', 'Cócteles'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Cafés'], sinAlcohol: ['🧃', 'Sin Alcohol'],
         maridajes: ['🍷', 'Maridajes'], alergenos: ['🚨', 'Alérgenos']
     };
     const hubOf = {}; Object.keys(hubs).forEach(h => hubs[h].forEach(s => hubOf[s] = h));
-    const lastSub = { servicio: 'protocolos', carta: 'carnes', bebestibles: 'vinos' };
+    const lastSub = { servicio: 'protocolos', carta: 'platos', bebestibles: 'vinos' };
     const renderers = {
         protocolos: renderProtocolos, atencionMesa: renderAtencionMesa, restaurantes: renderRestaurantesChile,
-        carnes: renderCarnes, productosMar: renderProductosMar, vegetales: renderVegetales, quesos: renderQuesos, sinCarne: renderSinCarne,
+        platos: renderPlatos, carnes: renderCarnes, productosMar: renderProductosMar, vegetales: renderVegetales, quesos: renderQuesos, sinCarne: renderSinCarne,
         vinos: renderVinos, cocteles: renderCocteles, cervezas: renderCervezas, barismo: renderBarismo, sinAlcohol: renderSinAlcohol,
         alergenos: renderAlergenos, maridajes: renderMaridajes, diccionario: renderDiccionario, quiz: renderQuiz, avance: renderAvance, favoritos: renderFavoritos
     };
