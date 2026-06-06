@@ -2190,10 +2190,10 @@
         if (TERMINOS_FR.has(term)) return 'fr-FR';
         return null; // español por defecto
     }
-    // qué texto leer: si es término extranjero, solo la palabra principal (sin la traducción entre paréntesis o tras "/")
+    // qué texto leer: solo la palabra principal (antes de "/" o "(") para no mezclar idiomas
+    // ej. "Colador / Strainer" → "Colador"; "Muddle (Machacar)" → "Muddle"
     function textoParaHablar(term, lang) {
-        if (!lang) return term;
-        return term.split('/')[0].split('(')[0].trim();
+        return term.split('/')[0].split('(')[0].replace(/[«»]/g, '').trim();
     }
 
     function abrirPuerta() {
