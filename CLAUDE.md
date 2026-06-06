@@ -16,7 +16,7 @@ Herramienta de consulta rápida y capacitación, instalable en el celular y func
 ## Stack
 - HTML + CSS + JavaScript puro (un solo `index.html`)
 - Sin frameworks ni dependencias
-- PWA (manifest + service worker v9, offline funcional)
+- PWA (manifest + service worker v11, offline funcional)
 - Deploy: Vercel conectado a GitHub (auto-deploy en cada push)
 - Servidor local: config `protocolos` en `.claude/launch.json` (`npx serve`, puerto 4321)
 
@@ -29,28 +29,56 @@ Herramienta de consulta rápida y capacitación, instalable en el celular y func
 - **Sonido (Web Audio, sin archivos):** campanita al abrir la puerta + "tic" sutil en cada botón. Botón 🔊/🔇 para silenciar (preferencia guardada en localStorage, key `sonido`)
 - **Pantalla de bienvenida (splash):** dos puertas que se abren al tocar "Entrar 🚪" y revelan la app (CSS+JS puro). Aparece **solo la primera vez por sesión** (`sessionStorage` key `splashVisto`)
 - **Filosofía gastronómica de la marca:** Altura · Imparidad · Movimiento (principios del emplatado)
-- La app **arranca siempre en la pestaña Protocolos**
+- La app **arranca siempre en Protocolos** (sub-pestaña del hub Servicio)
+- **Navegación en 2 niveles (hubs + sub-pestañas):** 9 botones arriba. 3 son hubs con una fila de sub-botones (chips) que se muestra solo dentro del hub:
+  - 📋 **Servicio** → Protocolos · Atención en Mesa · Servicio por Local
+  - 🍽️ **La Carta** → Platos Típicos · Carnes · Mar · Vegetales · Quesos · Sin Carne
+  - 🥂 **Bebestibles** → Vinos · Cócteles · Cervezas · Cafés · Sin Alcohol
+  - Sueltos: 🍷🍽️ Maridajes · 🚨 Alérgenos · 📖 Diccionario · 🧠 Quiz · 📊 Mi Avance · ⭐ Favoritos
+  - JS: objeto `hubs`, `subMeta`, `renderers`, función `goTo(seccion)` y `renderSubNav()`. Cada hub recuerda su última sub-pestaña (`lastSub`). El `<div id="subNav">` se oculta (`:empty`) en pestañas sueltas
+- **Sistema de aprendizaje (curso con seguimiento):**
+  - Cada tarjeta de las secciones de contenido tiene un **check ✅ "aprendido"** (esquina) que se guarda en localStorage (key `aprendidoCards`, id `seccion::titulo`)
+  - **Barra de % por sección** arriba (decorador central `decorateLearned`). Protocolos y Vinos usan barra basada en sus **checklists** (función `progresoDe` unifica tarjetas y checklists)
+  - **📊 Mi Avance:** panel con anillo de % total del curso (conic-gradient) + cada una de las 17 secciones con su mini-barra y % (color rojo/ámbar/verde según avance). Lista en `avanceSecciones`
+  - **🎉 Celebración:** al completar el 100% de una sección, overlay "¡Felicidades!" con confeti + fanfarria + frase motivadora **acorde al % global** (Gran comienzo / Buen ritmo / Ya pasaste la mitad / Ya casi lo dominas / Completaste TODO)
+- **Pronunciación (Web Speech API):** botón 🔊 junto a cada término del Diccionario y en cada pregunta del Quiz; lee la palabra con la voz del dispositivo (offline). Independiente del botón silenciar
 
-## Secciones (13 pestañas)
-1. 📋 **Protocolos** — 8 estilos con checklist + fotos chilenizadas. Servicio Americano aclarado (servir por la derecha = norma clásica, puede variar según el local)
-2. 🤝 **Atención en Mesa** — secuencia, gestos, venta sugestiva, presencia atenta (con foto)
-3. 🚨 **Alérgenos** — 14 alérgenos + protocolo + checklist
-4. 🍷 **Bebestibles** — protocolo vinos + 20 cócteles internacionales + 7 chilenos
-5. 🍷🍽️ **Maridajes** — guía + explicación de qué es el maridaje (con foto)
-6. 🥩 **Carnes** — vacuno (parrilla/olla), cerdo, venado, jabalí, otras, al palo, puntos de cocción. Cada corte con descripción + punto (escala chilena) + maridaje
-7. 🌊 **Productos del Mar** — 18 pescados, 12 mariscos, 7 crustáceos. Todos con descripción + maridaje
-8. 🌽 **Vegetales Chilenos** — papas chilotas, tubérculos, frutos nativos, hierbas, cultivos ancestrales
-9. 🧀 **Quesos** — 15 quesos del mundo usados en Chile + 5 chilenos. Cada uno con familia (fresco/blando/semiduro/duro/azul) + descripción entusiasta + maridaje. Intro con claves para servir/describir
-10. 🛎️ **Servicio por Local** — 15 tipos de restaurant chileno con protocolo recomendado
-11. 📖 **Diccionario** — Barra (+ fundamentos), Destilados, Comedor, Cocina, Códigos y jerga chilena
-12. 🧠 **Quiz / Entrenamiento** — ~203 preguntas auto-generadas desde los datos (quesos, maridajes, diccionario, carnes, mar). Flash card con "Mostrar respuesta" + "Siguiente". **Avance del curso:** barra de progreso con % y "marcar aprendida" ✅ que se **guarda** (localStorage key `quizAprendidas`) + botón reiniciar avance
-13. ⭐ **Favoritos** — tarjetas guardadas
+## Secciones (9 botones top-level; ~17 secciones de contenido)
+
+### 📋 Servicio (hub)
+- **Protocolos** — 8 estilos con checklist + fotos chilenizadas. Americano aclarado (servir por la derecha = norma clásica, puede variar según el local). Barra de avance según los pasos de los 8 checklists
+- **Atención en Mesa** — secuencia, gestos, venta sugestiva, presencia atenta (con foto)
+- **Servicio por Local** — 15 tipos de restaurant chileno con protocolo recomendado
+
+### 🍽️ La Carta (hub)
+- **🍲 Platos Típicos Chilenos** — 15 platos (cazuela, valdiviano, charquicán, porotos granados, ajiaco, pastel de choclo/papas, empanada, humitas, sopaipillas, caldillo de congrio, paila marina, curanto, lomo a lo pobre, chorrillana) con descripción + maridaje
+- **🥩 Carnes** — vacuno (parrilla/olla), cerdo, venado, jabalí, otras, al palo, puntos de cocción. Cada corte con descripción + punto (escala chilena) + maridaje
+- **🌊 Productos del Mar** — 18 pescados, 12 mariscos, 7 crustáceos, con descripción + maridaje
+- **🌽 Vegetales Chilenos** — papas chilotas, tubérculos, frutos nativos, hierbas, cultivos ancestrales
+- **🧀 Quesos** — 15 del mundo + 5 chilenos, con familia (fresco/blando/semiduro/duro/azul) + descripción + maridaje
+- **🌱 Sin Carne** — dietas (vegetariano, vegano, pescetariano, ovolacto, flexitariano) + productos sustitutos (tofu, tempeh, seitán, legumbres, etc.) + tip de atención (contaminación cruzada)
+
+### 🥂 Bebestibles (hub)
+- **🍷 Vinos** — protocolo de servicio (checklist con barra de avance)
+- **🍸 Cócteles** — 20 internacionales + 7 chilenos
+- **🍺 Cervezas** — 20 estilos (lagers, ales, trigo/ácidas) con tipo + descripción + maridaje
+- **☕ Cafés (Barismo)** — 15 cafés (base, con leche, especiales) con tipo + descripción + composición ("Lleva")
+- **🧃 Sin Alcohol** — 13 fichas: jugos, batidos y mocktails
+
+### Sueltas (botón directo)
+- **🍷🍽️ Maridajes** — guía + explicación de qué es el maridaje (con foto)
+- **🚨 Alérgenos** — 14 alérgenos + protocolo (checklist) + foto del cartel de alérgenos
+- **📖 Diccionario** — Barra, Destilados, Comedor, Cocina, Códigos y jerga chilena. 113 términos con 🔊 pronunciación + check aprendido
+- **🧠 Quiz / Entrenamiento** — ~200 preguntas auto-generadas (quesos, maridajes, diccionario, carnes, mar). Flash card con "Mostrar respuesta" + 🔊 + "Siguiente". Barra de avance propia, "marcar aprendida" (key `quizAprendidas`) + reiniciar
+- **📊 Mi Avance** — panel dashboard del progreso (ver Diseño)
+- **⭐ Favoritos** — tarjetas guardadas (key `favoritos`)
 
 > Nota: en cada sección con foto, la imagen va **al inicio** (bajo el título). La sección 🧮 Cuenta (calculadora de propina) fue **eliminada**.
 
 ## Imágenes (img/)
 - **Protocolos:** `frances.jpg`, `ingles.jpg`, `americano.jpg`, `ruso.jpg`, `directo.jpg`, `bandeja.jpg`, `montaje.jpg`, `quejas.jpg` (montaje y quejas pasaron de dibujo SVG a foto; agregados a `conFoto` en el JS)
-- **Secciones:** `bebestibles.jpg`, `mar.jpg`, `carnes.jpg`, `vegetales.jpg`, `local.jpg`, `maridajes.jpg`, `atencion-mesa.jpg`, `quesos.jpg`
+- **Secciones:** `bebestibles.jpg` (vinos), `mar.jpg`, `carnes.jpg`, `vegetales.jpg`, `local.jpg`, `maridajes.jpg`, `atencion-mesa.jpg`, `quesos.jpg`, `platos.jpg`, `cervezas.jpg`, `barismo.jpg`, `sinalcohol.jpg`, `sincarne.jpg`, `alergenos.jpg`, `quiz.jpg`, `mi-avance.jpg`, `favoritos.jpg` (todas las secciones ya tienen foto)
+- Patrón: el `image-place` de cada sección usa `onerror` para ocultarse si el archivo no existe todavía
 - `LOGO.jpg` → diseño de logo del dueño (montaña/llama/ola, maqueta enmarcada). El encabezado usa un **emblema SVG inline** (no este archivo)
 - `icon-192.png`, `icon-512.png` → íconos PWA con el **emblema montaña/llama/ola** sobre carbón (generados con PowerShell + System.Drawing, mismas curvas que el SVG del encabezado)
 - Todas las fotos de secciones/protocolos fueron renovadas (chilenizadas) en jun-2026
@@ -70,16 +98,25 @@ Herramienta de consulta rápida y capacitación, instalable en el celular y func
 - ✅ **Tipografía moderna** (Inter + Poppins)
 - ✅ **Sonidos** (campanita puerta + tic botones) con botón 🔊/🔇 para silenciar
 - ✅ **Ícono PWA** nuevo con el emblema (reemplazado el "GM")
+- ✅ **Navegación en hubs** (Servicio / La Carta / Bebestibles con sub-pestañas) — de 16 botones a 9
+- ✅ **Secciones nuevas:** 🍲 Platos Típicos Chilenos · 🍺 Cervezas · ☕ Cafés (Barismo) · 🧃 Sin Alcohol · 🌱 Sin Carne
+- ✅ Bebestibles dividido en 🍷 Vinos y 🍸 Cócteles
+- ✅ **Sistema de aprendizaje:** check ✅ por tarjeta + barra de % por sección, en TODAS las secciones (incluido Diccionario, Protocolos y Vinos)
+- ✅ **📊 Mi Avance** — panel con anillo de % total + 17 secciones con su progreso
+- ✅ **🎉 Celebración** al completar una sección (confeti + frase motivadora según avance)
+- ✅ **🔊 Pronunciación** (TTS) en Diccionario y Quiz
+- ✅ Fotos nuevas en Cervezas, Cafés, Sin Alcohol, Quiz, Mi Avance, Favoritos, Alérgenos y Platos
 
 ## Pendiente (próximos pasos / ideas)
-1. **Más preguntas/curado del Quiz** — revisar redacción y agregar preguntas de protocolos/alérgenos
+1. **Más preguntas/curado del Quiz** — agregar preguntas de protocolos, cervezas, cafés, platos típicos
 2. **Afinar tema claro** — revisar contraste en alguna sección puntual si hace falta
 3. Cualquier idea nueva del dueño 🙌
 
 ## Notas importantes
 - **Escala de puntos de cocción chilena:** Inglesa · A punto · Medio · 3/4 · Bien cocido
 - **Garzón** (no "camarero" ni "mesero") — toda la app usa términos chilenos
-- Service worker **v9** → cachea HTML, imágenes, fuentes y assets para offline (subir la versión `v9 → v10...` cada vez que se cambien imágenes/íconos en la lista `ASSETS` de `sw.js`)
+- Service worker **v11** → cachea HTML, imágenes, fuentes y assets para offline (subir la versión cada vez que se cambien imágenes/íconos en la lista `ASSETS` de `sw.js`). ⚠️ No agregar a `ASSETS` un archivo que aún no existe: `addAll` falla entero y rompe el offline
+- Datos en localStorage: `aprendidoCards` (checks de tarjetas), `quizAprendidas` (quiz), `favoritos`, `darkMode`, `sonido`, `proto_*` y `checklist_vino`/`checklist_alergenos` (checklists). sessionStorage: `splashVisto`
 - **Íconos PWA instalados no se actualizan solos:** tras cambiar `icon-*.png` hay que desinstalar/reinstalar la PWA en el celular para ver el ícono nuevo
 - `_canvatest/` está en `.gitignore` (carpeta temporal de descarga de Canva)
 - El archivo `CREDITS.md` tiene la atribución de imágenes con licencia CC
