@@ -1166,6 +1166,18 @@
         ]
     };
 
+    // ========================== COMIDA RÁPIDA ==========================
+    const comidaRapida = [
+        { nombre: "🗣️ Toma de pedido en caja", tipo: "En caja", desc: "Saluda con onda, escucha sin apurar y habla claro. Repite el pedido en voz alta para confirmar («Entonces: una completa, papas medianas y bebida, ¿correcto?»). Rapidez amable, no robótica." },
+        { nombre: "💰 Venta sugestiva", tipo: "Venta", desc: "Sube el ticket sin presionar: ofrece agrandar el combo, sumar papas, un postre o una bebida. «¿Lo hacemos combo?» o «¿Le agregamos algo dulce?». Una buena recomendación se agradece (y se nota en la caja)." },
+        { nombre: "🚗 Drive-thru / Para llevar", tipo: "Para llevar", desc: "Revisa que el pedido vaya COMPLETO antes de entregarlo: salsas, servilletas, bombillas, cubiertos. Sella y ordena bien las bolsas. Un pedido incompleto o frío arruina toda la experiencia." },
+        { nombre: "⏱️ Manejo de fila y hora punta", tipo: "Ritmo", desc: "En el peak, rapidez sin perder la precisión. Anticípate, mantén la calma y comunícate con cocina. Una fila que avanza ordenada y con buena cara espera mejor." },
+        { nombre: "🧼 Higiene y manipulación", tipo: "Higiene", desc: "Lavado de manos frecuente, uso correcto de guantes, control de temperaturas y rotación de productos (lo primero que entra, primero que sale). La inocuidad no se negocia." },
+        { nombre: "🧽 Autoservicio y limpieza", tipo: "Limpieza", desc: "Mantén impecables las mesas, bandejas, dispensadores de salsas y servilletas, basureros y baños. Un local limpio invita a volver; uno sucio espanta aunque la comida sea buena." },
+        { nombre: "🤝 Trabajo por estaciones", tipo: "Equipo", desc: "Cada uno en su puesto (caja, armado, fritos, despacho) pero apoyándose. Comunicación corta y clara, sobre todo en el peak. El equipo coordinado saca cualquier turno adelante." },
+        { nombre: "🆘 Reclamos rápidos", tipo: "Quejas", desc: "¿Pedido equivocado o demora? Discúlpate de inmediato, resuelve al toque (rehacer o compensar) y agradece el aviso. Un problema bien resuelto fideliza más que uno que nunca pasó." }
+    ];
+
     // ========================== ATENCIÓN EN MESA ==========================
     const atencionMesa = {
         secuencia: {
@@ -1345,6 +1357,13 @@
             "El pisco sour de la casa es tu carta ganadora. 🇨🇱",
             "Conoce tus tragos y recomienda con seguridad. 😎",
             "La barra también se atiende con onda. 🛎️"
+        ],
+        comidaRapida: [
+            "Rápido, preciso y con onda: así se atiende. 🍔",
+            "Una buena venta sugestiva sube cada pedido. 💰",
+            "Revisa el pedido completo antes de entregarlo. 🚗",
+            "En el peak, calma y trabajo en equipo. 🤝",
+            "Local limpio, cliente que vuelve. 🧽"
         ],
         platos: [
             "Un plato típico bien contado sabe mejor. 🍲",
@@ -1621,6 +1640,15 @@
             <div class="subseccion"><h2>🇨🇱 Quesos Chilenos (${quesos.chilenos.length})</h2><div class="grid-cards">${quesos.chilenos.map(card).join("")}</div></div>`;
     }
 
+    function renderComidaRapida() {
+        const container = document.getElementById('mainContent');
+        const card = c => `<div class="card-item"><div class="item-name">${c.nombre} <span class="std-badge">${c.tipo}</span></div><div class="item-desc">${c.desc}</div></div>`;
+        container.innerHTML = `<div class="service-title">🍔 Comida Rápida</div>
+            <div class="service-desc">El servicio de comida rápida tiene sus propias reglas: velocidad, precisión y buena onda en mostrador. Domina estas claves y atiende como un pro, sea en caja, drive-thru o autoservicio. 🍟</div>
+            <div class="image-place"><img src="img/comidarapida.jpg" alt="Comida rápida" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
+            <div class="grid-cards">${comidaRapida.map(card).join("")}</div>`;
+    }
+
     function renderPlatos() {
         const container = document.getElementById('mainContent');
         const card = p => `<div class="card-item"><div class="item-name">${p.nombre} <span class="std-badge">${p.tipo}</span></div><div class="item-desc">${p.desc}</div><div class="item-prep">🍷 <strong>Maridaje:</strong> ${p.maridaje}</div></div>`;
@@ -1796,10 +1824,11 @@
         alergenos: () => alergenos.lista.length,
         atencionMesa: () => atencionMesa.secuencia.momentos.length + atencionMesa.gestos.senales.length,
         restaurantes: () => restaurantesChile.length,
+        comidaRapida: () => comidaRapida.length,
         diccionario: () => Object.values(diccionario).reduce((a, arr) => a + arr.length, 0)
     };
     // todas las secciones con avance, en orden para Mi Avance
-    const avanceSecciones = ['protocolos', 'atencionMesa', 'restaurantes', 'platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne', 'vinos', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'diccionario'];
+    const avanceSecciones = ['protocolos', 'atencionMesa', 'restaurantes', 'comidaRapida', 'platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne', 'vinos', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'diccionario'];
     // progreso unificado: tarjetas (aprendido) o checklists (pasos marcados)
     function progresoDe(tab) {
         if (tab === 'protocolos') {
@@ -1832,7 +1861,7 @@
     function renderAvance() {
         const container = document.getElementById('mainContent');
         const meta = {
-            protocolos: ['📋', 'Protocolos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Servicio por Local'],
+            protocolos: ['📋', 'Protocolos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Servicio por Local'], comidaRapida: ['🍔', 'Comida Rápida'],
             platos: ['🍲', 'Platos Típicos'], carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Productos del Mar'], vegetales: ['🌽', 'Vegetales Chilenos'],
             quesos: ['🧀', 'Quesos'], sinCarne: ['🌱', 'Sin Carne'],
             vinos: ['🍷', 'Vinos'], cocteles: ['🍸', 'Cócteles'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Cafés'], sinAlcohol: ['🧃', 'Sin Alcohol'],
@@ -1957,7 +1986,7 @@
         if (btn) btn.textContent = n ? `⭐ Favoritos (${n})` : '⭐ Favoritos';
     }
     // ================== APRENDIDO POR TARJETA ==================
-    const tabsAprendizaje = ['platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'atencionMesa', 'restaurantes', 'diccionario'];
+    const tabsAprendizaje = ['platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'atencionMesa', 'restaurantes', 'comidaRapida', 'diccionario'];
     function loadAprendidoCards() { try { return JSON.parse(localStorage.getItem('aprendidoCards') || '{}'); } catch (e) { return {}; } }
     function saveAprendidoCards(o) { localStorage.setItem('aprendidoCards', JSON.stringify(o)); }
     function cardLearnId(titleText) { return currentTab + '::' + titleText.replace(/🔊/g, '').trim(); }
@@ -2091,12 +2120,12 @@
     // ================== NAVEGACIÓN PRINCIPAL ==================
     // ================== NAVEGACIÓN (hubs + sub-pestañas) ==================
     const hubs = {
-        servicio: ['protocolos', 'atencionMesa', 'restaurantes'],
+        servicio: ['protocolos', 'atencionMesa', 'restaurantes', 'comidaRapida'],
         carta: ['platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne'],
         bebestibles: ['vinos', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol']
     };
     const subMeta = {
-        protocolos: ['📋', 'Protocolos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Por Local'],
+        protocolos: ['📋', 'Protocolos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Por Local'], comidaRapida: ['🍔', 'Comida Rápida'],
         platos: ['🍲', 'Platos Típicos'], carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Mar'], vegetales: ['🌽', 'Vegetales'], quesos: ['🧀', 'Quesos'], sinCarne: ['🌱', 'Sin Carne'],
         vinos: ['🍷', 'Vinos'], cocteles: ['🍸', 'Cócteles'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Cafés'], sinAlcohol: ['🧃', 'Sin Alcohol'],
         maridajes: ['🍷', 'Maridajes'], alergenos: ['🚨', 'Alérgenos'], diccionario: ['📖', 'Diccionario']
@@ -2104,7 +2133,7 @@
     const hubOf = {}; Object.keys(hubs).forEach(h => hubs[h].forEach(s => hubOf[s] = h));
     const lastSub = { servicio: 'protocolos', carta: 'platos', bebestibles: 'vinos' };
     const renderers = {
-        protocolos: renderProtocolos, atencionMesa: renderAtencionMesa, restaurantes: renderRestaurantesChile,
+        protocolos: renderProtocolos, atencionMesa: renderAtencionMesa, restaurantes: renderRestaurantesChile, comidaRapida: renderComidaRapida,
         platos: renderPlatos, carnes: renderCarnes, productosMar: renderProductosMar, vegetales: renderVegetales, quesos: renderQuesos, sinCarne: renderSinCarne,
         vinos: renderVinos, cocteles: renderCocteles, cervezas: renderCervezas, barismo: renderBarismo, sinAlcohol: renderSinAlcohol,
         alergenos: renderAlergenos, maridajes: renderMaridajes, diccionario: renderDiccionario, quiz: renderQuiz, avance: renderAvance, favoritos: renderFavoritos
