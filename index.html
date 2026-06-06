@@ -1650,6 +1650,7 @@
         quizIdx = 0;
         container.innerHTML = `<div class="service-title">🧠 Quiz de Entrenamiento</div>
             <div class="service-desc">Pon a prueba lo que sabes 💪. Revela la respuesta y marca ✅ las que ya dominas. Tu avance del curso se guarda solo en este dispositivo.</div>
+            <div class="image-place"><img src="img/quiz.jpg" alt="Entrenamiento" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
             <div class="quiz-prog-card">
                 <div class="quiz-prog-top"><span>📈 Avance del curso</span><span id="quizPct">0%</span></div>
                 <div class="quiz-bar"><div class="quiz-bar-fill" id="quizBarFill"></div></div>
@@ -1736,6 +1737,7 @@
         const totalPct = totalAll ? Math.round(totalLearned / totalAll * 100) : 0;
         container.innerHTML = `<div class="service-title">📊 Mi Avance</div>
             <div class="service-desc">Tu progreso del curso, tema por tema. Marca ✅ las tarjetas en cada sección y míralo subir aquí. Toca un tema para ir a reforzarlo.</div>
+            <div class="image-place"><img src="img/mi-avance.jpg" alt="Mi avance" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
             <div class="avance-total">
                 <div class="avance-ring" style="--pct:${totalPct}"><div class="avance-ring-num">${totalPct}%</div></div>
                 <div class="avance-total-txt"><div class="avance-total-big">Avance total del curso</div><div class="avance-total-sub">${totalLearned} de ${totalAll} tarjetas aprendidas</div></div>
@@ -1817,6 +1819,7 @@
         const A = alergenos;
         container.innerHTML = `<div class="service-title">🚨 Alérgenos</div>
             <div class="service-desc">${A.intro}</div>
+            <div class="image-place"><img src="img/alergenos.jpg" alt="Información de alérgenos" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
             <div class="calc-card"><div class="item-name">🗣️ Frase clave al tomar la comanda</div><div class="item-prep" style="margin-top:8px"><em>${A.pregunta}</em></div></div>
             <div class="checklist" id="checklist-alergenos"><h3>✅ Protocolo <span class="progress-indicator" id="progressCounter">0/${A.protocolo.length}</span><button class="reset-btn" data-reset>↺ Reiniciar</button></h3>${A.protocolo.map(p => `<label class="checklist-item"><input type="checkbox"> ${p}</label>`).join("")}</div>
             <div class="subseccion"><h2>Los 14 alérgenos principales</h2><div class="grid-cards">${A.lista.map(a => `<div class="card-item"><div class="item-name">⚠️ ${a.nombre}</div><div class="item-desc"><strong>Dónde se esconde:</strong> ${a.donde}</div></div>`).join("")}</div></div>`;
@@ -1959,10 +1962,10 @@
         const favs = loadFavs();
         const ids = Object.keys(favs);
         if (!ids.length) {
-            container.innerHTML = `<div class="service-title">⭐ Favoritos</div><div class="service-desc">Aún no tienes favoritos. Toca la ⭐ en cualquier tarjeta para guardarla aquí y tenerla a mano.</div>`;
+            container.innerHTML = `<div class="service-title">⭐ Favoritos</div><div class="service-desc">Aún no tienes favoritos. Toca la ⭐ en cualquier tarjeta para guardarla aquí y tenerla a mano.</div><div class="image-place"><img src="img/favoritos.jpg" alt="Favoritos" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>`;
             return;
         }
-        container.innerHTML = `<div class="service-title">⭐ Favoritos (${ids.length})</div><div class="service-desc">Tus tarjetas guardadas. Toca la ⭐ para quitarlas.</div><div class="grid-cards">${ids.map(id => favs[id]).join("")}</div>`;
+        container.innerHTML = `<div class="service-title">⭐ Favoritos (${ids.length})</div><div class="service-desc">Tus tarjetas guardadas. Toca la ⭐ para quitarlas.</div><div class="image-place"><img src="img/favoritos.jpg" alt="Favoritos" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div><div class="grid-cards">${ids.map(id => favs[id]).join("")}</div>`;
     }
 
     // ================== NAVEGACIÓN PRINCIPAL ==================
