@@ -489,8 +489,8 @@
             display: flex; align-items: center; justify-content: center; padding: 0;
         }
         .learn-check.on { background: #16a34a; border-color: #16a34a; color: #fff; }
-        .card-item.has-learn .item-name { padding-left: 32px; }
-        .card-item.aprendida-card { box-shadow: inset 0 0 0 2px #16a34a; }
+        .card-item.has-learn .item-name, .term-card.has-learn .term-title { padding-left: 32px; }
+        .card-item.aprendida-card, .term-card.aprendida-card { box-shadow: inset 0 0 0 2px #16a34a; }
         /* ===== CELEBRACIÓN AL COMPLETAR SECCIÓN ===== */
         .celebra { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
         .celebra.show { opacity: 1; }
@@ -1285,6 +1285,7 @@
             const comp = states.filter(s => s).length;
             const span = container.querySelector('#progressCounter');
             if (span) span.innerText = `${comp}/${total}`;
+            if (currentTab === 'protocolos' || currentTab === 'vinos') updateChecklistBar();
         };
         checkboxes.forEach(cb => cb.addEventListener('change', update));
         const resetBtn = container.querySelector('[data-reset]');
@@ -1481,7 +1482,9 @@
     // ================== RENDERIZADO ==================
     function renderProtocolos() {
         const container = document.getElementById('mainContent');
-        let html = `<div class="service-title">📋 Protocolos de Servicio</div><div class="service-desc">Cada estilo tiene su gracia. Elige uno y repasa el paso a paso. 👇</div><div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">`;
+        let html = `<div class="service-title">📋 Protocolos de Servicio</div><div class="service-desc">Cada estilo tiene su gracia. Elige uno y repasa el paso a paso. 👇</div>`
+            + `<div class="learn-bar-card"><div class="learn-bar-top"><span>✅ Avance de los protocolos</span><span id="clPct">0%</span></div><div class="learn-bar"><div class="learn-bar-fill" id="clFill"></div></div><div class="learn-bar-sub" id="clSub"></div></div>`
+            + `<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">`;
         for (const [key, proto] of Object.entries(protocolos)) {
             html += `<button class="proto-btn" data-proto="${key}">${proto.titulo}</button>`;
         }
@@ -1490,6 +1493,7 @@
         const first = Object.keys(protocolos)[0];
         renderProtoDetail(first);
         document.querySelectorAll('[data-proto]').forEach(btn => btn.addEventListener('click', (e) => renderProtoDetail(btn.getAttribute('data-proto'))));
+        updateChecklistBar();
     }
     function renderProtoDetail(key) {
         document.querySelectorAll('[data-proto]').forEach(btn => {
@@ -1508,9 +1512,11 @@
         const container = document.getElementById('mainContent');
         container.innerHTML = `<div class="service-title">🍷 Vinos y Espumantes</div>
             <div class="service-desc">${bebestibles.vino.descripcion}</div>
+            <div class="learn-bar-card"><div class="learn-bar-top"><span>✅ Avance del protocolo</span><span id="clPct">0%</span></div><div class="learn-bar"><div class="learn-bar-fill" id="clFill"></div></div><div class="learn-bar-sub" id="clSub"></div></div>
             <div class="image-place"><img src="img/bebestibles.jpg" alt="Servicio de vino" loading="lazy"></div>
             <div class="checklist" id="checklist-vino"><h3>✅ Protocolo de servicio <span class="progress-indicator" id="progressCounter">0/${bebestibles.vino.pasos.length}</span><button class="reset-btn" data-reset>↺ Reiniciar</button></h3>${bebestibles.vino.pasos.map(p => `<label class="checklist-item"><input type="checkbox"> ${p}</label>`).join("")}</div>`;
         bindChecklist('checklist-vino', 'checklist_vino');
+        updateChecklistBar();
     }
     function renderCocteles() {
         const container = document.getElementById('mainContent');
@@ -1755,30 +1761,61 @@
         maridajes: () => maridajes.length,
         alergenos: () => alergenos.lista.length,
         atencionMesa: () => atencionMesa.secuencia.momentos.length + atencionMesa.gestos.senales.length,
-        restaurantes: () => restaurantesChile.length
+        restaurantes: () => restaurantesChile.length,
+        diccionario: () => Object.values(diccionario).reduce((a, arr) => a + arr.length, 0)
     };
+    // todas las secciones con avance, en orden para Mi Avance
+    const avanceSecciones = ['protocolos', 'atencionMesa', 'restaurantes', 'platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne', 'vinos', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'diccionario'];
+    // progreso unificado: tarjetas (aprendido) o checklists (pasos marcados)
+    function progresoDe(tab) {
+        if (tab === 'protocolos') {
+            let d = 0, t = 0;
+            Object.entries(protocolos).forEach(([k, p]) => { t += p.pasos.length; d += (loadChecklist('proto_' + k) || []).filter(Boolean).length; });
+            return { learned: Math.min(d, t), total: t };
+        }
+        if (tab === 'vinos') {
+            const t = bebestibles.vino.pasos.length;
+            const d = (loadChecklist('checklist_vino') || []).filter(Boolean).length;
+            return { learned: Math.min(d, t), total: t };
+        }
+        const total = totalsData[tab] ? totalsData[tab]() : 0;
+        const ap = loadAprendidoCards();
+        const learned = Object.keys(ap).filter(k => k.startsWith(tab + '::')).length;
+        return { learned, total };
+    }
+    const seccionesCelebradas = new Set();
+    // barra de avance para secciones tipo checklist (Protocolos, Vinos)
+    function updateChecklistBar() {
+        const { learned, total } = progresoDe(currentTab);
+        const pct = total ? Math.round(learned / total * 100) : 0;
+        const f = document.getElementById('clFill'); if (f) f.style.width = pct + '%';
+        const p = document.getElementById('clPct'); if (p) p.textContent = pct + '%';
+        const s = document.getElementById('clSub'); if (s) s.textContent = learned + ' de ' + total + ' pasos completados';
+        if (total && learned >= total) {
+            if (!seccionesCelebradas.has(currentTab)) { seccionesCelebradas.add(currentTab); celebrar((subMeta[currentTab] && subMeta[currentTab][1]) || 'esta sección'); }
+        } else { seccionesCelebradas.delete(currentTab); }
+    }
     function renderAvance() {
         const container = document.getElementById('mainContent');
         const meta = {
+            protocolos: ['📋', 'Protocolos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Servicio por Local'],
             platos: ['🍲', 'Platos Típicos'], carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Productos del Mar'], vegetales: ['🌽', 'Vegetales Chilenos'],
             quesos: ['🧀', 'Quesos'], sinCarne: ['🌱', 'Sin Carne'],
-            cocteles: ['🍸', 'Cócteles'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Cafés'], sinAlcohol: ['🧃', 'Sin Alcohol'],
-            maridajes: ['🍷', 'Maridajes'],
-            alergenos: ['🚨', 'Alérgenos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Servicio por Local']
+            vinos: ['🍷', 'Vinos'], cocteles: ['🍸', 'Cócteles'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Cafés'], sinAlcohol: ['🧃', 'Sin Alcohol'],
+            maridajes: ['🍷', 'Maridajes'], alergenos: ['🚨', 'Alérgenos'], diccionario: ['📖', 'Diccionario']
         };
-        const ap = loadAprendidoCards();
         let totalLearned = 0, totalAll = 0;
-        const rows = tabsAprendizaje.map(tab => {
-            const total = totalsData[tab] ? totalsData[tab]() : 0;
-            const learned = Object.keys(ap).filter(k => k.startsWith(tab + '::')).length;
+        const rows = avanceSecciones.map(tab => {
+            const { learned, total } = progresoDe(tab);
             totalLearned += learned; totalAll += total;
             const pct = total ? Math.round(learned / total * 100) : 0;
             const col = pct >= 75 ? '#16a34a' : pct >= 40 ? '#f59e0b' : (pct > 0 ? '#ef4444' : 'var(--text-secondary)');
             const [emoji, label] = meta[tab];
+            const unidad = (tab === 'protocolos' || tab === 'vinos') ? 'pasos' : 'aprendidas';
             return `<button class="avance-row" data-goto="${tab}">
                     <div class="avance-row-top"><span>${emoji} ${label}</span><span class="avance-row-pct" style="color:${col}">${pct}%</span></div>
                     <div class="avance-mini"><div class="avance-mini-fill" style="width:${pct}%;background:${col}"></div></div>
-                    <div class="avance-row-sub">${learned} de ${total} aprendidas</div>
+                    <div class="avance-row-sub">${learned} de ${total} ${unidad}</div>
                 </button>`;
         }).join('');
         const totalPct = totalAll ? Math.round(totalLearned / totalAll * 100) : 0;
@@ -1882,15 +1919,15 @@
         if (btn) btn.textContent = n ? `⭐ Favoritos (${n})` : '⭐ Favoritos';
     }
     // ================== APRENDIDO POR TARJETA ==================
-    const tabsAprendizaje = ['platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'atencionMesa', 'restaurantes'];
+    const tabsAprendizaje = ['platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'atencionMesa', 'restaurantes', 'diccionario'];
     function loadAprendidoCards() { try { return JSON.parse(localStorage.getItem('aprendidoCards') || '{}'); } catch (e) { return {}; } }
     function saveAprendidoCards(o) { localStorage.setItem('aprendidoCards', JSON.stringify(o)); }
-    function cardLearnId(titleText) { return currentTab + '::' + titleText.trim(); }
+    function cardLearnId(titleText) { return currentTab + '::' + titleText.replace(/🔊/g, '').trim(); }
     function updateLearnBar() {
-        const cards = [...document.querySelectorAll('#mainContent .card-item')].filter(c => c.querySelector('.item-name'));
+        const cards = [...document.querySelectorAll('#mainContent .card-item, #mainContent .term-card')].filter(c => c.querySelector('.item-name, .term-title'));
         const total = cards.length; if (!total) return;
         const ap = loadAprendidoCards();
-        const count = cards.filter(c => { const t = c.querySelector('.item-name'); return t && ap[cardLearnId(t.textContent)]; }).length;
+        const count = cards.filter(c => { const t = c.querySelector('.item-name, .term-title'); return t && ap[cardLearnId(t.textContent)]; }).length;
         const pct = Math.round(count / total * 100);
         const f = document.getElementById('learnFill'); if (f) f.style.width = pct + '%';
         const p = document.getElementById('learnPct'); if (p) p.textContent = pct + '%';
@@ -1898,13 +1935,11 @@
     }
     function celebrar(label) {
         // avance global del curso para la frase motivadora
-        const ap = loadAprendidoCards();
         let tl = 0, ta = 0, completas = 0;
-        tabsAprendizaje.forEach(t => {
-            const tot = totalsData[t] ? totalsData[t]() : 0;
-            const lr = Object.keys(ap).filter(k => k.startsWith(t + '::')).length;
-            tl += lr; ta += tot;
-            if (tot && lr >= tot) completas++;
+        avanceSecciones.forEach(t => {
+            const { learned, total } = progresoDe(t);
+            tl += learned; ta += total;
+            if (total && learned >= total) completas++;
         });
         const pct = ta ? Math.round(tl / ta * 100) : 0;
         let frase, emoji = '🎉';
@@ -1928,7 +1963,7 @@
             + `<div class="celebra-titulo">¡Felicidades!</div>`
             + `<div class="celebra-sub">Completaste <strong>${label}</strong> al 100% ✅</div>`
             + `<div class="celebra-frase">${frase}</div>`
-            + `<div class="celebra-pct">Avance del curso: ${pct}% · ${completas}/${tabsAprendizaje.length} temas dominados</div>`
+            + `<div class="celebra-pct">Avance del curso: ${pct}% · ${completas}/${avanceSecciones.length} temas dominados</div>`
             + `</div>`;
         document.body.appendChild(ov);
         requestAnimationFrame(() => ov.classList.add('show'));
@@ -1938,11 +1973,11 @@
     function decorateLearned() {
         const old = document.getElementById('learnBar'); if (old) old.remove();
         if (!tabsAprendizaje.includes(currentTab)) return;
-        const cards = [...document.querySelectorAll('#mainContent .card-item')].filter(c => c.querySelector('.item-name'));
+        const cards = [...document.querySelectorAll('#mainContent .card-item, #mainContent .term-card')].filter(c => c.querySelector('.item-name, .term-title'));
         if (!cards.length) return;
         const ap = loadAprendidoCards(); let count = 0;
         cards.forEach(card => {
-            const titleEl = card.querySelector('.item-name'); if (!titleEl) return;
+            const titleEl = card.querySelector('.item-name, .term-title'); if (!titleEl) return;
             const id = cardLearnId(titleEl.textContent);
             const isL = !!ap[id];
             card.classList.add('has-learn');
@@ -1959,9 +1994,9 @@
                 else { l[id] = 1; marcando = true; card.classList.add('aprendida-card'); b.classList.add('on'); b.textContent = '✓'; }
                 saveAprendidoCards(l); updateLearnBar();
                 if (marcando) {
-                    const cardsNow = [...document.querySelectorAll('#mainContent .card-item')].filter(c => c.querySelector('.item-name'));
+                    const cardsNow = [...document.querySelectorAll('#mainContent .card-item, #mainContent .term-card')].filter(c => c.querySelector('.item-name, .term-title'));
                     const ap2 = loadAprendidoCards();
-                    const learnedNow = cardsNow.filter(c => ap2[cardLearnId(c.querySelector('.item-name').textContent)]).length;
+                    const learnedNow = cardsNow.filter(c => ap2[cardLearnId(c.querySelector('.item-name, .term-title').textContent)]).length;
                     if (cardsNow.length && learnedNow === cardsNow.length) {
                         celebrar((subMeta[currentTab] && subMeta[currentTab][1]) || 'esta sección');
                     }
@@ -2026,7 +2061,7 @@
         protocolos: ['📋', 'Protocolos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Por Local'],
         platos: ['🍲', 'Platos Típicos'], carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Mar'], vegetales: ['🌽', 'Vegetales'], quesos: ['🧀', 'Quesos'], sinCarne: ['🌱', 'Sin Carne'],
         vinos: ['🍷', 'Vinos'], cocteles: ['🍸', 'Cócteles'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Cafés'], sinAlcohol: ['🧃', 'Sin Alcohol'],
-        maridajes: ['🍷', 'Maridajes'], alergenos: ['🚨', 'Alérgenos']
+        maridajes: ['🍷', 'Maridajes'], alergenos: ['🚨', 'Alérgenos'], diccionario: ['📖', 'Diccionario']
     };
     const hubOf = {}; Object.keys(hubs).forEach(h => hubs[h].forEach(s => hubOf[s] = h));
     const lastSub = { servicio: 'protocolos', carta: 'platos', bebestibles: 'vinos' };
