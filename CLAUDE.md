@@ -88,6 +88,7 @@ Academia/curso de bolsillo + herramienta de consulta rápida, instalable en el c
 - ⚠️ Ojo al pegar fotos: cuidado con dobles extensiones (`.jpg.jpg`) o nombre/extensión equivocados (ej. un JPEG guardado como `.SVG`) — la app busca el nombre exacto en minúsculas
 
 ## Hecho recientemente (jun-2026)
+- ✅ **Quiz dentro del avance total**: el 🧠 Quiz ahora cuenta como un área más en 📊 Mi Avance (función `quizProgreso()`, fila "Evaluación (Quiz)") y suma al anillo total y a la celebración. La barra del Quiz se renombró "Avance del Quiz" para no chocar con el total. El total del curso = todas las secciones + quiz (coherente con Garzón Bilingüe).
 - ✅ **Invitación cruzada a Garzón Bilingüe** (app hermana de idiomas): tarjeta fija al pie (`.sister-app`) + botón en la celebración del 100% → `https://chef-english.vercel.app`, con color celeste/violeta de esa app. (Garzón Bilingüe hace lo recíproco hacia Protocolos.)
 - ✅ Encabezado con nombre/logo (banner + emblema SVG + lema)
 - ✅ Pantalla de bienvenida con animación de puerta (ahora **solo la primera vez por sesión**)

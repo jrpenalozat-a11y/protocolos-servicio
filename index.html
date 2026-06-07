@@ -1829,13 +1829,13 @@
             <div class="service-desc">Pon a prueba lo que sabes 💪. Elige la alternativa correcta (A, B, C o D): si aciertas, la pregunta queda <strong>marcada como aprendida</strong> y suma a tu avance. Se guarda solo en este dispositivo.</div>
             <div class="image-place"><img src="img/quiz.jpg" alt="Entrenamiento" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
             <div class="quiz-prog-card">
-                <div class="quiz-prog-top"><span>📈 Avance del curso</span><span id="quizPct">0%</span></div>
+                <div class="quiz-prog-top"><span>📈 Avance del Quiz</span><span id="quizPct">0%</span></div>
                 <div class="quiz-bar"><div class="quiz-bar-fill" id="quizBarFill"></div></div>
                 <div class="quiz-prog-bottom"><span id="quizSub">0 de 0 aprendidas</span><button class="quiz-reset" id="quizReset">↺ Reiniciar avance</button></div>
             </div>
             <div id="quizBox"></div>`;
         document.getElementById('quizReset').addEventListener('click', () => {
-            if (confirm('¿Reiniciar tu avance del curso? Se desmarcarán todas las preguntas aprendidas.')) {
+            if (confirm('¿Reiniciar tu avance del Quiz? Se desmarcarán todas las preguntas aprendidas.')) {
                 saveAprendidas({}); updateQuizProgress(); mostrarPreguntaQuiz();
             }
         });
@@ -1933,6 +1933,13 @@
         const learned = Object.keys(ap).filter(k => k.startsWith(tab + '::')).length;
         return { learned, total };
     }
+    // progreso del Quiz: cuenta como un área más del avance total (coherente con Garzón Bilingüe)
+    function quizProgreso() {
+        let pool = []; try { pool = buildQuizPool(); } catch (e) {}
+        const ap = loadAprendidas();
+        const learned = pool.filter(it => ap[quizId(it)]).length;
+        return { learned, total: pool.length };
+    }
     const seccionesCelebradas = new Set();
     // barra de avance para secciones tipo checklist (Protocolos, Vinos)
     function updateChecklistBar() {
@@ -1968,15 +1975,25 @@
                     <div class="avance-row-sub">${learned} de ${total} ${unidad}</div>
                 </button>`;
         }).join('');
+        // 🧠 Quiz como un área más del avance total (igual que Garzón Bilingüe)
+        const qp = quizProgreso();
+        totalLearned += qp.learned; totalAll += qp.total;
+        const qpct = qp.total ? Math.round(qp.learned / qp.total * 100) : 0;
+        const qcol = qpct >= 75 ? '#16a34a' : qpct >= 40 ? '#f59e0b' : (qpct > 0 ? '#ef4444' : 'var(--text-secondary)');
+        const quizRow = `<button class="avance-row" data-goto="quiz">
+                    <div class="avance-row-top"><span>🧠 Evaluación (Quiz)</span><span class="avance-row-pct" style="color:${qcol}">${qpct}%</span></div>
+                    <div class="avance-mini"><div class="avance-mini-fill" style="width:${qpct}%;background:${qcol}"></div></div>
+                    <div class="avance-row-sub">${qp.learned} de ${qp.total} aprendidas</div>
+                </button>`;
         const totalPct = totalAll ? Math.round(totalLearned / totalAll * 100) : 0;
         container.innerHTML = `<div class="service-title">📊 Mi Avance</div>
-            <div class="service-desc">Tu progreso del curso, tema por tema. Marca ✅ las tarjetas en cada sección y míralo subir aquí. Toca un tema para ir a reforzarlo.</div>
+            <div class="service-desc">Tu progreso del curso, tema por tema. Marca ✅ las tarjetas en cada sección y acierta en el 🧠 Quiz; míralo subir aquí. Toca un tema para ir a reforzarlo.</div>
             <div class="image-place"><img src="img/mi-avance.jpg" alt="Mi avance" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
             <div class="avance-total">
                 <div class="avance-ring" style="--pct:${totalPct}"><div class="avance-ring-num">${totalPct}%</div></div>
-                <div class="avance-total-txt"><div class="avance-total-big">Avance total del curso</div><div class="avance-total-sub">${totalLearned} de ${totalAll} tarjetas aprendidas</div></div>
+                <div class="avance-total-txt"><div class="avance-total-big">Avance total del curso</div><div class="avance-total-sub">${totalLearned} de ${totalAll} puntos del curso</div></div>
             </div>
-            <div class="avance-list">${rows}</div>`;
+            <div class="avance-list">${rows}${quizRow}</div>`;
         container.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => setMainTab(b.getAttribute('data-goto'))));
     }
 
@@ -2097,6 +2114,7 @@
             tl += learned; ta += total;
             if (total && learned >= total) completas++;
         });
+        const _qp = quizProgreso(); tl += _qp.learned; ta += _qp.total; if (_qp.total && _qp.learned >= _qp.total) completas++;
         const pct = ta ? Math.round(tl / ta * 100) : 0;
         let frase, emoji = '🎉';
         if (pct >= 100) { emoji = '🏆'; frase = '¡Completaste TODO el curso! Eres un crack del servicio. 🌟 ¿Y si ahora aprendes idiomas para atender turistas?'; }
@@ -2119,7 +2137,7 @@
             + `<div class="celebra-titulo">¡Felicidades!</div>`
             + `<div class="celebra-sub">Completaste <strong>${label}</strong> al 100% ✅</div>`
             + `<div class="celebra-frase">${frase}</div>`
-            + `<div class="celebra-pct">Avance del curso: ${pct}% · ${completas}/${avanceSecciones.length} temas dominados</div>`
+            + `<div class="celebra-pct">Avance del curso: ${pct}% · ${completas}/${avanceSecciones.length + 1} temas dominados</div>`
             + `<button class="celebra-btn" id="celebraCont">Continuar ➡️</button>`
             + (pct >= 100 ? `<a class="celebra-btn" href="https://chef-english.vercel.app" target="_blank" rel="noopener" style="display:block;text-decoration:none;margin-top:12px;background:linear-gradient(135deg,#8b6bff,#0ea7cc);color:#fff;box-shadow:0 8px 22px rgba(109,79,255,0.45)">🗣️ Aprende idiomas con Garzón Bilingüe</a>` : '')
             + `</div>`;
