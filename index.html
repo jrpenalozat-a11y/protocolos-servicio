@@ -587,6 +587,16 @@
             color: var(--text-secondary);
             border-top: 1px solid var(--border-light);
         }
+        /* Invitación app hermana (Garzón Bilingüe · celeste/violeta) */
+        .sister-app { display: flex; align-items: center; gap: 13px; margin: 18px 14px 4px; padding: 14px 16px; border-radius: 18px; text-decoration: none;
+            background: linear-gradient(120deg, rgba(109,79,255,0.15), rgba(14,167,204,0.07)); border: 1px solid rgba(109,79,255,0.45); color: var(--text-primary); transition: transform 0.15s; }
+        .sister-app:active { transform: scale(0.99); }
+        .sister-app .si { flex-shrink: 0; width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; font-size: 23px;
+            background: linear-gradient(135deg, #8b6bff, #0ea7cc); box-shadow: 0 6px 16px rgba(109,79,255,0.4); }
+        .sister-app .st { display: flex; flex-direction: column; gap: 2px; font-size: 0.82rem; line-height: 1.35; min-width: 0; }
+        .sister-app .st b.t { font-size: 0.92rem; font-weight: 800; }
+        .sister-app .st .d { color: var(--text-secondary); }
+        .sister-app .st .go { color: #8b6bff; font-weight: 800; }
         @media (max-width: 480px) {
             .main-buttons {
                 flex-wrap: wrap;
@@ -660,6 +670,13 @@
     <div class="content-pane" id="mainContent">
         <div style="text-align: center; padding: 30px 0;">Cargando...</div>
     </div>
+    <a class="sister-app" href="https://chef-english.vercel.app" target="_blank" rel="noopener">
+        <span class="si">🗣️</span>
+        <span class="st">
+            <b class="t">¿Atiendes turistas? 🌍</b>
+            <span class="d">Aprende inglés, portugués y chino para la mesa con <b>Garzón Bilingüe</b> <span class="go">— ábrelo →</span></span>
+        </span>
+    </a>
     <footer>App educativa completa · Carnes, mariscos, vegetales chilenos y más<br>Creado por <strong>Jaime Ricardo Peñaloza</strong></footer>
 </div>
 
@@ -2082,7 +2099,7 @@
         });
         const pct = ta ? Math.round(tl / ta * 100) : 0;
         let frase, emoji = '🎉';
-        if (pct >= 100) { emoji = '🏆'; frase = '¡Completaste TODO el curso! Eres un crack del servicio.'; }
+        if (pct >= 100) { emoji = '🏆'; frase = '¡Completaste TODO el curso! Eres un crack del servicio. 🌟 ¿Y si ahora aprendes idiomas para atender turistas?'; }
         else if (pct >= 80) { frase = '¡Ya casi lo dominas todo! Te queda poquito. 🔥'; }
         else if (pct >= 50) { frase = '¡Ya pasaste la mitad del curso! Sigue así. 💪'; }
         else if (pct >= 20) { frase = '¡Buen ritmo! Cada tema te hace mejor garzón. 🚀'; }
@@ -2104,6 +2121,7 @@
             + `<div class="celebra-frase">${frase}</div>`
             + `<div class="celebra-pct">Avance del curso: ${pct}% · ${completas}/${avanceSecciones.length} temas dominados</div>`
             + `<button class="celebra-btn" id="celebraCont">Continuar ➡️</button>`
+            + (pct >= 100 ? `<a class="celebra-btn" href="https://chef-english.vercel.app" target="_blank" rel="noopener" style="display:block;text-decoration:none;margin-top:12px;background:linear-gradient(135deg,#8b6bff,#0ea7cc);color:#fff;box-shadow:0 8px 22px rgba(109,79,255,0.45)">🗣️ Aprende idiomas con Garzón Bilingüe</a>` : '')
             + `</div>`;
         document.body.appendChild(ov);
         requestAnimationFrame(() => ov.classList.add('show'));
