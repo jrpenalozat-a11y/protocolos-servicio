@@ -597,6 +597,11 @@
         .sister-app .st b.t { font-size: 0.92rem; font-weight: 800; }
         .sister-app .st .d { color: var(--text-secondary); }
         .sister-app .st .go { color: #8b6bff; font-weight: 800; }
+        /* Familia de apps (enlaces cruzados) */
+        .familia-apps { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; margin: 12px 14px 4px; }
+        .familia-apps a { display: inline-flex; align-items: center; gap: 7px; text-decoration: none; font-size: 0.84rem; font-weight: 700;
+            color: var(--text); background: var(--surface, rgba(255,255,255,.06)); border: 1px solid var(--border, rgba(255,255,255,.15)); border-radius: 999px; padding: 8px 14px; transition: transform 0.15s; }
+        .familia-apps a:active { transform: scale(0.97); }
         @media (max-width: 480px) {
             .main-buttons {
                 flex-wrap: wrap;
@@ -677,6 +682,10 @@
             <span class="d">Aprende inglés, portugués y chino para la mesa con <b>Garzón Bilingüe</b> <span class="go">— ábrelo →</span></span>
         </span>
     </a>
+    <div class="familia-apps">
+        <a href="https://sommelier-chile.vercel.app/" target="_blank" rel="noopener">🍷 Sommelier de Chile</a>
+        <a href="https://sommelier-alternativo-chile.vercel.app/" target="_blank" rel="noopener">🌿 Sommelier Alternativo</a>
+    </div>
     <footer>App educativa completa · Carnes, mariscos, vegetales chilenos y más<br>Creado por <strong>Jaime Ricardo Peñaloza</strong></footer>
 </div>
 
