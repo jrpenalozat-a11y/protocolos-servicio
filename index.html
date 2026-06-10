@@ -1864,6 +1864,9 @@
                 const n = sinBandera(c.nombre);
                 add('🍺 Cervezas', 'cerveza-tipo', `¿De qué tipo es la cerveza ${n}?`, c.tipo);
                 add('🍺 Cervezas', 'maridaje', `¿Con qué marida la cerveza ${n}?`, c.marida);
+                add('🍺 Cervezas', 'cerveza-pais', `¿De qué tradición/país es la cerveza ${n}?`, c.pais);
+                add('🍺 Cervezas', 'cerveza-ibu', `¿Qué nivel de amargor (IBU) tiene aprox. la cerveza ${n}?`, c.ibu);
+                add('🍺 Cervezas', 'cerveza-ferm', `¿Qué tipo de fermentación tiene la cerveza ${n}?`, c.ferm);
             });
         } catch (e) {}
         try { [...cafes.base, ...cafes.conLeche, ...cafes.especiales].forEach(c => add('☕ Cafés', 'composicion', `¿Qué lleva un ${sinBandera(c.nombre)}?`, c.lleva)); } catch (e) {}
