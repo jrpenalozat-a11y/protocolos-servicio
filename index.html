@@ -1094,58 +1094,91 @@
     // ========================== QUESOS ==========================
     const quesos = {
         internacionales: [
-            { nombre: "🇳🇱 Gouda", familia: "Semiduro", desc: "El favorito de los chilenos, ¡y con razón! Semiduro, cremoso y con ese dulzor a nuez que conquista a todos. Funde de maravilla y es el rey indiscutido de las tablas, sándwiches y el desayuno.", marida: "Carmenère, Merlot o una cerveza rubia." },
-            { nombre: "🇬🇧 Cheddar", familia: "Semiduro", desc: "Intenso, firme y de un naranjo inconfundible. Su sabor profundo y ligeramente ácido sube de potencia con los años de maduración. ¡Estrella absoluta de hamburguesas, salsas y nachos!", marida: "Cabernet Sauvignon o una cerveza ámbar." },
-            { nombre: "🇮🇹 Grana Padano", familia: "Duro", desc: "El hermano accesible y encantador del parmesano. Duro, granuloso y cargado de umami salado. Rallado sobre las pastas es pura magia, y en lascas con un buen vino, un lujo.", marida: "Chianti, Sangiovese o un espumante brut." },
-            { nombre: "🇮🇹 Parmigiano Reggiano", familia: "Duro", desc: "¡El Rey de los Quesos! Duro, con cristales crujientes que estallan en sabor umami. 24 meses o más de paciencia en cada lasca. Imprescindible en risottos, pastas y picoteos gourmet.", marida: "Lambrusco, tinto con cuerpo o aceto balsámico." },
+            { nombre: "🇳🇱 Gouda", familia: "Semimaduro", desc: "El favorito de los chilenos, ¡y con razón! Semiduro, cremoso y con ese dulzor a nuez que conquista a todos. Funde de maravilla y es el rey indiscutido de las tablas, sándwiches y el desayuno.", marida: "Carmenère, Merlot o una cerveza rubia." },
+            { nombre: "🇬🇧 Cheddar", familia: "Semimaduro", desc: "Intenso, firme y de un naranjo inconfundible. Su sabor profundo y ligeramente ácido sube de potencia con los años de maduración. ¡Estrella absoluta de hamburguesas, salsas y nachos!", marida: "Cabernet Sauvignon o una cerveza ámbar." },
+            { nombre: "🇮🇹 Grana Padano", familia: "Maduro", desc: "El hermano accesible y encantador del parmesano. Duro, granuloso y cargado de umami salado. Rallado sobre las pastas es pura magia, y en lascas con un buen vino, un lujo.", marida: "Chianti, Sangiovese o un espumante brut." },
+            { nombre: "🇮🇹 Parmigiano Reggiano", familia: "Maduro", desc: "¡El Rey de los Quesos! Duro, con cristales crujientes que estallan en sabor umami. 24 meses o más de paciencia en cada lasca. Imprescindible en risottos, pastas y picoteos gourmet.", marida: "Lambrusco, tinto con cuerpo o aceto balsámico." },
             { nombre: "🇫🇷 Camembert", familia: "Blando de corteza", desc: "Una joyita francesa de corteza blanca aterciopelada e interior que se derrite como mantequilla. Aroma campestre y sabor a champiñón. ¡Tibio al horno es una experiencia inolvidable!", marida: "Sidra, Chardonnay o Pinot Noir." },
             { nombre: "🇫🇷 Brie", familia: "Blando de corteza", desc: "Elegante, suave y mantecoso, apodado 'el Rey de los Quesos' en Francia. Su textura sedosa y sabor delicado lo hacen perfecto para tablas finas. ¡Con un toque de miel, irresistible!", marida: "Espumante, Chardonnay o Champagne." },
-            { nombre: "🇪🇸 Manchego", familia: "Duro", desc: "El orgullo español hecho de leche de oveja. Firme, con notas a frutos secos y un final picantito que enamora. La estrella de cualquier tabla de tapas que se respete.", marida: "Tempranillo, Rioja o un Jerez." },
-            { nombre: "🇨🇭 Gruyère", familia: "Duro", desc: "El alma de la fondue suiza. Duro, con un dulzor a nuez que se intensifica al madurar. Funde de forma espectacular y da carácter a gratinados y al clásico croque monsieur.", marida: "Chardonnay, vino blanco seco o Pinot Noir." },
-            { nombre: "🇨🇭 Emmental", familia: "Semiduro", desc: "¡El de los famosos agujeros! Suave, dulzón y con un sabor amable que gusta a grandes y chicos. Funde precioso y es otro pilar de la fondue. El queso 'de dibujo animado' por excelencia.", marida: "Vino blanco afrutado o sidra." },
+            { nombre: "🇪🇸 Manchego", familia: "Maduro", desc: "El orgullo español hecho de leche de oveja. Firme, con notas a frutos secos y un final picantito que enamora. La estrella de cualquier tabla de tapas que se respete.", marida: "Tempranillo, Rioja o un Jerez." },
+            { nombre: "🇨🇭 Gruyère", familia: "Maduro", desc: "El alma de la fondue suiza. Duro, con un dulzor a nuez que se intensifica al madurar. Funde de forma espectacular y da carácter a gratinados y al clásico croque monsieur.", marida: "Chardonnay, vino blanco seco o Pinot Noir." },
+            { nombre: "🇨🇭 Emmental", familia: "Semimaduro", desc: "¡El de los famosos agujeros! Suave, dulzón y con un sabor amable que gusta a grandes y chicos. Funde precioso y es otro pilar de la fondue. El queso 'de dibujo animado' por excelencia.", marida: "Vino blanco afrutado o sidra." },
             { nombre: "🇮🇹 Mozzarella", familia: "Fresco", desc: "La reina absoluta de la pizza. Fresca, elástica y lechosa, con esa textura que se estira y enamora. En una caprese con tomate y albahaca, es pura poesía italiana.", marida: "Pinot Grigio, Sauvignon Blanc o espumante." },
-            { nombre: "🇮🇹 Provolone", familia: "Semiduro", desc: "Semiduro y de personalidad fuerte. ¡A la parrilla se transforma en la legendaria provoleta, dorada por fuera y fundida por dentro! Un imperdible del asado.", marida: "Malbec, Bonarda o tinto joven." },
+            { nombre: "🇮🇹 Provolone", familia: "Semimaduro", desc: "Semiduro y de personalidad fuerte. ¡A la parrilla se transforma en la legendaria provoleta, dorada por fuera y fundida por dentro! Un imperdible del asado.", marida: "Malbec, Bonarda o tinto joven." },
             { nombre: "🇫🇷 Roquefort", familia: "Azul", desc: "El rey de los azules, de leche de oveja y vetas verde-azuladas. Intenso, salado y picante, con un carácter que no deja indiferente. Para paladares valientes y amantes del sabor potente.", marida: "Late Harvest, Oporto o Sauternes." },
             { nombre: "🇮🇹 Gorgonzola", familia: "Azul", desc: "El azul italiano más seductor: cremoso, con un equilibrio perfecto entre dulce y picante. Derretido en una salsa para ñoquis o pastas, es un abrazo al paladar.", marida: "Vino dulce, Moscato o tinto con cuerpo." },
-            { nombre: "🇳🇱 Edam", familia: "Semiduro", desc: "Reconocible por su bolita de cera roja. Suave, ligero y de sabor amable que madura hacia notas más intensas. Súper popular en Chile para sándwiches y picoteos del día a día.", marida: "Merlot suave o cerveza lager." },
-            { nombre: "🇮🇹 Pecorino", familia: "Duro", desc: "Queso de oveja salado e intenso, con muchísimo carácter. El protagonista de la auténtica cacio e pepe romana. Rallado sobre las pastas, lleva el sabor a otro nivel.", marida: "Tinto italiano con cuerpo o Chianti." }
+            { nombre: "🇳🇱 Edam", familia: "Semimaduro", desc: "Reconocible por su bolita de cera roja. Suave, ligero y de sabor amable que madura hacia notas más intensas. Súper popular en Chile para sándwiches y picoteos del día a día.", marida: "Merlot suave o cerveza lager." },
+            { nombre: "🇮🇹 Pecorino", familia: "Maduro", desc: "Queso de oveja salado e intenso, con muchísimo carácter. El protagonista de la auténtica cacio e pepe romana. Rallado sobre las pastas, lleva el sabor a otro nivel.", marida: "Tinto italiano con cuerpo o Chianti." }
         ],
         chilenos: [
-            { nombre: "🇨🇱 Chanco", familia: "Semiduro", desc: "¡El emblema quesero de Chile! Semiblando, suave y mantecoso, originario de la zona de Chanco en el Maule. Derrite delicioso en un sándwich caliente o un buen pastel. Sabor de hogar.", marida: "Carmenère, País o una cerveza artesanal chilena." },
-            { nombre: "🇨🇱 Mantecoso", familia: "Semiduro", desc: "Cremoso, untable y con un sabor suave que es puro cariño. Hermano del chanco pero más blando y mantequilloso. ¡Sobre una marraqueta calentita es el desayuno perfecto del chileno!", marida: "Sauvignon Blanc o vino País." },
+            { nombre: "🇨🇱 Chanco", familia: "Semimaduro", desc: "¡El emblema quesero de Chile! Semiblando, suave y mantecoso, originario de la zona de Chanco en el Maule. Derrite delicioso en un sándwich caliente o un buen pastel. Sabor de hogar.", marida: "Carmenère, País o una cerveza artesanal chilena." },
+            { nombre: "🇨🇱 Mantecoso", familia: "Semimaduro", desc: "Cremoso, untable y con un sabor suave que es puro cariño. Hermano del chanco pero más blando y mantequilloso. ¡Sobre una marraqueta calentita es el desayuno perfecto del chileno!", marida: "Sauvignon Blanc o vino País." },
             { nombre: "🇨🇱 Quesillo", familia: "Fresco", desc: "Fresco, blanco y bajito en sal, ligero y húmedo. Versátil como pocos: en ensaladas, con tomate, dentro de sopaipillas o con un chorrito de miel. ¡Sano y rico a la vez!", marida: "Vino blanco fresco o agua de hierbas." },
             { nombre: "🇨🇱 Queso de Cabra", familia: "Fresco", desc: "Artesanal e intenso, con esa acidez característica que lo hace inconfundible. Se elabora en el norte y centro del país en pequeñas rondas. Untado en pan tostado, una delicia con personalidad.", marida: "Sauvignon Blanc o un espumante seco." },
-            { nombre: "🇨🇱 Queso de Hoja", familia: "Fresco", desc: "Tesoro del sur de Chile: fresco y delicado, madurado envuelto en hojas de acelga que le dan su forma y aroma únicos. Pura tradición campesina en cada bocado.", marida: "Vino blanco suave o chicha." }
+            { nombre: "🇨🇱 Queso de Hoja", familia: "Fresco", desc: "Tesoro del sur de Chile: fresco y delicado, madurado envuelto en hojas de acelga que le dan su forma y aroma únicos. Pura tradición campesina en cada bocado.", marida: "Vino blanco suave o chicha." },
+            { nombre: "🇨🇱 Gauda Chileno", familia: "Semimaduro", desc: "La versión chilena del gouda (acá se escribe 'gauda'). Amarillo, firme y de sabor suave a nuez. Es el queso más vendido del país: el de las marraquetas, los sándwiches y la once de cada casa.", marida: "Carmenère, Merlot o una cerveza rubia." },
+            { nombre: "🇨🇱 Queso Chilote (de Chiloé)", familia: "Semimaduro", desc: "Queso artesanal de Chiloé, de leche de vaca de campo, firme y mantecoso, a veces ahumado sobre fogón. Sabor rústico con carácter; acompaña el curanto y las once chilotas. Pura identidad del archipiélago.", marida: "Vino País, sidra de manzana o una cerveza artesanal del sur." },
+            { nombre: "🇨🇱 Queso de Panquehue", familia: "Semimaduro", desc: "Clásico del valle de Aconcagua: semimaduro, mantecoso y de sabor suave y parejo. Muy popular para fundir y para tablas familiares. Un infaltable de la quesería del centro de Chile.", marida: "Cabernet Sauvignon de Aconcagua o una lager." },
+            { nombre: "🇨🇱 Queso de la Ligua", familia: "Semimaduro", desc: "Famoso junto a los dulces de La Ligua, se vende a la orilla de la ruta camino al norte. Mantecoso, suave y de buena fundición. Tradición chilena de carretera hecha queso.", marida: "Vino blanco fresco o País tinto joven." },
+            { nombre: "🇨🇱 Queso de Cabra Madurado (Norte Chico)", familia: "Maduro", desc: "Versión añejada del queso de cabra del Norte Chico (Coquimbo y Limarí): más firme, seco e intenso, con la acidez típica de la cabra concentrada por la maduración. Para los que aman el carácter.", marida: "Sauvignon Blanc, espumante seco o un Syrah del Limarí." }
+        ]
+    };
+
+    // ========================== CHARCUTERÍA (CECINAS) ==========================
+    const charcuteria = {
+        internacionales: [
+            { nombre: "🇮🇹 Prosciutto di Parma", familia: "Curado", desc: "El jamón crudo italiano por excelencia: pierna de cerdo curada solo con sal y mucho tiempo (mínimo 12 meses). Lonjas finísimas, dulces y sedosas que casi se derriten. La joya de cualquier tabla.", marida: "Espumante brut, Lambrusco o un melón en verano." },
+            { nombre: "🇪🇸 Jamón Serrano", familia: "Curado", desc: "Clásico jamón curado español de cerdo blanco, secado en sierra. Sabor intenso y salado, textura firme. El rey del bocadillo y de las tablas de tapas.", marida: "Tempranillo, Rioja o una caña de cerveza." },
+            { nombre: "🇪🇸 Jamón Ibérico (pata negra)", familia: "Curado", desc: "La cumbre de la charcutería: cerdo ibérico de bellota, curado hasta 36 meses. Grasa infiltrada que se funde, sabor profundo a nuez. Lujo puro, lonja a lonja.", marida: "Fino, Manzanilla o un tinto con cuerpo." },
+            { nombre: "🇮🇹 Salame", familia: "Embutido curado", desc: "Embutido curado de carne de cerdo picada con grasa, sal y especias (pimienta, ajo, vino). Firme, sabroso y con ese punto graso adictivo. De Milano a Napoli, hay mil versiones.", marida: "Tinto joven, Chianti o una cerveza ámbar." },
+            { nombre: "🇮🇹 Mortadela", familia: "Cocido", desc: "El gran fiambre cocido de Bolonia: pasta fina de cerdo con cubos de grasa y a veces pistachos. Suave, aromática y delicada. La 'abuela' de la vienesa, pero gourmet.", marida: "Lambrusco, espumante o pan focaccia." },
+            { nombre: "🇮🇹 Bresaola", familia: "Curado", desc: "Curado magro de carne de vacuno (no cerdo), color rojo intenso. Ligero, salado y elegante. Se sirve en lonjas finas con rúcula, limón y parmesano.", marida: "Tinto ligero, Pinot Noir o un blanco con cuerpo." },
+            { nombre: "🇪🇸 Chorizo Español", familia: "Embutido curado", desc: "Embutido curado teñido y perfumado con pimentón (dulce o picante). Rojo, sabroso y con carácter. Se come en lonjas o salteado; clave en muchos guisos.", marida: "Rioja, Garnacha o una cerveza tostada." },
+            { nombre: "🇮🇹 Pancetta", familia: "Curado", desc: "La 'panceta' italiana: tocino de cerdo curado con sal y especias, a veces enrollado. Grasa sabrosa y aromática. Alma de la carbonara y la amatriciana.", marida: "Tinto joven o un blanco seco." },
+            { nombre: "🇩🇪 Speck", familia: "Curado ahumado", desc: "Jamón del Tirol curado y levemente ahumado. Mezcla lo mejor del crudo y del ahumado: aromático, firme y con un dejo a humo de montaña.", marida: "Riesling, cerveza de trigo o un tinto alpino." },
+            { nombre: "🇺🇸 Pepperoni", familia: "Embutido curado", desc: "Salame picante americano de cerdo y vacuno con pimentón y ají. Graso, especiado y rojísimo. El embutido más famoso sobre una pizza.", marida: "Cerveza lager o un tinto joven." },
+            { nombre: "🇫🇷 Paté de Campagne", familia: "Paté / Terrina", desc: "Paté rústico francés de cerdo e hígado, horneado en terrina con hierbas y a veces coñac. Untable, intenso y reconfortante. Se sirve con pan tostado y pepinillos.", marida: "Beaujolais, sidra o un blanco seco." },
+            { nombre: "🇫🇷 Rillettes", familia: "Paté / Terrina", desc: "Carne de cerdo (o pato) cocida lentamente en su grasa y desmenuzada hasta quedar untable. Sedosa, profunda y campesina. Pura indulgencia sobre pan crujiente.", marida: "Chenin Blanc, sidra o un tinto ligero." }
+        ],
+        chilenas: [
+            { nombre: "🇨🇱 Longaniza de Chillán", familia: "Embutido curado", desc: "La reina de las cecinas chilenas: embutido de cerdo aliñado con ajo, ají y especias, de Chillán. Se come frita, al jugo o en el choripán. Sabor de fonda y dieciocho.", marida: "Tinto País, Carmenère o una cerveza artesanal." },
+            { nombre: "🇨🇱 Prieta", familia: "Cocido", desc: "La morcilla chilena: embutido de sangre de cerdo con cebolla, especias y a veces nueces o arroz. Suave y sabrosa, infaltable en el asado y la parrilla criolla.", marida: "Tinto joven o un pipeño." },
+            { nombre: "🇨🇱 Arrollado de Huaso", familia: "Cocido", desc: "Trozos de cerdo enrollados en cuero, cocidos y cubiertos de ají color. Se come frío en lonjas, con pan y pebre. Un clásico de la cocina campesina chilena.", marida: "Tinto País, pipeño o una cerveza bien fría." },
+            { nombre: "🇨🇱 Chorizo Parrillero", familia: "Embutido fresco", desc: "Embutido fresco de cerdo (o mixto) para la parrilla, jugoso y aliñado. Va directo a las brasas y arma el choripán nacional. El alma del asado chileno.", marida: "Carmenère, tinto joven o cerveza lager." },
+            { nombre: "🇨🇱 Queso de Cabeza", familia: "Fiambre", desc: "Fiambre tradicional hecho con cortes de la cabeza del cerdo, gelatinado y aliñado con ajo, ají y vinagre. Firme y sabroso; se sirve en lonjas con pan y pebre.", marida: "Pipeño, tinto País o una chela." },
+            { nombre: "🇨🇱 Malaya Arrollada", familia: "Cocido", desc: "Corte de res (la malaya) relleno con zanahoria, huevo y aliños, enrollado y cocido. Se come frío en lonjas; clásico de las picadas y el aperitivo chileno.", marida: "Tinto joven o un Sauvignon Blanc." },
+            { nombre: "🇨🇱 Mortadela Chilena", familia: "Cocido", desc: "El fiambre económico y querido de la once chilena: suave, rosado y para sándwiches de toda la vida. En la marraqueta con palta, puro cariño popular.", marida: "Bebida, jugo natural o una lager suave." },
+            { nombre: "🇨🇱 Salame Nacional", familia: "Embutido curado", desc: "Versión chilena del salame: curado, firme y especiado, muy presente en tablas, pizzas y aperitivos. El compañero fiel del queso gauda en cualquier picoteo.", marida: "Tinto joven, Carmenère o una cerveza ámbar." }
         ]
     };
 
     // ========================== CERVEZAS ==========================
     const cervezas = {
         lagers: [
-            { nombre: "🇨🇿 Pilsner", tipo: "Lager", desc: "La rubia más famosa del mundo, nacida en Pilsen (Chequia) en 1842. Dorada, brillante y de espuma blanca, con un amargor herbal limpio del lúpulo Saaz. Refrescante y fácil: la que popularizó la cerveza clara.", marida: "Pescados fritos, sushi, ensaladas y quesos frescos." },
-            { nombre: "🍺 Lager (Helles)", tipo: "Lager", desc: "La rubia clásica y equilibrada (estilo 'Helles' de Múnich). Suave, maltosa y de amargor bajo, pensada para beber sin complicaciones. La cerveza de cervecería por excelencia.", marida: "Empanadas, completos, pollo asado y picoteos." },
-            { nombre: "🐐 Bock", tipo: "Lager", desc: "Lager fuerte y maltosa de origen alemán, de color ámbar a marrón. Su nombre significa 'macho cabrío'. Dulzona, con cuerpo y poco amargor; ideal para el frío.", marida: "Carnes asadas, cerdo, embutidos y quesos maduros." },
-            { nombre: "💪 Doppelbock", tipo: "Lager", desc: "La hermana mayor y más potente del Bock ('doble bock'). Oscura e intensa, con notas a pan tostado, caramelo y frutos secos. Los monjes la llamaban 'pan líquido' para el ayuno.", marida: "Estofados, cordero, chocolate y postres." },
-            { nombre: "🍂 Märzen (Oktoberfest)", tipo: "Lager", desc: "La cerveza del Oktoberfest. Ámbar, maltosa y tostada, con final seco. Antiguamente se elaboraba en marzo ('März') y se guardaba para la fiesta de octubre.", marida: "Salchichas, cerdo, papas y pretzels." },
-            { nombre: "🌑 Dunkel", tipo: "Lager", desc: "La lager oscura tradicional de Baviera. Color caoba, con sabores suaves a pan, caramelo y chocolate, pero ligera y muy bebible. Oscura sin ser pesada.", marida: "Carnes a la parrilla, cerdo y quesos semiduros." },
-            { nombre: "⬛ Schwarzbier", tipo: "Lager", desc: "La 'cerveza negra' alemana. Casi negra a la vista pero sorprendentemente liviana y suave, con un toque a café y cacao sin amargor agresivo. Elegante.", marida: "Carnes ahumadas, chocolate y postres." }
+            { nombre: "🇨🇿 Pilsner", tipo: "Lager", pais: "Chequia (Bohemia)", ibu: "25–45 IBU (amargor medio)", ferm: "Baja (lager) · ~7–12 °C", desc: "La rubia más famosa del mundo, nacida en Pilsen (Chequia) en 1842. Dorada, brillante y de espuma blanca, con un amargor herbal limpio del lúpulo Saaz. Refrescante y fácil: la que popularizó la cerveza clara.", marida: "Pescados fritos, sushi, ensaladas y quesos frescos." },
+            { nombre: "🍺 Lager (Helles)", tipo: "Lager", pais: "Alemania (Múnich)", ibu: "16–22 IBU (amargor bajo)", ferm: "Baja (lager) · ~7–12 °C", desc: "La rubia clásica y equilibrada (estilo 'Helles' de Múnich). Suave, maltosa y de amargor bajo, pensada para beber sin complicaciones. La cerveza de cervecería por excelencia.", marida: "Empanadas, completos, pollo asado y picoteos." },
+            { nombre: "🐐 Bock", tipo: "Lager", pais: "Alemania (Einbeck)", ibu: "20–27 IBU (amargor bajo)", ferm: "Baja (lager) · ~8–12 °C", desc: "Lager fuerte y maltosa de origen alemán, de color ámbar a marrón. Su nombre significa 'macho cabrío'. Dulzona, con cuerpo y poco amargor; ideal para el frío.", marida: "Carnes asadas, cerdo, embutidos y quesos maduros." },
+            { nombre: "💪 Doppelbock", tipo: "Lager", pais: "Alemania (Múnich)", ibu: "16–26 IBU (amargor bajo)", ferm: "Baja (lager) · ~8–12 °C", desc: "La hermana mayor y más potente del Bock ('doble bock'). Oscura e intensa, con notas a pan tostado, caramelo y frutos secos. Los monjes la llamaban 'pan líquido' para el ayuno.", marida: "Estofados, cordero, chocolate y postres." },
+            { nombre: "🍂 Märzen (Oktoberfest)", tipo: "Lager", pais: "Alemania (Baviera)", ibu: "18–24 IBU (amargor bajo)", ferm: "Baja (lager) · ~8–12 °C", desc: "La cerveza del Oktoberfest. Ámbar, maltosa y tostada, con final seco. Antiguamente se elaboraba en marzo ('März') y se guardaba para la fiesta de octubre.", marida: "Salchichas, cerdo, papas y pretzels." },
+            { nombre: "🌑 Dunkel", tipo: "Lager", pais: "Alemania (Baviera)", ibu: "18–24 IBU (amargor bajo)", ferm: "Baja (lager) · ~8–12 °C", desc: "La lager oscura tradicional de Baviera. Color caoba, con sabores suaves a pan, caramelo y chocolate, pero ligera y muy bebible. Oscura sin ser pesada.", marida: "Carnes a la parrilla, cerdo y quesos semiduros." },
+            { nombre: "⬛ Schwarzbier", tipo: "Lager", pais: "Alemania (Turingia/Sajonia)", ibu: "20–30 IBU (amargor medio-bajo)", ferm: "Baja (lager) · ~8–12 °C", desc: "La 'cerveza negra' alemana. Casi negra a la vista pero sorprendentemente liviana y suave, con un toque a café y cacao sin amargor agresivo. Elegante.", marida: "Carnes ahumadas, chocolate y postres." }
         ],
         ales: [
-            { nombre: "🇬🇧 Pale Ale", tipo: "Ale", desc: "El ale dorado-cobrizo que equilibra malta y lúpulo. Aromática, fácil y con carácter; base de la revolución cervecera artesanal. Versátil y amable.", marida: "Hamburguesas, carnes a la parrilla y quesos." },
-            { nombre: "🌿 IPA (India Pale Ale)", tipo: "Ale", desc: "La reina de la cerveza artesanal. Cargada de lúpulo: muy aromática (cítricos, fruta tropical, pino) y de amargor marcado. Nació para soportar el viaje de Inglaterra a la India.", marida: "Comida picante, curry, carnes intensas y quesos azules." },
-            { nombre: "⚫ Stout", tipo: "Ale", desc: "La cerveza negra cremosa por excelencia (la Guinness es la más famosa). Tostada, con notas a café, chocolate y final seco. Espuma densa y sedosa.", marida: "Ostras, carnes, chocolate y postres." },
-            { nombre: "🟤 Porter", tipo: "Ale", desc: "La antecesora de la stout, oscura y reconfortante. Sabores a chocolate, caramelo y café tostado, con cuerpo medio. Favorita de los cargadores ('porters') del Londres del s. XVIII.", marida: "Carnes asadas, estofados y quesos ahumados." },
-            { nombre: "🟠 Amber / Red Ale", tipo: "Ale", desc: "Ale de color ámbar a rojizo, con malta caramelo que aporta dulzor tostado y un lúpulo equilibrado. Sabrosa, redonda y muy fácil de disfrutar.", marida: "Carnes rojas, hamburguesas y comida tex-mex." },
-            { nombre: "🟫 Brown Ale", tipo: "Ale", desc: "Ale marrón inglesa, suave y maltosa, con notas a nuez, caramelo y pan tostado. Poco amargor y mucha calidez. Reconfortante.", marida: "Carnes asadas, cerdo, embutidos y quesos." },
-            { nombre: "✨ Kölsch", tipo: "Ale (híbrida)", desc: "Especialidad de Colonia (Köln): fermenta como ale pero madura en frío como lager. Resultado dorado, delicado, frutal y súper bebible. Se sirve en vaso alto y fino ('stange').", marida: "Pescados, mariscos, ensaladas y pollo." },
-            { nombre: "🌾 Saison", tipo: "Ale", desc: "La 'cerveza de granja' belga, antes hecha para refrescar a los trabajadores en verano. Dorada, efervescente, seca y especiada, con levaduras frutales y un toque a pimienta.", marida: "Mariscos, ensaladas, pollo y quesos de cabra." },
-            { nombre: "🇧🇪 Belgian Tripel", tipo: "Ale", desc: "Joya belga rubia y engañosamente fuerte (suele superar 8% de alcohol). Frutal, especiada y de dulzor seco; las abadías la perfeccionaron. Burbujeante y elegante.", marida: "Mariscos, aves, quesos cremosos y platos especiados." },
-            { nombre: "🍯 Barleywine", tipo: "Ale", desc: "El 'vino de cebada': el ale más fuerte y complejo (10%+ de alcohol). Ámbar oscuro, con caramelo, frutos secos, toffee y fruta madura. Para sorber lento como un buen vino.", marida: "Quesos azules, postres, chocolate o de bajativo." }
+            { nombre: "🇬🇧 Pale Ale", tipo: "Ale", pais: "Inglaterra", ibu: "30–50 IBU (amargor medio)", ferm: "Alta (ale) · ~18–22 °C", desc: "El ale dorado-cobrizo que equilibra malta y lúpulo. Aromática, fácil y con carácter; base de la revolución cervecera artesanal. Versátil y amable.", marida: "Hamburguesas, carnes a la parrilla y quesos." },
+            { nombre: "🌿 IPA (India Pale Ale)", tipo: "Ale", pais: "Inglaterra (auge en EE.UU.)", ibu: "40–70 IBU (amargor alto)", ferm: "Alta (ale) · ~18–22 °C", desc: "La reina de la cerveza artesanal. Cargada de lúpulo: muy aromática (cítricos, fruta tropical, pino) y de amargor marcado. Nació para soportar el viaje de Inglaterra a la India.", marida: "Comida picante, curry, carnes intensas y quesos azules." },
+            { nombre: "⚫ Stout", tipo: "Ale", pais: "Irlanda / Inglaterra", ibu: "30–45 IBU (amargor medio)", ferm: "Alta (ale) · ~18–22 °C", desc: "La cerveza negra cremosa por excelencia (la Guinness es la más famosa). Tostada, con notas a café, chocolate y final seco. Espuma densa y sedosa.", marida: "Ostras, carnes, chocolate y postres." },
+            { nombre: "🟤 Porter", tipo: "Ale", pais: "Inglaterra (Londres)", ibu: "18–35 IBU (amargor medio-bajo)", ferm: "Alta (ale) · ~18–22 °C", desc: "La antecesora de la stout, oscura y reconfortante. Sabores a chocolate, caramelo y café tostado, con cuerpo medio. Favorita de los cargadores ('porters') del Londres del s. XVIII.", marida: "Carnes asadas, estofados y quesos ahumados." },
+            { nombre: "🟠 Amber / Red Ale", tipo: "Ale", pais: "Irlanda / EE.UU.", ibu: "20–45 IBU (amargor medio)", ferm: "Alta (ale) · ~18–22 °C", desc: "Ale de color ámbar a rojizo, con malta caramelo que aporta dulzor tostado y un lúpulo equilibrado. Sabrosa, redonda y muy fácil de disfrutar.", marida: "Carnes rojas, hamburguesas y comida tex-mex." },
+            { nombre: "🟫 Brown Ale", tipo: "Ale", pais: "Inglaterra", ibu: "20–30 IBU (amargor bajo)", ferm: "Alta (ale) · ~18–22 °C", desc: "Ale marrón inglesa, suave y maltosa, con notas a nuez, caramelo y pan tostado. Poco amargor y mucha calidez. Reconfortante.", marida: "Carnes asadas, cerdo, embutidos y quesos." },
+            { nombre: "✨ Kölsch", tipo: "Ale (híbrida)", pais: "Alemania (Colonia)", ibu: "18–30 IBU (amargor bajo)", ferm: "Alta, madura en frío (híbrida) · ferm. ~15–20 °C", desc: "Especialidad de Colonia (Köln): fermenta como ale pero madura en frío como lager. Resultado dorado, delicado, frutal y súper bebible. Se sirve en vaso alto y fino ('stange').", marida: "Pescados, mariscos, ensaladas y pollo." },
+            { nombre: "🌾 Saison", tipo: "Ale", pais: "Bélgica (Valonia)", ibu: "20–35 IBU (amargor medio)", ferm: "Alta (ale) · ~20–28 °C", desc: "La 'cerveza de granja' belga, antes hecha para refrescar a los trabajadores en verano. Dorada, efervescente, seca y especiada, con levaduras frutales y un toque a pimienta.", marida: "Mariscos, ensaladas, pollo y quesos de cabra." },
+            { nombre: "🇧🇪 Belgian Tripel", tipo: "Ale", pais: "Bélgica (abadías)", ibu: "20–40 IBU (amargor medio)", ferm: "Alta (ale) · ~18–24 °C", desc: "Joya belga rubia y engañosamente fuerte (suele superar 8% de alcohol). Frutal, especiada y de dulzor seco; las abadías la perfeccionaron. Burbujeante y elegante.", marida: "Mariscos, aves, quesos cremosos y platos especiados." },
+            { nombre: "🍯 Barleywine", tipo: "Ale", pais: "Inglaterra", ibu: "35–70 IBU (amargor medio-alto)", ferm: "Alta (ale) · ~18–22 °C", desc: "El 'vino de cebada': el ale más fuerte y complejo (10%+ de alcohol). Ámbar oscuro, con caramelo, frutos secos, toffee y fruta madura. Para sorber lento como un buen vino.", marida: "Quesos azules, postres, chocolate o de bajativo." }
         ],
         trigoYacidas: [
-            { nombre: "🌾 Hefeweizen", tipo: "Ale (trigo)", desc: "La clásica cerveza de trigo bávara, turbia y refrescante. Su levadura aporta inconfundibles aromas a plátano y clavo de olor. Espuma generosa; se sirve en vaso alto curvo.", marida: "Ensaladas, pescados, salchichas blancas y brunch." },
-            { nombre: "🤍 Witbier (blanca belga)", tipo: "Ale (trigo)", desc: "Cerveza blanca belga, pálida y turbia, especiada con cáscara de naranja y cilantro. Ligera, cítrica y muy refrescante (la Hoegaarden la hizo famosa).", marida: "Mariscos, ceviche, ensaladas y quesos frescos." },
-            { nombre: "🍋 Sour / Lambic (ácida)", tipo: "Espontánea", desc: "Cervezas de fermentación espontánea y sabor ácido, originarias de Bélgica. Refrescantes y complejas, a veces con frutas (frambuesa, cereza). Acidez que despierta el paladar: las amas o las odias.", marida: "Ensaladas, quesos, ceviche y postres de fruta." }
+            { nombre: "🌾 Hefeweizen", tipo: "Ale (trigo)", pais: "Alemania (Baviera)", ibu: "8–15 IBU (amargor muy bajo)", ferm: "Alta (ale) · ~18–22 °C", desc: "La clásica cerveza de trigo bávara, turbia y refrescante. Su levadura aporta inconfundibles aromas a plátano y clavo de olor. Espuma generosa; se sirve en vaso alto curvo.", marida: "Ensaladas, pescados, salchichas blancas y brunch." },
+            { nombre: "🤍 Witbier (blanca belga)", tipo: "Ale (trigo)", pais: "Bélgica", ibu: "8–20 IBU (amargor muy bajo)", ferm: "Alta (ale) · ~18–22 °C", desc: "Cerveza blanca belga, pálida y turbia, especiada con cáscara de naranja y cilantro. Ligera, cítrica y muy refrescante (la Hoegaarden la hizo famosa).", marida: "Mariscos, ceviche, ensaladas y quesos frescos." },
+            { nombre: "🍋 Sour / Lambic (ácida)", tipo: "Espontánea", pais: "Bélgica (valle del Senne)", ibu: "0–10 IBU (amargor casi nulo; manda la acidez)", ferm: "Espontánea (levaduras y bacterias salvajes) · ~15–25 °C", desc: "Cervezas de fermentación espontánea y sabor ácido, originarias de Bélgica. Refrescantes y complejas, a veces con frutas (frambuesa, cereza). Acidez que despierta el paladar: las amas o las odias.", marida: "Ensaladas, quesos, ceviche y postres de fruta." }
         ]
     };
 
@@ -1680,7 +1713,7 @@
 
     function renderCervezas() {
         const container = document.getElementById('mainContent');
-        const card = c => `<div class="card-item"><div class="item-name">${c.nombre} <span class="std-badge">${c.tipo}</span></div><div class="item-desc">${c.desc}</div><div class="item-prep">🍽️ <strong>Marida con:</strong> ${c.marida}</div></div>`;
+        const card = c => `<div class="card-item"><div class="item-name">${c.nombre} <span class="std-badge">${c.tipo}</span></div><div class="item-desc">${c.desc}</div><div class="item-prep">🌍 <strong>Tradición:</strong> ${c.pais}</div><div class="item-prep">🌡️ <strong>Fermentación:</strong> ${c.ferm}</div><div class="item-prep">🌿 <strong>Amargor:</strong> ${c.ibu}</div><div class="item-prep">🍽️ <strong>Marida con:</strong> ${c.marida}</div></div>`;
         container.innerHTML = `<div class="service-title">🍺 Cervezas</div>
             <div class="service-desc">Los 20 estilos de cerveza más importantes del mundo, explicados con onda para que sepas describirlos y recomendarlos. De la rubia fácil a la negra cremosa. 🍺✨</div>
             <div class="image-place"><img src="img/cervezas.jpg" alt="Cervezas" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
@@ -1688,7 +1721,9 @@
                 <div class="item-name">🍺 Claves para servir y describir cervezas</div>
                 <ul style="margin:8px 0 0 18px; font-size:0.88rem; color:var(--text-secondary); line-height:1.55">
                     <li style="margin-bottom:5px"><strong>Las familias:</strong> Lager (baja fermentación, limpia y fresca), Ale (alta fermentación, frutal y con carácter), de Trigo (turbias y suaves) y Espontáneas (ácidas).</li>
-                    <li style="margin-bottom:5px"><strong>Temperatura:</strong> rubias/lagers bien frías (3–5 °C); ales y oscuras un poco menos frías (7–12 °C) para que liberen su aroma.</li>
+                    <li style="margin-bottom:5px"><strong>¿Alta o baja fermentación?</strong> Se refiere a <em>cómo trabaja la levadura</em>, no al alcohol. En la <strong>alta fermentación (ales)</strong> la levadura actúa en la <em>parte superior</em> del tanque y en <em>caliente</em> (~18–24 °C); trabaja rápido y deja aromas frutales y especiados. En la <strong>baja fermentación (lagers)</strong> la levadura se va al <em>fondo</em> y fermenta en <em>frío</em> (~7–12 °C), más lento, dejando una cerveza limpia, suave y fresca. Las <strong>espontáneas</strong> no llevan levadura agregada: fermentan con levaduras y bacterias <em>salvajes</em> del aire, lo que da su acidez.</li>
+                    <li style="margin-bottom:5px"><strong>IBU (amargor):</strong> mide cuánto amargor del lúpulo tiene la cerveza. Bajo (≤20) = suave y maltosa; medio (20–40) = equilibrada; alto (40+) = amarga y lupulada como una IPA. Es una guía aproximada por estilo.</li>
+                    <li style="margin-bottom:5px"><strong>Temperatura de servicio:</strong> rubias/lagers bien frías (3–5 °C); ales y oscuras un poco menos frías (7–12 °C) para que liberen su aroma. (Ojo: la temperatura de <em>servicio</em> es distinta de la de <em>fermentación</em>.)</li>
                     <li style="margin-bottom:5px"><strong>Espuma:</strong> dos dedos de espuma protegen el aroma y el gas. Sirve inclinando el vaso y endereza al final.</li>
                     <li style="margin-bottom:5px"><strong>Cada estilo, su vaso:</strong> pilsner en vaso alto, weizen en vaso curvo, belgas en cáliz. Realza aroma y presentación.</li>
                     <li style="margin-bottom:5px"><strong>Frescura:</strong> la cerveza es perecible; las IPA sobre todo (el lúpulo se apaga). Mientras más fresca, mejor.</li>
@@ -1708,7 +1743,7 @@
             <div class="calc-card">
                 <div class="item-name">🧀 Claves para lucirte con los quesos</div>
                 <ul style="margin:8px 0 0 18px; font-size:0.88rem; color:var(--text-secondary); line-height:1.55">
-                    <li style="margin-bottom:5px"><strong>Las 5 familias:</strong> frescos (quesillo, mozzarella), blandos de corteza (brie, camembert), semiduros (gouda, chanco), duros (parmesano, grana padano) y azules (roquefort, gorgonzola).</li>
+                    <li style="margin-bottom:5px"><strong>Las 5 familias:</strong> frescos (quesillo, mozzarella), blandos de corteza (brie, camembert), semimaduros (gouda, chanco), maduros (parmesano, grana padano) y azules (roquefort, gorgonzola). El nivel de <em>maduración</em> (tiempo de añejamiento) es lo que más cambia su textura y sabor: a más maduro, más firme e intenso.</li>
                     <li style="margin-bottom:5px"><strong>Temperatura:</strong> sácalos del frío <strong>30 a 60 min antes</strong> de servir. A temperatura ambiente despliegan todo su aroma y sabor.</li>
                     <li style="margin-bottom:5px"><strong>Orden en la tabla:</strong> del más suave al más intenso, así el paladar no se satura. El azul y el más añejo, siempre al final.</li>
                     <li style="margin-bottom:5px"><strong>Acompáñalos:</strong> frutos secos, miel, mermeladas, uvas, higos y un buen pan o galletas elevan cualquier tabla.</li>
@@ -1717,6 +1752,26 @@
             </div>
             <div class="subseccion"><h2>🌍 Quesos del Mundo (${quesos.internacionales.length})</h2><div class="grid-cards">${quesos.internacionales.map(card).join("")}</div></div>
             <div class="subseccion"><h2>🇨🇱 Quesos Chilenos (${quesos.chilenos.length})</h2><div class="grid-cards">${quesos.chilenos.map(card).join("")}</div></div>`;
+    }
+
+    function renderCharcuteria() {
+        const container = document.getElementById('mainContent');
+        const card = c => `<div class="card-item"><div class="item-name">${c.nombre} <span class="std-badge">${c.familia}</span></div><div class="item-desc">${c.desc}</div><div class="item-prep">🍷 <strong>Marida con:</strong> ${c.marida}</div></div>`;
+        container.innerHTML = `<div class="service-title">🥓 Charcutería</div>
+            <div class="service-desc">La charcutería (las cecinas, como decimos en Chile) es la otra gran estrella de una tabla junto al queso: jamones, salames, embutidos, fiambres y patés. Saber su <strong>origen, su tipo (curado, cocido, ahumado) y su sabor</strong> te permite armar tablas de lujo, describirlas con seguridad y recomendar el maridaje justo (¡y subir la propina! 😉). Aquí los clásicos del mundo y nuestras cecinas chilenas con identidad propia. 🥓✨</div>
+            <div class="image-place"><img src="img/charcuteriachilena.jpg" alt="Charcutería" loading="lazy" onerror="this.closest('.image-place').style.display='none'"></div>
+            <div class="calc-card">
+                <div class="item-name">🥓 Claves para lucirte con la charcutería</div>
+                <ul style="margin:8px 0 0 18px; font-size:0.88rem; color:var(--text-secondary); line-height:1.55">
+                    <li style="margin-bottom:5px"><strong>Los tipos:</strong> <em>curados</em> (jamón serrano, salame: secados con sal y tiempo), <em>cocidos</em> (mortadela, jamón, prieta), <em>frescos</em> (chorizo parrillero, para cocinar), <em>ahumados</em> (speck) y <em>patés/terrinas</em> (untables).</li>
+                    <li style="margin-bottom:5px"><strong>El corte:</strong> los curados, en lonjas <strong>finísimas</strong> (casi transparentes) para que liberen aroma; los cocidos y fiambres, un poco más gruesos. ¡Un buen corte lo es todo!</li>
+                    <li style="margin-bottom:5px"><strong>Temperatura:</strong> sácalos del frío <strong>20 a 30 min antes</strong>. La grasa a temperatura ambiente despliega todo el sabor.</li>
+                    <li style="margin-bottom:5px"><strong>En la tabla:</strong> combínalos con quesos, frutos secos, aceitunas, pepinillos, pan y un pebre o mostaza. Del más suave al más intenso.</li>
+                    <li style="margin-bottom:5px"><strong>Cómo describirlos:</strong> menciona su <em>origen</em>, su <em>tipo</em> (curado, cocido, ahumado) y una <em>nota de sabor</em> (especiado, dulce, ahumado). ¡Eso vende!</li>
+                </ul>
+            </div>
+            <div class="subseccion"><h2>🌍 Charcutería del Mundo (${charcuteria.internacionales.length})</h2><div class="grid-cards">${charcuteria.internacionales.map(card).join("")}</div></div>
+            <div class="subseccion"><h2>🇨🇱 Cecinas Chilenas (${charcuteria.chilenas.length})</h2><div class="grid-cards">${charcuteria.chilenas.map(card).join("")}</div></div>`;
     }
 
     function renderComidaRapida() {
@@ -1791,6 +1846,13 @@
                 const n = sinBandera(q.nombre);
                 add('🧀 Quesos', 'familia', `¿A qué familia pertenece el queso ${n}?`, q.familia);
                 add('🧀 Quesos', 'maridaje', `¿Con qué marida el ${n}?`, q.marida);
+            });
+        } catch (e) {}
+        try {
+            [...charcuteria.internacionales, ...charcuteria.chilenas].forEach(c => {
+                const n = sinBandera(c.nombre);
+                add('🥓 Charcutería', 'charcuteria-tipo', `¿Qué tipo de charcutería es ${n}?`, c.familia);
+                add('🥓 Charcutería', 'maridaje', `¿Con qué marida ${n}?`, c.marida);
             });
         } catch (e) {}
         try { maridajes.forEach(m => add('🍷 Maridajes', 'maridaje-largo', `¿Qué bebida marida con ${sinBandera(m.plato)}?`, `${m.vino} — ${m.motivo}`)); } catch (e) {}
@@ -1912,6 +1974,7 @@
         productosMar: () => pescadosChile.length + mariscos.orilla.length + mariscos.fondo.length + crustaceos.length,
         vegetales: () => vegetalesChilenos.papas.variedades.length + vegetalesChilenos.otrosTubérculos.lista.length + vegetalesChilenos.frutosNativos.lista.length + vegetalesChilenos.hierbasCondimentos.lista.length + vegetalesChilenos.otros.lista.length,
         quesos: () => quesos.internacionales.length + quesos.chilenos.length,
+        charcuteria: () => charcuteria.internacionales.length + charcuteria.chilenas.length,
         sinCarne: () => sinCarne.dietas.length + sinCarne.productos.length,
         cocteles: () => bebestibles.cocteles.internacionales.length + bebestibles.cocteles.chilenos.length,
         cervezas: () => cervezas.lagers.length + cervezas.ales.length + cervezas.trigoYacidas.length,
@@ -1925,7 +1988,7 @@
         diccionario: () => Object.values(diccionario).reduce((a, arr) => a + arr.length, 0)
     };
     // todas las secciones con avance, en orden para Mi Avance
-    const avanceSecciones = ['protocolos', 'atencionMesa', 'restaurantes', 'comidaRapida', 'platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne', 'vinos', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'diccionario'];
+    const avanceSecciones = ['protocolos', 'atencionMesa', 'restaurantes', 'comidaRapida', 'platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'charcuteria', 'sinCarne', 'vinos', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'diccionario'];
     // progreso unificado: tarjetas (aprendido) o checklists (pasos marcados)
     function progresoDe(tab) {
         if (tab === 'protocolos') {
@@ -1941,7 +2004,7 @@
         const total = totalsData[tab] ? totalsData[tab]() : 0;
         const ap = loadAprendidoCards();
         const learned = Object.keys(ap).filter(k => k.startsWith(tab + '::')).length;
-        return { learned, total };
+        return { learned: Math.min(learned, total), total }; // tope: nunca supera el total (evita >100% por llaves huérfanas)
     }
     // progreso del Quiz: cuenta como un área más del avance total (coherente con Garzón Bilingüe)
     function quizProgreso() {
@@ -1967,7 +2030,7 @@
         const meta = {
             protocolos: ['📋', 'Protocolos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Servicio por Local'], comidaRapida: ['🍔', 'Comida Rápida'],
             platos: ['🍲', 'Platos Típicos'], carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Productos del Mar'], vegetales: ['🌽', 'Vegetales Chilenos'],
-            quesos: ['🧀', 'Quesos'], sinCarne: ['🌱', 'Sin Carne'],
+            quesos: ['🧀', 'Quesos'], charcuteria: ['🥓', 'Charcutería'], sinCarne: ['🌱', 'Sin Carne'],
             vinos: ['🍷', 'Vinos'], cocteles: ['🍸', 'Cócteles'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Cafés'], sinAlcohol: ['🧃', 'Sin Alcohol'],
             maridajes: ['🍷', 'Maridajes'], alergenos: ['🚨', 'Alérgenos'], diccionario: ['📖', 'Diccionario']
         };
@@ -2102,7 +2165,7 @@
         if (btn) btn.textContent = n ? `⭐ Favoritos (${n})` : '⭐ Favoritos';
     }
     // ================== APRENDIDO POR TARJETA ==================
-    const tabsAprendizaje = ['platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'atencionMesa', 'restaurantes', 'comidaRapida', 'diccionario'];
+    const tabsAprendizaje = ['platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'charcuteria', 'sinCarne', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol', 'maridajes', 'alergenos', 'atencionMesa', 'restaurantes', 'comidaRapida', 'diccionario'];
     function loadAprendidoCards() { try { return JSON.parse(localStorage.getItem('aprendidoCards') || '{}'); } catch (e) { return {}; } }
     function saveAprendidoCards(o) { localStorage.setItem('aprendidoCards', JSON.stringify(o)); }
     function cardLearnId(titleText) { return currentTab + '::' + titleText.replace(/🔊/g, '').trim(); }
@@ -2243,12 +2306,12 @@
     // ================== NAVEGACIÓN (hubs + sub-pestañas) ==================
     const hubs = {
         servicio: ['protocolos', 'atencionMesa', 'restaurantes', 'comidaRapida'],
-        carta: ['platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'sinCarne'],
+        carta: ['platos', 'carnes', 'productosMar', 'vegetales', 'quesos', 'charcuteria', 'sinCarne'],
         bebestibles: ['vinos', 'cocteles', 'cervezas', 'barismo', 'sinAlcohol']
     };
     const subMeta = {
         protocolos: ['📋', 'Protocolos'], atencionMesa: ['🤝', 'Atención en Mesa'], restaurantes: ['🛎️', 'Por Local'], comidaRapida: ['🍔', 'Comida Rápida'],
-        platos: ['🍲', 'Platos Típicos'], carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Mar'], vegetales: ['🌽', 'Vegetales'], quesos: ['🧀', 'Quesos'], sinCarne: ['🌱', 'Sin Carne'],
+        platos: ['🍲', 'Platos Típicos'], carnes: ['🥩', 'Carnes'], productosMar: ['🌊', 'Mar'], vegetales: ['🌽', 'Vegetales'], quesos: ['🧀', 'Quesos'], charcuteria: ['🥓', 'Charcutería'], sinCarne: ['🌱', 'Sin Carne'],
         vinos: ['🍷', 'Vinos'], cocteles: ['🍸', 'Cócteles'], cervezas: ['🍺', 'Cervezas'], barismo: ['☕', 'Cafés'], sinAlcohol: ['🧃', 'Sin Alcohol'],
         maridajes: ['🍷', 'Maridajes'], alergenos: ['🚨', 'Alérgenos'], diccionario: ['📖', 'Diccionario']
     };
@@ -2256,7 +2319,7 @@
     const lastSub = { servicio: 'protocolos', carta: 'platos', bebestibles: 'vinos' };
     const renderers = {
         protocolos: renderProtocolos, atencionMesa: renderAtencionMesa, restaurantes: renderRestaurantesChile, comidaRapida: renderComidaRapida,
-        platos: renderPlatos, carnes: renderCarnes, productosMar: renderProductosMar, vegetales: renderVegetales, quesos: renderQuesos, sinCarne: renderSinCarne,
+        platos: renderPlatos, carnes: renderCarnes, productosMar: renderProductosMar, vegetales: renderVegetales, quesos: renderQuesos, charcuteria: renderCharcuteria, sinCarne: renderSinCarne,
         vinos: renderVinos, cocteles: renderCocteles, cervezas: renderCervezas, barismo: renderBarismo, sinAlcohol: renderSinAlcohol,
         alergenos: renderAlergenos, maridajes: renderMaridajes, diccionario: renderDiccionario, quiz: renderQuiz, avance: renderAvance, favoritos: renderFavoritos
     };

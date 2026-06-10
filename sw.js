@@ -1,5 +1,5 @@
 // Service Worker — Protocolos de Servicio
-const CACHE = 'protocolos-v16';
+const CACHE = 'protocolos-v18';
 const ASSETS = [
   './',
   './index.html',
@@ -10,6 +10,7 @@ const ASSETS = [
   './img/maridajes.jpg',
   './img/atencion-mesa.jpg',
   './img/quesos.jpg',
+  './img/charcuteriachilena.jpg',
   './img/mar.jpg',
   './img/carnes.jpg',
   './img/vegetales.jpg',

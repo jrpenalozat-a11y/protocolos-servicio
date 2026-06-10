@@ -120,6 +120,7 @@ Academia/curso de bolsillo + herramienta de consulta rápida, instalable en el c
 2. **Afinar tema claro** — revisar contraste en alguna sección puntual si hace falta
 3. **¿URL propia?** — si se quiere `servicio-a-la-mano.vercel.app` hay que reconfigurar el deploy (hoy sigue `protocolos-servicio`)
 4. Cualquier idea nueva del dueño 🙌
+5. **Pulir 🍺 Cervezas:** que las 20 fichas tengan **categoría/estilo explícito** (Ale, Lager, de trigo, ácida/espontánea, etc., según corresponda — hoy solo están agrupadas en `lagers`/`ales`/`trigoYacidas` con un campo `tipo` libre) y datos técnicos aproximados por estilo: **concentración de lúpulos, IBU aproximado, temperatura/tiempo de cocción (maceración-hervor) aproximados**, etc.
 
 ## Notas importantes
 - **Escala de puntos de cocción chilena:** Inglesa · A punto · Medio · 3/4 · Bien cocido
